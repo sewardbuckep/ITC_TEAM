@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ITC Design System v1 — For Rich Cruz & Robert Staddon</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,400&family=Source+Code+Pro:wght@400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#1B2A4A;
+  --teal:#2E8B8B;
+  --gold:#D4A439;
+  --gray:#666;
+  --lgray:#F2F4F7;
+  --lgray2:#E8F4F4;
+  --off:#F8F8F6;
+  --body-text:#2A2A2A;
+  --max:960px;
+}
+
+body{font-family:'Source Sans 3',sans-serif;font-size:16px;background:#EDEDEA;color:var(--body-text)}
+
+/* ─── CHROME ─── */
+.ds-banner{position:sticky;top:0;z-index:1000;background:var(--navy);padding:12px 32px;display:flex;align-items:center;gap:20px;border-bottom:3px solid var(--gold)}
+.ds-brand{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:#fff;letter-spacing:.02em}
+.ds-sub{font-family:'Source Code Pro',monospace;font-size:11px;color:var(--teal);letter-spacing:.08em}
+.ds-badge{margin-left:auto;background:var(--teal);color:#fff;font-size:10px;font-weight:600;padding:4px 12px;border-radius:3px;letter-spacing:.1em;text-transform:uppercase}
+
+/* ─── NAV ─── */
+.ds-nav{background:#fff;border-bottom:1px solid #E8E8E4;position:sticky;top:49px;z-index:999;padding:0 32px}
+.ds-nav-inner{max-width:1100px;margin:0 auto;display:flex;gap:0;overflow-x:auto}
+.ds-nav a{display:inline-block;padding:14px 20px;font-size:13px;font-weight:600;color:var(--gray);text-decoration:none;border-bottom:3px solid transparent;white-space:nowrap;letter-spacing:.02em;transition:color .15s,border-color .15s}
+.ds-nav a:hover{color:var(--navy);border-bottom-color:var(--teal)}
+
+/* ─── LAYOUT ─── */
+.ds-page{max-width:1100px;margin:0 auto;padding:0 32px 80px}
+.ds-section{padding:64px 0 48px;border-bottom:1px solid #E0E0DC}
+.ds-section:last-child{border-bottom:none}
+.ds-section-title{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;color:var(--navy);margin-bottom:6px}
+.ds-section-sub{font-size:15px;color:var(--gray);font-weight:300;margin-bottom:40px;line-height:1.6;max-width:680px}
+
+/* ─── CODE SPEC ─── */
+.spec{font-family:'Source Code Pro',monospace;font-size:11px;background:#F2F4F7;color:var(--navy);padding:2px 7px;border-radius:3px;display:inline-block;margin-top:4px}
+.spec-block{background:#F2F4F7;border-left:3px solid var(--teal);padding:14px 18px;border-radius:0 6px 6px 0;margin:16px 0;font-family:'Source Code Pro',monospace;font-size:12px;color:#1a1a1a;line-height:1.8}
+.spec-block strong{color:var(--teal);font-weight:600}
+
+/* ─── TWO COL ─── */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.four-col{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+
+/* ─── USAGE NOTE ─── */
+.usage{background:#FFF8E1;border-left:4px solid var(--gold);padding:14px 18px;border-radius:0 6px 6px 0;font-size:13px;color:#5D3A00;line-height:1.65;margin-top:20px}
+.usage strong{font-weight:600;display:block;margin-bottom:4px;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.do-dont{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}
+.do{background:#E6F4EA;border-left:4px solid #2E7D32;padding:14px 18px;border-radius:0 6px 6px 0;font-size:13px;color:#1B4A1D;line-height:1.65}
+.dont{background:#FDEDED;border-left:4px solid #C0392B;padding:14px 18px;border-radius:0 6px 6px 0;font-size:13px;color:#7A1A1A;line-height:1.65}
+.do strong,.dont strong{font-weight:600;display:block;margin-bottom:4px;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+
+/* ─── COLOR SWATCHES ─── */
+.swatch-grid{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:12px}
+.swatch{border-radius:8px;overflow:hidden;width:160px;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.swatch-color{height:80px}
+.swatch-info{background:#fff;padding:10px 12px}
+.swatch-name{font-weight:600;font-size:13px;color:var(--navy);margin-bottom:2px}
+.swatch-hex{font-family:'Source Code Pro',monospace;font-size:11px;color:var(--gray)}
+.swatch-role{font-size:11px;color:#555;margin-top:3px;line-height:1.4}
+
+/* ─── TYPOGRAPHY DEMOS ─── */
+.type-demo{background:#fff;border-radius:10px;padding:32px;border:.5px solid #DDDDD8;margin-bottom:16px}
+.type-meta{display:flex;gap:16px;align-items:baseline;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #E8E8E4}
+.type-label{font-family:'Source Code Pro',monospace;font-size:11px;color:var(--teal);font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+.type-spec{font-size:11px;color:var(--gray)}
+.type-usage{font-size:11px;color:#888;font-style:italic}
+
+/* ─── SECTION BG DEMOS ─── */
+.bg-demo{border-radius:10px;padding:28px 32px;margin-bottom:12px;border:.5px solid #DDDDD8}
+.bg-label{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:6px;font-family:'Source Code Pro',monospace}
+
+/* ─── COMPONENT PREVIEWS — live samples from OKC wireframe ─── */
+
+/* stat card */
+.stat-card{background:#fff;border-radius:10px;padding:24px 20px;border:.5px solid #DDDDD8}
+.stat-card.accent{border-left:4px solid var(--teal)}
+.stat-number{font-family:'Playfair Display',serif;font-size:48px;font-weight:700;color:var(--navy);line-height:1;margin-bottom:10px}
+.stat-number span{font-size:24px;font-weight:500}
+.stat-label{font-size:13px;color:#444;line-height:1.45;margin-bottom:10px}
+.stat-source{font-size:10.5px;color:var(--gray);font-style:italic;line-height:1.4}
+
+/* not-do strip */
+.not-do-strip{background:var(--navy);padding:22px 28px;border-radius:6px;max-width:100%}
+.not-do-strip p{font-size:16px;color:#fff;font-weight:400;line-height:1.7;margin:0}
+.not-do-strip p strong{color:var(--teal);font-weight:600}
+
+/* positioning statement */
+.positioning-statement{font-family:'Playfair Display',serif;font-size:22px;font-style:italic;color:var(--navy);border-left:4px solid var(--gold);padding-left:20px;line-height:1.4;font-weight:500}
+
+/* boutique strip */
+.boutique-strip{background:var(--lgray2);border-left:4px solid var(--teal);padding:18px 24px;border-radius:0 6px 6px 0}
+.boutique-strip p{font-size:15px;color:var(--navy);font-style:italic;margin:0;line-height:1.6;font-weight:300}
+
+/* focus list */
+.focus-list{list-style:none;display:flex;flex-direction:column;max-width:680px}
+.focus-list li{display:flex;align-items:flex-start;gap:14px;padding:16px 0;border-bottom:.5px solid #E8E8E4;min-height:44px}
+.focus-list li::before{content:'';width:8px;height:8px;background:var(--teal);border-radius:50%;flex-shrink:0;margin-top:7px}
+.focus-main{font-size:17px;color:var(--navy);font-weight:300;line-height:1.4;display:block}
+.focus-sub{font-size:12px;color:var(--gray);font-style:italic;font-weight:300;display:block;margin-top:3px}
+.section-label{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:20px}
+
+/* engagement card */
+.engage-card{background:#fff;border-radius:10px;padding:28px 24px;border:.5px solid #DDDDD8}
+.engage-phase{font-family:'Source Code Pro',monospace;font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:8px}
+.engage-weeks{font-size:12px;color:var(--gray);font-style:italic;margin-bottom:12px}
+.engage-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:500;color:var(--navy);margin-bottom:12px}
+.engage-desc{font-size:14px;color:#444;line-height:1.65;font-weight:300}
+
+/* buttons */
+.btn-primary{display:inline-block;background:var(--teal);color:#fff;font-size:16px;font-weight:600;padding:16px 36px;border-radius:6px;text-decoration:none;letter-spacing:.02em;font-family:'Source Sans 3',sans-serif;cursor:pointer;border:none}
+.btn-primary:hover{background:var(--navy)}
+.btn-secondary{display:inline-block;background:#fff;border:1.5px solid var(--teal);color:var(--teal);font-size:14px;font-weight:600;padding:11px 24px;border-radius:6px;text-decoration:none;font-family:'Source Sans 3',sans-serif;cursor:pointer}
+.btn-secondary:hover{background:var(--teal);color:#fff}
+.btn-pill{display:inline-flex;align-items:center;gap:8px;background:var(--teal);color:#fff;font-size:13px;font-weight:600;padding:12px 22px;border-radius:32px;text-decoration:none;letter-spacing:.03em;box-shadow:0 4px 20px rgba(46,139,139,.35)}
+.btn-pill:hover{background:var(--navy)}
+
+/* contact card */
+.contact-section-demo{background:var(--navy);padding:40px 32px;border-radius:10px}
+.contact-dual{display:flex;gap:48px;flex-wrap:wrap}
+.contact-card{display:flex;align-items:center;gap:20px;flex:1;min-width:240px}
+.contact-photo-ph{width:80px;height:80px;border-radius:50%;border:2px dashed rgba(46,139,139,.5);display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;gap:4px}
+.ph-icon{width:28px;height:28px;border-radius:50%;background:rgba(46,139,139,.25)}
+.ph-body{width:36px;height:18px;border-radius:18px 18px 0 0;background:rgba(46,139,139,.2)}
+.contact-info{display:flex;flex-direction:column;gap:4px}
+.contact-name{font-family:'Playfair Display',serif;font-size:18px;color:#fff;font-weight:500}
+.contact-title{font-size:12px;color:rgba(255,255,255,.55);line-height:1.5;font-weight:300}
+.contact-creds{font-size:11px;color:rgba(46,139,139,.8);font-weight:300;margin-top:2px}
+.contact-email{font-size:14px;color:var(--teal);text-decoration:none;margin-top:4px}
+.contact-divider{width:1px;background:rgba(255,255,255,.12);align-self:stretch}
+
+/* results strip */
+.results-strip{background:var(--navy);padding:28px 32px;border-radius:10px;display:flex;align-items:center;gap:32px;flex-wrap:wrap}
+.results-label{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);flex-shrink:0}
+.results-stats{display:flex;gap:40px;flex-wrap:wrap}
+.rs-item{display:flex;flex-direction:column;gap:3px}
+.rs-number{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:#fff;line-height:1}
+.rs-desc{font-size:12px;color:rgba(255,255,255,.6);font-weight:300;line-height:1.4;max-width:140px}
+
+/* CTA block */
+.cta-demo{background:var(--lgray2);border-top:1px solid rgba(46,139,139,.2);padding:48px 32px;border-radius:10px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:0}
+.call-explainer{background:#fff;border-radius:10px;padding:24px 28px;margin-bottom:32px;width:100%;max-width:560px;text-align:left;border:.5px solid #DDDDD8}
+.call-explainer h4{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:8px}
+.call-explainer p{font-size:14px;color:#444;line-height:1.65;font-weight:300}
+.cta-prompt{font-family:'Playfair Display',serif;font-size:18px;font-style:italic;color:var(--navy);line-height:1.5;margin-top:20px}
+
+/* winning signal card */
+.win-card{display:flex;gap:0;border-radius:10px;overflow:hidden;border:.5px solid #DDDDD8;box-shadow:0 2px 16px rgba(27,42,74,.08)}
+.win-left{background:var(--navy);padding:36px 32px;flex:0 0 260px;display:flex;flex-direction:column;justify-content:center;gap:8px}
+.win-outcome{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:#fff;line-height:1.25}
+.win-outcome-label{font-size:11px;color:rgba(255,255,255,.45);font-weight:300;letter-spacing:.08em;text-transform:uppercase;margin-top:4px}
+.win-right{background:var(--off);padding:36px 32px;flex:1;display:flex;flex-direction:column;justify-content:center;gap:14px;border-left:4px solid var(--gold)}
+.win-situation{font-size:15px;color:var(--body-text);line-height:1.7;font-weight:300}
+
+/* snapshot card */
+.snapshot-card{background:var(--lgray2);border:1.5px solid rgba(46,139,139,.3);border-radius:10px;padding:36px 40px;max-width:680px}
+.snapshot-badge{display:inline-block;background:var(--teal);color:#fff;font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:4px 12px;border-radius:3px;margin-bottom:14px;font-family:'Source Code Pro',monospace}
+.snapshot-card h3{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--navy);margin-bottom:6px}
+.snapshot-example{background:#fff;border-left:3px solid var(--gold);padding:12px 16px;border-radius:0 6px 6px 0;font-size:13px;font-style:italic;color:var(--navy);line-height:1.6}
+
+/* practice area card */
+.pa-card{background:#fff;border:.5px solid #DDDDD8;border-radius:8px;padding:24px 28px;border-top:3px solid var(--teal)}
+.pa-headline{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--navy);line-height:1.3;margin-bottom:8px}
+.pa-sub{font-size:13px;color:var(--gray);font-style:italic;font-weight:300;margin-bottom:16px;line-height:1.5}
+.pa-link{font-size:13px;font-weight:600;color:var(--teal);text-decoration:none;letter-spacing:.03em}
+
+/* section rhythm demo */
+.rhythm-block{padding:40px 32px;margin-bottom:2px}
+.rhythm-label{font-family:'Source Code Pro',monospace;font-size:10px;color:var(--teal);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;opacity:.7}
+</style>
+</head>
+<body>
+
+<div class="ds-banner">
+  <div>
+    <div class="ds-brand">Institute for Transformative Change</div>
+    <div class="ds-sub">ITC Design System v1 — Rich Cruz &amp; Robert Staddon</div>
+  </div>
+  <div class="ds-badge">CONTRACTOR REFERENCE</div>
+</div>
+
+<nav class="ds-nav">
+  <div class="ds-nav-inner">
+    <a href="#overview">Overview</a>
+    <a href="#colors">Colors</a>
+    <a href="#typography">Typography</a>
+    <a href="#sections">Section Rhythm</a>
+    <a href="#components">Components</a>
+    <a href="#buttons">Buttons</a>
+    <a href="#dont">What Not to Do</a>
+    <a href="#divi">Divi Notes</a>
+  </div>
+</nav>
+
+<div class="ds-page">
+
+
+<!-- ══════════════════════════════════
+     OVERVIEW
+     ══════════════════════════════════ -->
+<section class="ds-section" id="overview">
+  <div class="ds-section-title">ITC Design System</div>
+  <div class="ds-section-sub">This document is the single reference for all ITC website pages. Every practice area page, landing page, and content page should use only the colors, fonts, components, and patterns shown here. If it is not in this guide, ask before building it.</div>
+
+  <div class="two-col">
+    <div>
+      <div class="spec-block">
+<strong>Purpose of this document</strong>
+All five practice area pages must look like they
+belong to the same firm, built by the same team.
+This guide ensures visual consistency across
+every page regardless of who builds it or when.
+
+When in doubt: match what is in this guide exactly.
+Do not invent new colors, fonts, or component patterns.
+</div>
+    </div>
+    <div>
+      <div class="spec-block">
+<strong>Files this guide covers</strong>
+itc.pro/organization-design-execution (ODE)
+itc.pro/operational-effectiveness-knowledge-continuity (OKC)
+itc.pro/change-leadership-transformation
+itc.pro/leadership-development-capability
+itc.pro/organizational-effectiveness-culture
+itc.pro/ (homepage)
+itc.pro/practice-areas (overview page)
+</div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════
+     COLORS
+     ══════════════════════════════════ -->
+<section class="ds-section" id="colors">
+  <div class="ds-section-title">Color Palette</div>
+  <div class="ds-section-sub">Three brand colors. Three neutrals. Use them only in the roles defined below. Do not introduce new colors.</div>
+
+  <div class="swatch-grid">
+    <div class="swatch">
+      <div class="swatch-color" style="background:#1B2A4A"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Navy</div>
+        <div class="swatch-hex">#1B2A4A — var(--navy)</div>
+        <div class="swatch-role">H1 text · contact section bg · not-do strip · results strip · dark overlays</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#2E8B8B"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Teal</div>
+        <div class="swatch-hex">#2E8B8B — var(--teal)</div>
+        <div class="swatch-role">Primary buttons · links · section labels · bullet dots · card accent borders · hero taglines</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#D4A439"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Gold</div>
+        <div class="swatch-hex">#D4A439 — var(--gold)</div>
+        <div class="swatch-role">Positioning statement border · snapshot example border · winning card border · results label text · banner accent</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#F8F8F6;border:1px solid #E0E0DC"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Off-White</div>
+        <div class="swatch-hex">#F8F8F6 — var(--off)</div>
+        <div class="swatch-role">Alternating section backgrounds (stats, engagement model)</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#E8F4F4;border:1px solid #C8E8E8"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Light Teal</div>
+        <div class="swatch-hex">#E8F4F4 — var(--lgray2)</div>
+        <div class="swatch-role">CTA section bg · snapshot card bg · boutique strip bg</div>
+      </div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#F2F4F7;border:1px solid #E0E0DC"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Light Gray</div>
+        <div class="swatch-hex">#F2F4F7 — var(--lgray)</div>
+        <div class="swatch-role">Table zebra rows · code spec backgrounds</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="do-dont">
+    <div class="do"><strong>✅ Do</strong>Use these six values exclusively. Copy hex codes exactly. Use CSS variables in custom CSS fields.</div>
+    <div class="dont"><strong>🚫 Don't</strong>Do not pick "close enough" colors from Divi's color picker. Do not add new brand colors without partner approval. #1B3A5C is not navy.</div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════
+     TYPOGRAPHY
+     ══════════════════════════════════ -->
+<section class="ds-section" id="typography">
+  <div class="ds-section-title">Typography</div>
+  <div class="ds-section-sub">Two fonts. One for display and statements. One for everything else. Both are Google Fonts — already loaded in the wireframe link tag. Add this to the WordPress theme header or Divi custom CSS if not already present.</div>
+
+  <div class="spec-block" style="margin-bottom:32px">
+<strong>Google Fonts link — add to theme header or Divi integration</strong>
+&lt;link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,400&family=Source+Code+Pro:wght@400&display=swap" rel="stylesheet"&gt;
+  </div>
+
+  <div class="type-demo">
+    <div class="type-meta">
+      <span class="type-label">Playfair Display 700</span>
+      <span class="type-spec">54px desktop · 30px mobile · color: #fff on dark, #1B2A4A on light</span>
+      <span class="type-usage">H1 page title only</span>
+    </div>
+    <div style="font-family:'Playfair Display',serif;font-size:48px;font-weight:700;color:var(--navy);line-height:1.1">Operational Effectiveness &amp; Knowledge Continuity</div>
+    <div class="spec" style="margin-top:12px">font-family: 'Playfair Display', serif · font-weight: 700 · font-size: clamp(30px, 5vw, 54px)</div>
+  </div>
+
+  <div class="type-demo">
+    <div class="type-meta">
+      <span class="type-label">Playfair Display 500</span>
+      <span class="type-spec">23px desktop · 18px mobile · color: #1B2A4A</span>
+      <span class="type-usage">Framing sentence · section lead-in statements</span>
+    </div>
+    <div style="font-family:'Playfair Display',serif;font-size:23px;font-weight:500;color:var(--navy);line-height:1.5;max-width:720px">Most organizations carry more operational and knowledge risk than they realize. Work lives in people's heads. Processes are inconsistent or undocumented.</div>
+    <div class="spec" style="margin-top:12px">font-family: 'Playfair Display', serif · font-weight: 500 · font-size: clamp(17px, 2.2vw, 23px)</div>
+  </div>
+
+  <div class="type-demo">
+    <div class="type-meta">
+      <span class="type-label">Playfair Display 500 Italic</span>
+      <span class="type-spec">22px · gold left border · color: #1B2A4A</span>
+      <span class="type-usage">Positioning statement pullquote only</span>
+    </div>
+    <div class="positioning-statement">We do not sell knowledge management. We build the system that keeps your operation running when people leave, roles change, and technology arrives.</div>
+    <div class="spec" style="margin-top:12px">font-style: italic · border-left: 4px solid #D4A439 · padding-left: 20px</div>
+  </div>
+
+  <div class="type-demo">
+    <div class="type-meta">
+      <span class="type-label">Source Sans 3 300</span>
+      <span class="type-spec">17px · line-height 1.8 · color: #2A2A2A</span>
+      <span class="type-usage">All body copy paragraphs</span>
+    </div>
+    <div style="font-size:17px;line-height:1.8;color:var(--body-text);font-weight:300;max-width:680px">You already have the list. The names on it are the people whose departure would hurt — because what they know lives nowhere else in the organization. You know which ERP implementation ran over because the workforce was trained on the system but not on how this operation actually uses it.</div>
+    <div class="spec" style="margin-top:12px">font-family: 'Source Sans 3', sans-serif · font-weight: 300 · font-size: 17px · line-height: 1.8</div>
+  </div>
+
+  <div class="type-demo">
+    <div class="type-meta">
+      <span class="type-label">Source Sans 3 300</span>
+      <span class="type-spec">17px navy 300 · focus list plain language line</span>
+      <span class="type-usage">Areas of Focus — plain language line</span>
+    </div>
+    <div style="font-size:17px;color:var(--navy);font-weight:300;line-height:1.4">Capturing the knowledge that walks out the door when your most experienced people leave — before it's gone.</div>
+    <div style="font-size:12px;color:var(--gray);font-style:italic;font-weight:300;margin-top:4px">Knowledge Continuity</div>
+    <div class="spec" style="margin-top:12px">Line 1: 17px navy 300 · Line 2: 12px gray italic 300</div>
+  </div>
+
+  <div class="type-demo">
+    <div class="type-meta">
+      <span class="type-label">Source Code Pro 400</span>
+      <span class="type-spec">10–11px · teal · uppercase · letter-spacing .12em</span>
+      <span class="type-usage">Section labels · phase labels · badge text · code references</span>
+    </div>
+    <div style="font-family:'Source Code Pro',monospace;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--teal)">Areas of Focus</div>
+    <div style="font-family:'Source Code Pro',monospace;font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-top:8px">Phase 1 &nbsp;·&nbsp; Free · 5 Minutes · No Sign-in Required</div>
+    <div class="spec" style="margin-top:12px">font-family: 'Source Code Pro', monospace · font-size: 10–11px · text-transform: uppercase · letter-spacing: .12em</div>
+  </div>
+
+  <div class="usage">
+    <strong>Typography rules</strong>
+    Playfair Display is for headlines, framing sentences, card titles, phase titles, and the positioning statement only. Never use Playfair for body copy. Never use it at weights other than 500 or 700. Source Sans 3 weight 300 is the default for all body text — it reads lighter and more confident than 400. Use 600 only for button labels and nav items.
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════
+     SECTION RHYTHM
+     ══════════════════════════════════ -->
+<section class="ds-section" id="sections">
+  <div class="ds-section-title">Section Rhythm</div>
+  <div class="ds-section-sub">Every practice area page follows the same background alternation sequence. This creates visual breathing room without custom design. Do not break the sequence.</div>
+
+  <div style="border-radius:10px;overflow:hidden;border:.5px solid #DDDDD8;margin-bottom:24px">
+    <div class="rhythm-block" style="background:#fff">
+      <div class="rhythm-label">Block 1 · Hero — background: #0D1B2E (video overlay)</div>
+      <div style="font-size:15px;color:#555;font-weight:300">Full-height hero with video background and dark navy overlay</div>
+    </div>
+    <div class="rhythm-block" style="background:#fff;border-top:1px solid #E8E8E4">
+      <div class="rhythm-label">Block 2 · Framing — background: #FFFFFF</div>
+      <div style="font-size:15px;color:#555;font-weight:300">White section · Playfair Display framing sentence · max-width 800px</div>
+    </div>
+    <div class="rhythm-block" style="background:#F8F8F6;border-top:1px solid #E0E0DC">
+      <div class="rhythm-label">Block 3 · Stats — background: #F8F8F6 (var --off)</div>
+      <div style="font-size:15px;color:#555;font-weight:300">Off-white section · 4-column stat card grid</div>
+    </div>
+    <div class="rhythm-block" style="background:#fff;border-top:1px solid #E8E8E4">
+      <div class="rhythm-label">Block 4 · Body Copy — background: #FFFFFF</div>
+      <div style="font-size:15px;color:#555;font-weight:300">White section · not-do strip + paragraphs + positioning statement</div>
+    </div>
+    <div class="rhythm-block" style="background:#1B2A4A;border-top:1px solid #0D1E36">
+      <div class="rhythm-label" style="color:rgba(46,139,139,.8)">Block 4b · Results Strip — background: #1B2A4A (navy)</div>
+      <div style="font-size:15px;color:rgba(255,255,255,.5);font-weight:300">Navy bar · white Playfair numbers · gold label</div>
+    </div>
+    <div class="rhythm-block" style="background:#fff;border-top:1px solid #E8E8E4">
+      <div class="rhythm-label">Block 7 · Focus List — background: #FFFFFF</div>
+      <div style="font-size:15px;color:#555;font-weight:300">White section · teal bullet list · 6 items</div>
+    </div>
+    <div class="rhythm-block" style="background:#F8F8F6;border-top:1px solid #E0E0DC">
+      <div class="rhythm-label">Block 7b · Engagement Model — background: #F8F8F6 (var --off)</div>
+      <div style="font-size:15px;color:#555;font-weight:300">Off-white section · 3-column card grid</div>
+    </div>
+    <div class="rhythm-block" style="background:#E8F4F4;border-top:1px solid rgba(46,139,139,.2)">
+      <div class="rhythm-label">Block 8 · CTA — background: #E8F4F4 (var --lgray2)</div>
+      <div style="font-size:15px;color:#2A7A7A;font-weight:300">Light teal section · centered CTA card + button</div>
+    </div>
+    <div class="rhythm-block" style="background:#fff;border-top:1px solid #E8E8E4">
+      <div class="rhythm-label">Block 8b · Snapshot — background: #FFFFFF</div>
+      <div style="font-size:15px;color:#555;font-weight:300">White section · teal-bordered snapshot card</div>
+    </div>
+    <div class="rhythm-block" style="background:#F8F8F6;border-top:1px solid #E0E0DC">
+      <div class="rhythm-label">Block 9b · Credential — background: #F8F8F6 (var --off)</div>
+      <div style="font-size:15px;color:#555;font-weight:300">Off-white section · Playfair statement + gray italic attribution</div>
+    </div>
+    <div class="rhythm-block" style="background:#fff;border-top:1px solid #E8E8E4">
+      <div class="rhythm-label">Block 9c · Winning Card — background: #FFFFFF</div>
+      <div style="font-size:15px;color:#555;font-weight:300">White section · navy/gold two-panel outcome card</div>
+    </div>
+    <div class="rhythm-block" style="background:#1B2A4A;border-top:1px solid #0D1E36">
+      <div class="rhythm-label" style="color:rgba(46,139,139,.8)">Block 10 · Contact — background: #1B2A4A (navy)</div>
+      <div style="font-size:15px;color:rgba(255,255,255,.5);font-weight:300">Navy footer · photo circles + credentials + email links</div>
+    </div>
+  </div>
+
+  <div class="usage">
+    <strong>Content max-width</strong>
+    All content inside sections is constrained to max-width: 960px centered. The section background fills full width. The content column is 960px. Use 24px horizontal padding on sections. In Divi, set row max-width to 960px.
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════
+     COMPONENTS
+     ══════════════════════════════════ -->
+<section class="ds-section" id="components">
+  <div class="ds-section-title">Components</div>
+  <div class="ds-section-sub">Live samples from the OKC practice area page. Every component shown here is already working in the wireframe. Build to match exactly.</div>
+
+  <!-- STAT CARDS -->
+  <h3 style="font-family:'Playfair Display',serif;font-size:20px;color:var(--navy);margin-bottom:8px;margin-top:40px">Stat Cards</h3>
+  <p style="font-size:14px;color:var(--gray);margin-bottom:20px;font-weight:300">4-column grid on desktop · 2-column tablet · 1-column mobile. Card 1 always gets the teal accent border (class: <span class="spec">accent</span>). Never add a 5th card.</p>
+  <div class="four-col" style="margin-bottom:16px">
+    <div class="stat-card accent">
+      <div class="stat-number">70<span>%+</span></div>
+      <div class="stat-label">of ERP implementations never reach their business case goals</div>
+      <div class="stat-source">Panorama Consulting 2026 ERP Report</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">88<span>%</span></div>
+      <div class="stat-label">of CFOs rank workforce productivity a top-three priority in 2026</div>
+      <div class="stat-source">Gartner CFO Budget Priorities — February 2026</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">1<span>in 3</span></div>
+      <div class="stat-label">supervisors spends less than one-third of their time on their people</div>
+      <div class="stat-source">McKinsey Global Lighthouse Network 2024</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">78<span>%</span></div>
+      <div class="stat-label">of CHROs agree workflows must change to extract AI value</div>
+      <div class="stat-source">Gartner CHRO Change Management Trends — March 2026</div>
+    </div>
+  </div>
+  <div class="spec-block">
+<strong>Divi implementation</strong>
+Section bg: #F8F8F6 · Row: 4 columns
+Each column: Blurb module OR Number Counter module (for animated count-up)
+Stat number: Playfair Display 700 48px navy
+Accent card: add CSS class "accent" to the column or blurb module
+  </div>
+
+  <!-- NOT-DO STRIP -->
+  <h3 style="font-family:'Playfair Display',serif;font-size:20px;color:var(--navy);margin-bottom:8px;margin-top:48px">Not-Do Strip</h3>
+  <p style="font-size:14px;color:var(--gray);margin-bottom:20px;font-weight:300">Always the first element inside the body copy section. Never move it. Always navy background.</p>
+  <div class="not-do-strip" style="margin-bottom:16px">
+    <p>We do not run programs. We do not deliver training decks. We do not hand you a framework and leave.<br><strong>We build the system. Your team runs it.</strong></p>
+  </div>
+  <div class="spec-block">
+<strong>Divi: Code module inside white section row</strong>
+background: #1B2A4A · border-radius: 6px · padding: 22px 28px
+max-width: 760px · margin-bottom: 32px
+Text color: #ffffff · font-size: 16px · font-weight: 400 · line-height: 1.7
+Strong text color: #2E8B8B (teal)
+  </div>
+
+  <!-- POSITIONING STATEMENT -->
+  <h3 style="font-family:'Playfair Display',serif;font-size:20px;color:var(--navy);margin-bottom:8px;margin-top:48px">Positioning Statement</h3>
+  <p style="font-size:14px;color:var(--gray);margin-bottom:20px;font-weight:300">One per page. Always gold left border. Always Playfair italic. Always navy text. Never use a teal border here — gold is the signal for statements, teal is the signal for information strips.</p>
+  <div style="margin-bottom:16px">
+    <p class="positioning-statement">We do not sell knowledge management. We build the system that keeps your operation running when people leave, roles change, and technology arrives.</p>
+  </div>
+  <div class="spec-block">
+<strong>Divi: Text module</strong>
+font-family: Playfair Display · font-style: italic · font-weight: 500
+font-size: 22px · color: #1B2A4A · line-height: 1.4
+border-left: 4px solid #D4A439 · padding-left: 20px
+margin: 36px 0
+  </div>
+
+  <!-- BOUTIQUE STRIP -->
+  <h3 style="font-family:'Playfair Display',serif;font-size:20px;color:var(--navy);margin-bottom:8px;margin-top:48px">Boutique Strip</h3>
+  <p style="font-size:14px;color:var(--gray);margin-bottom:20px;font-weight:300">Teal left border. Light teal background. Navy italic text. Used for short supporting context — one to two sentences maximum.</p>
+  <div class="boutique-strip" style="margin-bottom:16px">
+    <p>Most clients start with an assessment to get clarity on where the real risk is. Then they move into a project. We work at your pace. What we build, your team owns and sustains.</p>
+  </div>
+  <div class="spec-block">
+<strong>Divi: Callout module or Text module</strong>
+background: #E8F4F4 · border-left: 4px solid #2E8B8B
+padding: 18px 24px · border-radius: 0 6px 6px 0 · max-width: 760px
+Text: 15px · color: #1B2A4A · font-style: italic · font-weight: 300
+  </div>
+
+  <!-- FOCUS LIST -->
+  <h3 style="font-family:'Playfair Display',serif;font-size:20px;color:var(--navy);margin-bottom:8px;margin-top:48px">Areas of Focus List</h3>
+  <p style="font-size:14px;color:var(--gray);margin-bottom:20px;font-weight:300">Two lines per item. Plain language line + practitioner term. Teal bullet dot. Minimum 44px tap target on mobile.</p>
+  <div class="section-label">Areas of Focus</div>
+  <ul class="focus-list" style="margin-bottom:16px">
+    <li><span><span class="focus-main">Capturing the knowledge that walks out the door when your most experienced people leave — before it's gone.</span><span class="focus-sub">Knowledge Continuity</span></span></li>
+    <li><span><span class="focus-main">Making sure your workforce is ready to use the technology you are installing — not just trained on it.</span><span class="focus-sub">ERP &amp; Digital Readiness</span></span></li>
+    <li><span><span class="focus-main">Building the accountability system your frontline supervisors will actually use — not a framework that sits in a binder.</span><span class="focus-sub">Frontline Capability &amp; Performance Architecture</span></span></li>
+  </ul>
+  <div class="spec-block">
+<strong>Divi: Blurb modules in 1-column row, OR custom HTML/Code module</strong>
+Section bg: #ffffff · Section label: Source Code Pro 11px teal uppercase
+Bullet: 8px circle · background: #2E8B8B · margin-top: 7px (aligns to first line)
+Line 1: 17px · color: #1B2A4A · font-weight: 300 · line-height: 1.4
+Line 2: 12px · color: #666 · font-style: italic · font-weight: 300
+Row border-bottom: 0.5px solid #E8E8E4 · padding: 16px 0
+Min-height: 44px (mobile tap target)
+  </div>
+
+  <!-- ENGAGEMENT CARDS -->
+  <h3 style="font-family:'Playfair Display',serif;font-size:20px;color:var(--navy);margin-bottom:8px;margin-top:48px">Engagement Model Cards</h3>
+  <p style="font-size:14px;color:var(--gray);margin-bottom:20px;font-weight:300">3-column grid on desktop. 1-column on mobile. Off-white section background. White cards with 0.5px border.</p>
+  <div class="three-col" style="margin-bottom:16px">
+    <div class="engage-card">
+      <div class="engage-phase">Phase 1</div>
+      <div class="engage-weeks">Weeks 1–4</div>
+      <div class="engage-title">Map</div>
+      <div class="engage-desc">We take a structured look at how work flows and where knowledge is concentrated. We identify where things are unclear, fragile, or held by one person. You leave with a clear picture of what to address first and what it is costing you to wait.</div>
+    </div>
+    <div class="engage-card">
+      <div class="engage-phase">Phase 2</div>
+      <div class="engage-weeks">Weeks 5–10</div>
+      <div class="engage-title">Build</div>
+      <div class="engage-desc">We build what your organization actually needs. Process documentation. Knowledge capture from high-risk roles. ERP readiness. Frontline accountability systems. Role transition playbooks. The deliverable works the week after we leave. Your team owns it.</div>
+    </div>
+    <div class="engage-card">
+      <div class="engage-phase">Phase 3</div>
+      <div class="engage-weeks">Weeks 11–16</div>
+      <div class="engage-title">Sustain</div>
+      <div class="engage-desc">Your team runs the system. We are available for course-correction as the work meets reality. Knowledge gaps narrow. Supervisors get back to their people. Most clients see measurable traction within ninety days.</div>
+    </div>
+  </div>
+  <div class="spec-block">
+<strong>Divi: 3-column row · Blurb modules · Section bg: #F8F8F6</strong>
+Card bg: #ffffff · border: 0.5px solid #DDDDD8 · border-radius: 10px · padding: 28px 24px
+Phase label: Source Code Pro 10px teal uppercase letter-spacing .12em
+Weeks: 12px gray italic · Title: Playfair Display 500 18px navy
+Desc: 14px #444 font-weight 300 line-height 1.65
+  </div>
+
+  <!-- RESULTS STRIP -->
+  <h3 style="font-family:'Playfair Display',serif;font-size:20px;color:var(--navy);margin-bottom:8px;margin-top:48px">Practitioner Results Strip</h3>
+  <p style="font-size:14px;color:var(--gray);margin-bottom:20px;font-weight:300">Full-width navy bar. Flex row desktop. Stacks on mobile. Gold label on far left. Disclaimer note on far right.</p>
+  <div class="results-strip" style="margin-bottom:16px">
+    <div class="results-label">Practitioner<br>observations</div>
+    <div class="results-stats">
+      <div class="rs-item"><div class="rs-number">90</div><div class="rs-desc">days to measurable traction in a knowledge capture engagement</div></div>
+      <div class="rs-item"><div class="rs-number">8:1</div><div class="rs-desc">reskilling vs. replacement cost ratio — AT&amp;T / HBR</div></div>
+      <div class="rs-item"><div class="rs-number">24%</div><div class="rs-desc">of employees left or considered leaving in 2025</div></div>
+      <div class="rs-item"><div class="rs-number">622K</div><div class="rs-desc">unfilled US manufacturing jobs — concentrated knowledge risk</div></div>
+    </div>
+  </div>
+  <div class="spec-block">
+<strong>Divi: Full-width section bg: #1B2A4A · Code module for full control</strong>
+Numbers: Playfair Display 700 28px white
+Descriptions: 12px rgba(255,255,255,0.6) font-weight 300
+Label: 11px #D4A439 uppercase letter-spacing .12em
+Layout: flexbox row · gap: 40px · wraps on mobile
+  </div>
+
+  <!-- WINNING SIGNAL CARD -->
+  <h3 style="font-family:'Playfair Display',serif;font-size:20px;color:var(--navy);margin-bottom:8px;margin-top:48px">Winning Signal Card</h3>
+  <p style="font-size:14px;color:var(--gray);margin-bottom:20px;font-weight:300">Two-panel card. Navy left panel for outcome numbers. Off-white right panel with gold left border for situation description. Outcome numbers are supplied by the practice lead.</p>
+  <div class="win-card" style="margin-bottom:16px;max-width:760px">
+    <div class="win-left">
+      <div class="win-outcome">14 critical roles.<br>6 functions.<br>Zero disruption<br>at handover.</div>
+      <div class="win-outcome-label">Engagement outcome</div>
+    </div>
+    <div class="win-right">
+      <p class="win-situation">A Fortune 500 DoD prime contractor facing a retirement wave across its most experienced engineering and operations workforce. Critical knowledge mapped, captured, and transferred before the first retirement occurred.</p>
+      <p class="win-situation" style="font-style:italic;color:var(--gray);font-size:13px">Client name withheld. Details available on request.</p>
+    </div>
+  </div>
+  <div class="spec-block">
+<strong>Divi: 2-column row · left col navy bg · right col off-white bg · gold border-left on right</strong>
+Left panel: bg #1B2A4A · padding 36px 32px · flex col justify-center
+Outcome text: Playfair Display 700 24–28px white line-height 1.2
+Right panel: bg #F8F8F6 · border-left: 4px solid #D4A439 · padding 36px 32px
+Situation text: 15px #2A2A2A font-weight 300 line-height 1.7
+Client withheld line: 13px #666 italic
+Card: border-radius 10px · overflow hidden · box-shadow 0 2px 16px rgba(27,42,74,.08)
+  </div>
+
+  <!-- PRACTICE AREA CARD -->
+  <h3 style="font-family:'Playfair Display',serif;font-size:20px;color:var(--navy);margin-bottom:8px;margin-top:48px">Practice Area Card (Overview Page)</h3>
+  <p style="font-size:14px;color:var(--gray);margin-bottom:20px;font-weight:300">Used on the practice areas overview page. Teal top border. White background. Max-width 320px on the grid.</p>
+  <div style="display:flex;gap:20px;flex-wrap:wrap;margin-bottom:16px">
+    <div class="pa-card" style="max-width:300px">
+      <div class="pa-headline">Improve workforce productivity. Protect what your operation knows.</div>
+      <div class="pa-sub">Operational friction and knowledge risk are already costing you output.</div>
+      <a href="#" class="pa-link">Learn more →</a>
+    </div>
+    <div class="pa-card" style="max-width:300px">
+      <div class="pa-headline">Build an organization where work moves without you.</div>
+      <div class="pa-sub">When structure matches strategy, execution follows.</div>
+      <a href="#" class="pa-link">Learn more →</a>
+    </div>
+  </div>
+  <div class="spec-block">
+<strong>Divi: Blurb module · border-top: 3px solid #2E8B8B</strong>
+Card bg: white · border: 0.5px solid #DDDDD8 · border-radius: 8px · padding: 24px 28px
+Headline: Playfair Display 700 18px navy line-height 1.3
+Sub: 13px italic gray font-weight 300 line-height 1.5
+Link: 13px teal font-weight 600 letter-spacing .03em · "Learn more →"
+  </div>
+
+  <!-- CONTACT MODULE -->
+  <h3 style="font-family:'Playfair Display',serif;font-size:20px;color:var(--navy);margin-bottom:8px;margin-top:48px">Contact Module</h3>
+  <p style="font-size:14px;color:var(--gray);margin-bottom:20px;font-weight:300">Navy section. Two cards side by side. Co-lead listed left. Photo placeholder is 80px circle with dashed teal border. Replace with actual headshots post-launch.</p>
+  <div class="contact-section-demo" style="margin-bottom:16px">
+    <div class="contact-dual">
+      <div class="contact-card">
+        <div class="contact-photo-ph"><div class="ph-icon"></div><div class="ph-body"></div></div>
+        <div class="contact-info">
+          <div class="contact-name">Carole Townsley</div>
+          <div class="contact-title">Founding Partner &amp; Practice Co-Lead<br>Operational Effectiveness &amp; Knowledge Continuity</div>
+          <div class="contact-creds">SHRM-SCP · Prosci · SAFe · ATD</div>
+          <a href="mailto:carole@itc.pro" class="contact-email">carole@itc.pro</a>
+        </div>
+      </div>
+      <div class="contact-divider"></div>
+      <div class="contact-card">
+        <div class="contact-photo-ph"><div class="ph-icon"></div><div class="ph-body"></div></div>
+        <div class="contact-info">
+          <div class="contact-name">Buck Seward, JD, SHRM-SCP</div>
+          <div class="contact-title">Founding Partner &amp; Practice Co-Lead<br>Operational Effectiveness &amp; Knowledge Continuity</div>
+          <div class="contact-creds">Harvard/MIT 6TC L2 · Drucker OD</div>
+          <a href="mailto:buck@itc.pro" class="contact-email">buck@itc.pro</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="spec-block">
+<strong>Divi: Full-width section bg: #1B2A4A · Person modules side by side</strong>
+Photo: 80px circle · border: 2px dashed rgba(46,139,139,0.5) · placeholder until headshots ready
+Name: Playfair Display 500 18px white
+Title: 12px rgba(255,255,255,0.55) line-height 1.5 font-weight 300
+Creds: 11px rgba(46,139,139,0.8) font-weight 300
+Email: 14px teal · mailto link
+Divider between cards: 1px rgba(255,255,255,0.12) · hidden on mobile
+Mobile: cards stack vertically · co-lead first
+  </div>
+
+  <!-- CTA BLOCK -->
+  <h3 style="font-family:'Playfair Display',serif;font-size:20px;color:var(--navy);margin-bottom:8px;margin-top:48px">CTA Block</h3>
+  <p style="font-size:14px;color:var(--gray);margin-bottom:20px;font-weight:300">Light teal background. Centered. Call explainer card above the button. Scheduler link. Two emails. Closing Playfair italic prompt.</p>
+  <div class="cta-demo" style="margin-bottom:16px">
+    <div class="call-explainer">
+      <h4>What the 30-minute conversation looks like</h4>
+      <p>This is not a sales call. In thirty minutes we listen to your situation, share what we are seeing in similar organizations, and tell you honestly whether we are the right fit.</p>
+    </div>
+    <a href="#" class="btn-primary">Schedule a 30-minute discovery conversation</a>
+    <div style="font-size:14px;color:var(--gray);margin-top:14px">Or send a note first: <a href="mailto:carole@itc.pro" style="color:var(--teal);font-weight:600;text-decoration:none">carole@itc.pro</a> &nbsp;·&nbsp; <a href="mailto:buck@itc.pro" style="color:var(--teal);font-weight:600;text-decoration:none">buck@itc.pro</a></div>
+    <p class="cta-prompt">"Tell us what you are trying to protect — and what is making it hard to get there."</p>
+  </div>
+  <div class="spec-block">
+<strong>Divi: Section bg: #E8F4F4 · border-top: 1px solid rgba(46,139,139,0.2)</strong>
+Call explainer: white card · border-radius 10px · border 0.5px #DDDDD8 · padding 24px 28px
+Label inside: Source Code Pro 12px teal uppercase
+Body: 14px #444 font-weight 300 line-height 1.65
+Button: see Buttons section
+Prompt: Playfair Display italic 18px navy
+  </div>
+
+  <!-- SNAPSHOT CARD -->
+  <h3 style="font-family:'Playfair Display',serif;font-size:20px;color:var(--navy);margin-bottom:8px;margin-top:48px">Snapshot / Assessment Card</h3>
+  <p style="font-size:14px;color:var(--gray);margin-bottom:20px;font-weight:300">Light teal card with teal border. Badge in teal. Sample item in gold-bordered white inset. Button links to assessment tool URL (supplied by Robert/Wahid).</p>
+  <div class="snapshot-card" style="margin-bottom:16px">
+    <div class="snapshot-badge">Free · 5 Minutes · No Sign-in Required</div>
+    <h3 style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--navy);margin-bottom:6px">Operational Health Snapshot</h3>
+    <div style="font-size:15px;color:var(--gray);font-style:italic;font-weight:300;margin-bottom:18px">Is your system healthy — or stressed?</div>
+    <div class="snapshot-example" style="margin-bottom:20px">"Critical knowledge is documented well enough that a qualified person could step in without significant disruption."</div>
+    <a href="#" class="btn-primary" style="font-size:15px;padding:14px 32px">▶ Take the Snapshot →</a>
+  </div>
+  <div class="spec-block">
+<strong>Divi: White section · Code module for card</strong>
+Card bg: #E8F4F4 · border: 1.5px solid rgba(46,139,139,0.3) · border-radius: 10px · padding: 36px 40px
+Badge: teal bg · white text · Source Code Pro · uppercase
+Headline: Playfair Display 700 22px navy
+Sample item: white bg · border-left: 3px solid #D4A439 · padding 12px 16px · 13px italic navy
+Button href: supplied by Robert/Wahid (custom tool URL) — currently placeholder
+  </div>
+
+</section>
+
+
+<!-- ══════════════════════════════════
+     BUTTONS
+     ══════════════════════════════════ -->
+<section class="ds-section" id="buttons">
+  <div class="ds-section-title">Buttons</div>
+  <div class="ds-section-sub">Three button types. Use primary for the main CTA on every page. Use secondary for download or secondary actions. Use pill for sticky floating CTA only.</div>
+
+  <div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap;margin-bottom:24px">
+    <div>
+      <a href="#" class="btn-primary">Schedule a 30-minute conversation</a>
+      <div class="spec" style="margin-top:8px;display:block">Primary — bg: #2E8B8B → hover: #1B2A4A</div>
+    </div>
+    <div>
+      <a href="#" class="btn-secondary">Download the framework</a>
+      <div class="spec" style="margin-top:8px;display:block">Secondary — border: #2E8B8B → hover: fill teal</div>
+    </div>
+    <div>
+      <a href="#" class="btn-pill">📅 Schedule a conversation</a>
+      <div class="spec" style="margin-top:8px;display:block">Pill — sticky CTA only · fixed bottom-right</div>
+    </div>
+  </div>
+
+  <div class="spec-block">
+<strong>Primary button</strong>
+bg: #2E8B8B · color: #ffffff · font-size: 16px · font-weight: 600
+padding: 16px 36px · border-radius: 6px · letter-spacing: .02em
+hover bg: #1B2A4A · transition: background .2s
+
+<strong>Secondary button</strong>
+bg: #ffffff · border: 1.5px solid #2E8B8B · color: #2E8B8B
+font-size: 14px · font-weight: 600 · padding: 11px 24px · border-radius: 6px
+hover bg: #2E8B8B · hover color: #ffffff
+
+<strong>Pill (sticky only)</strong>
+bg: #2E8B8B · color: #ffffff · border-radius: 32px
+padding: 12px 22px · box-shadow: 0 4px 20px rgba(46,139,139,0.35)
+position: fixed · bottom: 28px · right: 28px · z-index: 900
+Appears after 400px scroll · hides when CTA section is in view
+  </div>
+
+  <div class="do-dont">
+    <div class="do"><strong>✅ Do</strong>One primary button per page — the main scheduler link. Keep button text action-oriented and specific. "Schedule a 30-minute discovery conversation" not "Contact Us."</div>
+    <div class="dont"><strong>🚫 Don't</strong>Do not use navy as a button color. Do not add outline/ghost buttons in navy. Do not use more than one primary button in the same viewport.</div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════
+     WHAT NOT TO DO
+     ══════════════════════════════════ -->
+<section class="ds-section" id="dont">
+  <div class="ds-section-title">What Not to Do</div>
+  <div class="ds-section-sub">These patterns appeared in earlier ITC content. Do not reproduce them on any new page.</div>
+
+  <div style="display:flex;flex-direction:column;gap:16px">
+
+    <div class="dont">
+      <strong>🚫 Decorative borders and scroll ornaments</strong>
+      Do not use decorative horizontal rules, scroll flourishes, ornamental dividers, or clip-art style section separators. Section separation is handled by background color alternation and 1px solid #E0E0DC borders only.
+    </div>
+
+    <div class="dont">
+      <strong>🚫 Flat stat tables</strong>
+      Do not put statistics in HTML tables or flat rows. All statistics use the Stat Card component — white card, rounded corners, Playfair number, source attribution. See Components section above.
+    </div>
+
+    <div class="dont">
+      <strong>🚫 Long case study narratives on practice area pages</strong>
+      Case studies belong on a dedicated Cases page or as linked content. Practice area pages use the two-panel Winning Signal Card component for outcome evidence. Full narratives bury the conversion architecture.
+    </div>
+
+    <div class="dont">
+      <strong>🚫 Unattributed statistics</strong>
+      Every stat on the page must have a source in the stat-source line. "Source: Perplexity" is not a citation. All stats on ITC pages come from the validated research library: Gartner, McKinsey, Panorama, Deloitte, Gallup, WEF, Accenture, HBR, Prosci. See the companion document for the full source appendix.
+    </div>
+
+    <div class="dont">
+      <strong>🚫 Font substitutions</strong>
+      Do not substitute Georgia for Playfair Display. Do not use system fonts for headings. Do not use Arial or Helvetica for body copy. If Google Fonts are not loading, check the link tag in the theme header. The font stack is Playfair Display + Source Sans 3 + Source Code Pro — no substitutions.
+    </div>
+
+    <div class="dont">
+      <strong>🚫 Gold as a primary action color</strong>
+      Gold (#D4A439) is used only for borders on the positioning statement, snapshot sample item, and winning card right panel. It is never used for buttons, links, or interactive elements. Teal is the action color.
+    </div>
+
+    <div class="dont">
+      <strong>🚫 Fear-based or alarm headlines</strong>
+      Headlines like "Don't Become a Negative Statistic" do not match ITC's voice. Headlines and section titles on ITC pages are declarative, peer-to-peer, and outcome-named. See the framing sentence and Areas of Focus components as the voice model.
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════
+     DIVI NOTES
+     ══════════════════════════════════ -->
+<section class="ds-section" id="divi">
+  <div class="ds-section-title">Divi Implementation Notes</div>
+  <div class="ds-section-sub">Specific notes for building these pages in Divi 5 on WordPress. Platform: itc.pro hosted by Training Lion (Robert Staddon).</div>
+
+  <div style="display:flex;flex-direction:column;gap:16px">
+
+    <div class="spec-block">
+<strong>CRITICAL: H1 and page title</strong>
+Leave the Divi page title field BLANK.
+The H1 renders inside the Fullwidth Header module "Title" field.
+If both are populated, Google sees two H1 tags — this breaks SEO.
+The H1 is the SEO carrier for the page. It must be unique and correct.
+    </div>
+
+    <div class="spec-block">
+<strong>Content max-width in Divi</strong>
+Set row max-width to 960px in Divi Row Settings.
+All content is centered within this column. Section backgrounds fill 100% width.
+Use 24px horizontal padding on sections (Divi Section Settings: padding left/right 24px).
+    </div>
+
+    <div class="spec-block">
+<strong>Custom CSS in Divi</strong>
+Use Divi Theme Options → Custom CSS OR the Divi Module Settings → Custom CSS tab.
+CSS variables from this guide work in Divi custom CSS fields.
+Example: color: var(--teal); background: var(--navy);
+Add the :root variable block to Divi Theme Options → Custom CSS at the top level.
+    </div>
+
+    <div class="spec-block">
+<strong>Google Fonts</strong>
+Add the font link tag to Divi Theme Options → Integration → Add code to the &lt;head&gt; of your blog:
+&lt;link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,400&family=Source+Code+Pro:wght@400&display=swap" rel="stylesheet"&gt;
+    </div>
+
+    <div class="spec-block">
+<strong>SEO: Rank Math SEO Pro</strong>
+Already installed on itc.pro.
+For each practice area page:
+— Rank Math sidebar → Focus Keyword: enter primary keyword
+— Rank Math → Snippet Editor: set meta title and meta description
+— Rank Math → Schema: add LocalBusiness (site-wide), FAQPage (Snapshot section), BreadcrumbList
+— Enable BreadcrumbList: Rank Math → General Settings → Breadcrumbs → On
+Do NOT use Yoast or any other SEO plugin alongside Rank Math — conflicts will occur.
+    </div>
+
+    <div class="spec-block">
+<strong>Hero video</strong>
+1. Upload MP4 to WordPress Media Library first.
+2. In Divi Section Settings: set Video Background, paste Media Library URL.
+3. Set Poster Image: export JPG from video at 0:05, upload to Media Library, set as poster.
+4. Enable: autoplay, mute, loop, playsinline.
+5. Overlay color: rgba(27,42,74,0.45) — set in Section Settings → Background → Color overlay.
+prefers-reduced-motion: add CSS to show poster image only for users with motion sensitivity.
+    </div>
+
+    <div class="spec-block">
+<strong>Assessment tool (Block 8b Snapshot)</strong>
+Button href is currently placeholder "#".
+Robert Staddon + Wahid are building a custom assessment tool.
+Replace "#" with the tool URL when confirmed.
+Do not use a Google Form or Gravity Forms for this block — custom tool only.
+    </div>
+
+    <div class="spec-block">
+<strong>Photos (Contact Module)</strong>
+80px circle headshots. Upload to WordPress Media Library.
+In Divi Person module: set image, enable circular crop.
+Alt text format: "[Name], ITC Founding Partner"
+Currently showing placeholder circles — replace post-launch when photos are provided.
+    </div>
+
+  </div>
+</section>
+
+
+</div><!-- end ds-page -->
+
+<div style="background:#1B2A4A;padding:24px 32px;text-align:center">
+  <p style="font-family:'Source Code Pro',monospace;font-size:11px;color:rgba(255,255,255,.35);letter-spacing:.06em">ITC Design System v1 · April 2026 · For Rich Cruz &amp; Robert Staddon · itc.pro</p>
+</div>
+
+</body>
+</html>
