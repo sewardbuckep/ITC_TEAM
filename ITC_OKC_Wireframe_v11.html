@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ITC Workforce Productivity &amp; Knowledge Continuity, Annotated Wireframe v1</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,400&family=Source+Code+Pro:wght@400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#1B2A4A;--teal:#2E8B8B;--gold:#D4A439;--gray:#666;--lgray:#F2F4F7;--lgray2:#E8F4F4;--off:#F8F8F6;--note-bg:#FFFDE7;--note-bd:#F9A825;--note-tx:#5D3A00;--red:#C0392B;--green:#1A6B2E;--max:960px}
+body{font-family:'Source Sans 3',sans-serif;font-size:16px;background:#EDEDEA;color:#1a1a1a}
+
+/* ─── WIREFRAME CHROME ─── */
+.wf-banner{position:sticky;top:0;z-index:1000;background:var(--navy);padding:10px 24px;display:flex;align-items:center;gap:16px;border-bottom:3px solid var(--gold)}
+.wf-title{font-family:'Source Code Pro',monospace;font-size:12px;color:var(--gold);letter-spacing:.08em}
+.wf-url{font-family:'Source Code Pro',monospace;font-size:12px;color:#7EB8B8}
+.wf-badge{margin-left:auto;background:var(--red);color:#fff;font-size:10px;font-weight:600;padding:3px 10px;border-radius:3px;letter-spacing:.1em;text-transform:uppercase}
+.anno{position:absolute;right:-290px;top:0;width:270px;background:var(--note-bg);border:1px solid var(--note-bd);border-left:4px solid var(--note-bd);border-radius:0 6px 6px 0;padding:10px 12px;font-size:11.5px;line-height:1.55;color:var(--note-tx);z-index:10}
+.anno strong{font-weight:600;display:block;margin-bottom:4px;font-size:11px;text-transform:uppercase;letter-spacing:.06em}
+.anno code{font-family:'Source Code Pro',monospace;font-size:10.5px;background:rgba(0,0,0,.06);padding:1px 4px;border-radius:2px}
+.anno .new{color:var(--green);font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:.08em;display:inline-block;margin-bottom:4px}
+.anno .changed{color:#B85C00;font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:.08em;display:inline-block;margin-bottom:4px}
+.annotated{position:relative;margin-bottom:6px}
+@media(min-width:1520px){.annotated{margin-right:310px}}
+.section-tag{position:absolute;top:12px;left:12px;z-index:5;background:rgba(27,42,74,.88);color:var(--gold);font-size:10px;padding:3px 10px;border-radius:3px;font-family:'Source Code Pro',monospace;letter-spacing:.08em}
+.page-sim{max-width:1200px;margin:0 auto;background:#fff;box-shadow:0 4px 32px rgba(0,0,0,.12)}
+.bp-bar{background:var(--navy);padding:6px 24px;font-size:11px;color:#7EB8B8;font-family:'Source Code Pro',monospace;display:flex;gap:24px}
+.bp-bar span{opacity:.6}
+.bp-bar span.active{opacity:1;color:var(--gold)}
+.content-wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+
+/* ─── LANDING CARD PREVIEW ─── */
+.lc-preview{background:#FFF8E1;border-bottom:4px solid var(--gold);padding:28px 0}
+.lc-wrap{max-width:var(--max);margin:0 auto;padding:0 24px;display:flex;align-items:flex-start;gap:48px}
+.lc-label{font-family:'Source Code Pro',monospace;font-size:11px;color:var(--note-tx);font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--note-bd)}
+.lc-left{flex:1;min-width:0}
+.lc-card{background:#fff;border:.5px solid #DDDDD8;border-radius:8px;padding:24px 28px;max-width:320px;border-top:3px solid var(--teal)}
+.lc-card-headline{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--navy);line-height:1.3;margin-bottom:8px}
+.lc-card-sub{font-size:13px;color:var(--gray);font-style:italic;font-weight:300;margin-bottom:16px;line-height:1.5}
+.lc-card-link{font-size:13px;font-weight:600;color:var(--teal);text-decoration:none;letter-spacing:.03em}
+.lc-right{width:340px;flex-shrink:0;background:var(--note-bg);border:1px solid var(--note-bd);border-left:4px solid var(--note-bd);border-radius:0 6px 6px 0;padding:12px 14px;font-size:11.5px;line-height:1.6;color:var(--note-tx)}
+.lc-right strong{font-weight:600;display:block;margin-bottom:6px;font-size:11px;text-transform:uppercase;letter-spacing:.06em}
+
+/* ─── STICKY CTA ─── */
+.sticky-cta{position:fixed;bottom:28px;right:28px;z-index:900;background:var(--teal);color:#fff;padding:12px 22px;border-radius:32px;font-size:13px;font-weight:600;text-decoration:none;box-shadow:0 4px 20px rgba(46,139,139,.35);letter-spacing:.03em;display:flex;align-items:center;gap:8px;transition:background .2s,transform .2s,opacity .3s}
+.sticky-cta:hover{background:var(--navy);transform:translateY(-2px)}
+.sticky-anno{position:fixed;bottom:80px;right:28px;z-index:901;width:250px;background:var(--note-bg);border:1px solid var(--note-bd);border-left:4px solid var(--note-bd);border-radius:6px;padding:10px 12px;font-size:11px;color:var(--note-tx);line-height:1.55}
+.sticky-anno strong{display:block;margin-bottom:4px;font-weight:600;font-size:10.5px;text-transform:uppercase;letter-spacing:.06em}
+
+/* ─── HERO ─── */
+.hero{position:relative;height:100vh;min-height:520px;max-height:800px;background:#0D1B2E;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,#0D1B2E 0%,#1B2A4A 40%,#0F3344 100%)}
+.hero-bg::before{content:'';position:absolute;inset:0;background-image:radial-gradient(ellipse 80% 60% at 30% 50%,rgba(46,139,139,.12) 0%,transparent 70%),radial-gradient(ellipse 60% 80% at 70% 40%,rgba(212,164,57,.08) 0%,transparent 70%)}
+.hero-video-ph{position:absolute;inset:24px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;border:2px dashed rgba(46,139,139,.35);border-radius:4px}
+.vp-icon{width:48px;height:48px;border:2px solid rgba(46,139,139,.5);border-radius:50%;display:flex;align-items:center;justify-content:center}
+.vp-icon::after{content:'';border-left:16px solid rgba(46,139,139,.7);border-top:9px solid transparent;border-bottom:9px solid transparent;margin-left:3px}
+.hero-video-ph p{font-family:'Source Code Pro',monospace;font-size:10.5px;color:rgba(46,139,139,.6);text-align:center;line-height:1.7}
+.hero-overlay{position:absolute;inset:0;background:rgba(27,42,74,.45)}
+.hero-content{position:relative;z-index:2;text-align:center;padding:0 2rem;max-width:760px}
+.hero-content h1{font-family:'Playfair Display',serif;font-size:clamp(30px,5vw,54px);font-weight:700;color:#fff;letter-spacing:-.01em;line-height:1.1;margin-bottom:18px}
+.hero-taglines p{font-size:clamp(14px,1.8vw,18px);color:var(--teal);font-style:italic;margin:5px 0;font-weight:300}
+.hero-cta-link{display:inline-block;margin-top:28px;color:rgba(255,255,255,.75);font-size:14px;font-weight:400;text-decoration:none;letter-spacing:.06em;border-bottom:1px solid rgba(255,255,255,.25);padding-bottom:2px;transition:color .2s,border-color .2s}
+.hero-cta-link:hover{color:#fff;border-color:var(--teal)}
+.hero-scroll{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;color:rgba(255,255,255,.3);font-size:10px;letter-spacing:.12em;text-transform:uppercase;animation:bounce 2.2s ease-in-out infinite}
+.hero-scroll::after{content:'';width:1px;height:28px;background:linear-gradient(to bottom,rgba(255,255,255,.3),transparent)}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
+
+/* ─── FRAMING ─── */
+.framing-section{padding:64px 0 48px;background:#fff;border-bottom:1px solid #E8E8E4}
+.framing-sentence{font-family:'Playfair Display',serif;font-size:clamp(17px,2.2vw,23px);font-weight:500;color:var(--navy);line-height:1.5;max-width:800px}
+
+/* ─── STATS ─── */
+.stats-section{padding:48px 0;background:var(--off);border-bottom:1px solid #E0E0DC}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.stat-card{background:#fff;border-radius:10px;padding:24px 20px;border:.5px solid #DDDDD8}
+.stat-card.accent{border-left:4px solid var(--teal)}
+.stat-number{font-family:'Playfair Display',serif;font-size:48px;font-weight:700;color:var(--navy);line-height:1;margin-bottom:10px}
+.stat-number span{font-size:24px;font-weight:500}
+.stat-label{font-size:13px;color:#444;line-height:1.45;margin-bottom:10px}
+.stat-source{font-size:10.5px;color:var(--gray);font-style:italic;line-height:1.4}
+
+/* ─── NOT-DO STRIP ─── */
+.not-do-strip{background:var(--navy);padding:22px 28px;margin:0 0 32px;max-width:760px;border-radius:6px}
+.not-do-strip p{font-size:16px;color:#fff;font-weight:400;line-height:1.7;margin:0;letter-spacing:.01em}
+.not-do-strip p strong{color:var(--teal);font-weight:600}
+
+/* ─── CREDENTIAL STRIP ─── */
+.credential-section{padding:40px 0;background:var(--off);border-top:1px solid #E0E0DC;border-bottom:1px solid #E0E0DC}
+.credential-inner{max-width:760px}
+.credential-label{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:14px}
+.credential-statement{font-family:'Playfair Display',serif;font-size:17px;font-weight:500;color:var(--navy);line-height:1.6;margin-bottom:0}
+.credential-attribution{font-size:12px;color:var(--gray);font-style:italic;margin-top:10px;line-height:1.5}
+
+/* ─── BODY ─── */
+.body-section{padding:56px 0 0;background:#fff}
+.body-section p{font-size:17px;line-height:1.8;color:#2A2A2A;margin-bottom:24px;max-width:760px;font-weight:300}
+.positioning-statement{font-family:'Playfair Display',serif;font-size:22px!important;font-style:italic;color:var(--navy)!important;border-left:4px solid var(--gold);padding-left:20px;margin:36px 0!important;line-height:1.4!important;font-weight:500!important}
+.boutique-strip{background:var(--lgray2);border-left:4px solid var(--teal);padding:18px 24px;margin:0 0 32px;max-width:760px;border-radius:0 6px 6px 0}
+.boutique-strip p{font-size:15px;color:var(--navy);font-style:italic;margin:0;line-height:1.6;font-weight:300}
+.social-proof{background:var(--off);border-top:1px solid #E8E8E4;padding:32px 0}
+.social-proof-inner{max-width:var(--max);margin:0 auto;padding:0 24px}
+.sp-label{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:10px}
+.sp-text{font-size:15px;color:#444;line-height:1.6;font-weight:300;max-width:700px}
+
+/* ─── PRACTITIONER RESULTS STRIP ─── */
+.results-strip{background:var(--lgray);padding:28px 0;border-top:1px solid #E0E0DC;border-bottom:1px solid #E0E0DC}
+.results-inner{max-width:var(--max);margin:0 auto;padding:0 24px;display:flex;align-items:center;gap:32px;flex-wrap:wrap}
+.results-label{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);flex-shrink:0;font-family:'Source Code Pro',monospace}
+.results-stats{display:flex;gap:40px;flex-wrap:wrap}
+.rs-item{display:flex;flex-direction:column;gap:3px}
+.rs-number{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--navy);line-height:1}
+.rs-desc{font-size:12px;color:var(--gray);font-weight:300;line-height:1.4;max-width:160px}
+.results-note{font-size:11px;color:#888;font-style:italic;margin-left:auto;max-width:240px;line-height:1.5}
+
+/* ─── FOCUS ─── */
+.focus-section{padding:56px 0;background:#fff}
+.section-label{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:20px}
+.focus-list{list-style:none;display:flex;flex-direction:column}
+.focus-list li{display:flex;align-items:flex-start;gap:14px;padding:16px 0;border-bottom:.5px solid #E8E8E4;min-height:44px}
+.focus-list li::before{content:'';width:8px;height:8px;background:var(--teal);border-radius:50%;flex-shrink:0;margin-top:7px}
+.focus-main{font-size:17px;color:var(--navy);font-weight:300;line-height:1.4;display:block}
+.focus-sub{font-size:12px;color:var(--gray);font-style:italic;font-weight:300;display:block;margin-top:3px;letter-spacing:.01em}
+
+/* ─── ENGAGEMENT MODEL ─── */
+.engagement-section{padding:56px 0;background:var(--off);border-top:1px solid #E0E0DC}
+.engage-label{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:8px}
+.engage-headline{font-family:'Playfair Display',serif;font-size:22px;font-weight:500;color:var(--navy);margin-bottom:32px;max-width:600px;line-height:1.4}
+.engage-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:var(--max)}
+.engage-card{background:#fff;border-radius:10px;padding:28px 24px;border:.5px solid #DDDDD8}
+.engage-phase{font-family:'Source Code Pro',monospace;font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:8px}
+.engage-weeks{font-size:12px;color:var(--gray);font-style:italic;margin-bottom:12px}
+.engage-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:500;color:var(--navy);margin-bottom:12px}
+.engage-desc{font-size:14px;color:#444;line-height:1.65;font-weight:300}
+
+/* ─── SNAPSHOT BLOCK ─── */
+.snapshot-section{padding:56px 0;background:#fff;border-top:1px solid #E8E8E4}
+.snapshot-card{background:var(--lgray2);border:1.5px solid rgba(46,139,139,.3);border-radius:10px;padding:36px 40px;max-width:760px}
+.snapshot-badge{display:inline-block;background:var(--teal);color:#fff;font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:4px 12px;border-radius:3px;margin-bottom:14px;font-family:'Source Code Pro',monospace}
+.snapshot-card h3{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--navy);margin-bottom:6px}
+.snapshot-tagline{font-size:15px;color:var(--gray);font-style:italic;font-weight:300;margin-bottom:18px}
+.snapshot-card p{font-size:14px;color:#444;line-height:1.65;font-weight:300;margin-bottom:14px;max-width:640px}
+.snapshot-example{background:#fff;border-left:3px solid var(--gold);padding:12px 16px;border-radius:0 6px 6px 0;margin-bottom:20px;font-size:13px;font-style:italic;color:var(--navy);line-height:1.6;max-width:640px}
+.snapshot-steps{font-size:13px;color:#555;line-height:1.7;margin-bottom:24px;font-weight:300}
+.snapshot-btn{display:inline-block;background:var(--teal);color:#fff;font-size:15px;font-weight:600;padding:14px 32px;border-radius:6px;text-decoration:none;letter-spacing:.02em;font-family:'Source Sans 3',sans-serif}
+.snapshot-btn:hover{background:var(--navy)}
+
+/* ─── CTA ─── */
+.cta-section{padding:72px 0;background:var(--lgray2);border-top:1px solid rgba(46,139,139,.2)}
+.cta-inner{display:flex;flex-direction:column;align-items:center;text-align:center;gap:0;max-width:600px;margin:0 auto}
+.call-explainer{background:#fff;border-radius:10px;padding:24px 28px;margin-bottom:36px;width:100%;text-align:left;border:.5px solid #DDDDD8}
+.call-explainer h4{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:8px}
+.call-explainer p{font-size:14px;color:#444;line-height:1.65;font-weight:300}
+.cta-button{display:inline-block;background:var(--teal);color:#fff;font-size:16px;font-weight:600;padding:16px 36px;border-radius:6px;text-decoration:none;letter-spacing:.02em;font-family:'Source Sans 3',sans-serif;margin-bottom:14px}
+.cta-button:hover{background:var(--navy)}
+.cta-email-link{font-size:14px;color:var(--gray);margin-bottom:24px}
+.cta-email-link a{color:var(--teal);text-decoration:none;font-weight:600}
+.cta-email-link a:hover{text-decoration:underline}
+.cta-prompt{font-family:'Playfair Display',serif;font-size:18px;font-style:italic;color:var(--navy);line-height:1.5}
+
+/* ─── LINKEDIN ─── */
+.linkedin-section{padding:32px 0;background:#fff;border-top:1px solid #E8E8E4}
+.linkedin-inner{display:flex;align-items:center;gap:16px;max-width:var(--max);margin:0 auto;padding:0 24px}
+.li-icon{width:36px;height:36px;background:#0A66C2;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;font-size:16px;font-weight:700;font-family:Georgia,serif}
+.li-text{flex:1}
+.li-text p{font-size:14px;color:#444;font-weight:300}
+.li-text p a{color:#0A66C2;text-decoration:none;font-weight:600}
+.li-text p a:hover{text-decoration:underline}
+
+/* ─── CONTACT, DUAL LEADER ─── */
+.contact-section{padding:48px 0;background:#2A3F5F}
+.contact-dual{display:flex;gap:48px;flex-wrap:wrap;max-width:760px}
+.contact-card{display:flex;align-items:center;gap:20px;flex:1;min-width:280px}
+.contact-photo-ph{width:80px;height:80px;border-radius:50%;border:2px dashed rgba(255,255,255,.3);display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;gap:4px}
+.ph-icon{width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.2)}
+.ph-body{width:36px;height:18px;border-radius:18px 18px 0 0;background:rgba(255,255,255,.15)}
+.contact-info{display:flex;flex-direction:column;gap:4px}
+.contact-name-link{text-decoration:none}
+.contact-name-link:hover .contact-name{color:var(--teal);text-decoration:underline;text-underline-offset:3px}
+.contact-name{font-family:'Playfair Display',serif;font-size:18px;color:#fff;font-weight:500;transition:color .15s}
+.contact-title{font-size:12px;color:rgba(255,255,255,.7);line-height:1.5;font-weight:300}
+.contact-creds{font-size:11px;color:rgba(255,255,255,.55);font-weight:300;margin-top:2px}
+.contact-email{font-size:14px;color:#7ECECE;text-decoration:none;margin-top:4px}
+.contact-email:hover{text-decoration:underline}
+.contact-divider{width:1px;background:rgba(255,255,255,.15);align-self:stretch}
+
+/* ─── TECH STACK BAR ─── */
+.tech-bar{background:#0F1E10;padding:10px 24px;display:flex;gap:0;flex-wrap:wrap;border-bottom:2px solid #2A4A2A}
+.tech-bar-label{font-family:'Source Code Pro',monospace;font-size:10px;color:#64A064;letter-spacing:.1em;text-transform:uppercase;font-weight:600;margin-right:16px;padding-right:16px;border-right:1px solid #2A4A2A;flex-shrink:0}
+.tech-item{font-family:'Source Code Pro',monospace;font-size:10px;color:rgba(255,255,255,.5);padding:0 12px;border-right:1px solid #2A4A2A}
+.tech-item strong{color:#9ED89E;font-weight:600}
+.tech-item:last-child{border-right:none}
+
+/* ─── CAPABILITY DETAIL ─── */
+.cap-section{padding:56px 0;background:var(--lgray);border-top:1px solid #E0E0DC}
+.cap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:var(--max)}
+.cap-card{background:#fff;border-radius:10px;padding:28px 24px;border:.5px solid #DDDDD8;display:flex;flex-direction:column;gap:16px}
+.cap-name{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--navy);line-height:1.3;padding-bottom:12px;border-bottom:2px solid var(--teal)}
+.cap-what{font-size:13px;color:#444;line-height:1.6;font-weight:300;font-style:italic}
+.cap-sub-label{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:6px;font-family:'Source Code Pro',monospace}
+.cap-bullets{list-style:none;display:flex;flex-direction:column;gap:6px}
+.cap-bullets li{font-size:13px;color:#444;line-height:1.5;font-weight:300;padding-left:14px;position:relative}
+.cap-bullets li::before{content:'';position:absolute;left:0;top:7px;width:5px;height:5px;background:var(--teal);border-radius:50%}
+.cap-outcomes li::before{background:var(--gold)}
+
+/* ─── WINNING SIGNAL CARD ─── */
+.win-section{padding:48px 0;background:#fff;border-top:1px solid #E8E8E4}
+.win-card{display:flex;gap:0;max-width:760px;border-radius:10px;overflow:hidden;border:.5px solid #DDDDD8;box-shadow:0 2px 16px rgba(27,42,74,.08)}
+.win-left{background:var(--navy);padding:36px 32px;flex:0 0 280px;display:flex;flex-direction:column;justify-content:center;gap:8px}
+.win-outcome{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:#fff;line-height:1.2}
+.win-outcome-label{font-size:11px;color:rgba(255,255,255,.45);font-weight:300;letter-spacing:.08em;text-transform:uppercase;margin-top:4px}
+.win-right{background:var(--off);padding:36px 32px;flex:1;display:flex;flex-direction:column;justify-content:center;gap:14px;border-left:4px solid var(--gold)}
+.win-situation{font-size:15px;color:#2A2A2A;line-height:1.7;font-weight:300}
+.win-placeholder{display:inline-block;background:var(--note-bg);border:1px dashed var(--note-bd);border-radius:4px;padding:2px 8px;font-size:11px;color:var(--note-tx);font-family:'Source Code Pro',monospace;margin-left:4px}
+
+/* ─── RESPONSIVE BAR ─── */
+.responsive-bar{background:#1A1A18;padding:24px 32px;display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+.rp-col h4{font-family:'Source Code Pro',monospace;font-size:11px;color:var(--gold);letter-spacing:.1em;margin-bottom:12px}
+.rp-col ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+.rp-col li{font-size:11.5px;color:rgba(255,255,255,.55);line-height:1.5;padding-left:14px;position:relative}
+.rp-col li::before{content:'—';position:absolute;left:0;color:var(--teal);font-size:10px}
+.rp-col li.new-item{color:rgba(100,220,130,.8)}
+.rp-col li.new-item::before{color:#64DC82}
+.rp-col li.changed-item{color:rgba(255,200,80,.8)}
+.rp-col li.changed-item::before{color:#FFC850}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════
+     PRACTICE AREA PAGE, itc.pro/operational-effectiveness-knowledge-continuity
+     ITC OKC Wireframe v6 · Co-led by Carole Townsley + Buck Seward
+     v6 changes: Block 2 framing replaced with Carole's own language ·
+     Block 7 all six focus items replaced with Carole's "What this work does" sentences ·
+     Block 7c added, full capability detail 6-card grid (Carole's April 7 content) ·
+     Companion document v3 issued
+     ══════════════════════════════════════════════════════════ -->
+
+<a href="https://scheduler.zoom.us/buck-seward/30-minute-working-conversation"
+   class="sticky-cta" target="_blank" rel="noopener" id="sticky-cta">
+  📅 Schedule a conversation
+</a>
+<div class="sticky-anno">
+  <strong>Sticky CTA, unchanged</strong>
+  Appears after scroll past framing sentence (~400px).<br>
+  Hides when user reaches CTA section.<br><br>
+  JS: scroll event listener<br>
+  Position: fixed bottom-right · z-index 900<br>
+  Hide entirely below 360px mobile
+</div>
+
+<div class="wf-banner">
+  <div class="wf-title">ITC ANNOTATED WIREFRAME v11 — OKC — APRIL 8 CALL FEEDBACK APPLIED</div>
+  <div class="wf-url">itc.pro/operational-effectiveness-knowledge-continuity</div>
+  <div class="wf-badge">DRAFT, NOT FOR PUBLICATION</div>
+</div>
+
+<div class="page-sim">
+
+<div class="bp-bar">
+  <span class="active">▶ DESKTOP 1200px, viewing now</span>
+  <span>TABLET 768–1199px</span>
+  <span>MOBILE below 480px, see responsive notes</span>
+</div>
+
+<div class="tech-bar">
+  <div class="tech-bar-label">Tech Stack</div>
+  <div class="tech-item"><strong>CMS:</strong> WordPress · Divi 5 Builder</div>
+  <div class="tech-item"><strong>Forms:</strong> Gravity Forms + Divi GF Premium</div>
+  <div class="tech-item"><strong>Payments:</strong> Stripe via GF Add-on</div>
+  <div class="tech-item"><strong>SEO:</strong> Rank Math SEO Pro</div>
+  <div class="tech-item"><strong>Analytics:</strong> MonsterInsights Pro + GSC</div>
+  <div class="tech-item"><strong>Hosting:</strong> Training Lion / Robert Staddon · rstaddon@traininglion.com</div>
+  <div class="tech-item"><strong>Web dev:</strong> Rich Cruz · richcruzchicago@gmail.com</div>
+  <div class="tech-item"><strong>LMS:</strong> LearnDash → DGSCert.com (separate site)</div>
+</div>
+
+
+<!-- ─────────────────────────────────────
+     BLOCK 1, HERO VIDEO
+     ───────────────────────────────────── -->
+<div class="annotated">
+  <div class="section-tag">BLOCK 1, HERO VIDEO</div>
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-video-ph">
+      <div class="vp-icon"></div>
+      <p>ADOBE STOCK VIDEO, LICENSED<br>
+        Operational environment, manufacturing floor, frontline supervisor with technician,<br>
+        equipment in use, or practitioner alongside internal team in plant or field service setting.<br>
+        Tone: grounded, operational, real. Not a conference room. Work is actually happening.<br><br>
+        Suggested search: "manufacturing floor supervisor training" · "operations team working session plant"<br>
+        "frontline worker knowledge transfer" · "industrial facility team"<br><br>
+        4K · 10–15 sec · MOV · H.264<br>
+        Export: 1920×1080 desktop · 1280×720 tablet · 854×480 mobile<br>
+        autoplay · muted · loop · playsinline · poster: export JPG at 0:05
+      </p>
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>Operational Effectiveness &amp; Knowledge Continuity</h1>
+      <div class="hero-taglines">
+        <p>Most organizations don't have a knowledge problem. They have a continuity problem.</p>
+        <p>We build the capability. Your team runs it.</p>
+      </div>
+      <a href="#framing" class="hero-cta-link">See how we work ↓</a>
+    </div>
+    <div class="hero-scroll">scroll</div>
+  </div>
+  <div class="anno" style="top:40px">
+    <strong>Block 1, Hero Taglines</strong>
+    <span class="changed">UPDATED v10</span><br><br>
+    Both taglines updated, "system" removed per Carole's note.<br><br>
+    Tagline 1: "continuity problem" replaces "system problem"<br>
+   , Links directly to the practice name<br>
+   , No tech vibe · Carole's OD vocabulary<br><br>
+    Tagline 2: "capability" replaces "system"<br>
+   , Carole's own word from her April 7 email title<br>
+   , "Your team runs it", matches not-do strip language<br><br>
+    <strong>⚠️ TWO MORE "system" INSTANCES, DISCUSS WITH CAROLE:</strong><br><br>
+    Not-do strip (Block 4):<br>
+    Current: "We build the system. Your team runs it."<br>
+    Proposed: "We build the capability. Your team runs it."<br><br>
+    Positioning statement (Block 4):<br>
+    Current: "We build the system that keeps your operation running..."<br>
+    Proposed: "We build the practice that keeps your operation running..."<br><br>
+    One yes/no from Carole on the call resolves both.<br><br>
+    Video preview: drive.google.com/file/d/1UTklKj/view<br>
+    Height: 100vh desktop · 60vh mobile
+  </div>
+  </div>
+</div>
+
+
+<!-- ─────────────────────────────────────
+     BLOCK 2, FRAMING SENTENCE
+     ───────────────────────────────────── -->
+<div class="annotated" id="framing">
+  <div class="section-tag">BLOCK 2, FRAMING SENTENCE</div>
+  <div class="framing-section">
+    <div class="content-wrap">
+      <p class="framing-sentence">Organizational Effectiveness and Knowledge Continuity is about making sure work still gets done well when people, processes, and structures change. The focus is on three things: keeping critical know-how inside the organization, making day-to-day operations easier and more effective, and getting teams ready to work with new technology and AI.</p>
+    </div>
+  </div>
+  <div class="anno" style="top:24px">
+    <strong>Block 2, Framing Sentence</strong>
+    <span class="changed">UPDATED v7, systems → processes</span><br><br>
+    Carole flagged "systems" (April 7 email) as sending<br>
+    an unintended tech vibe. Changed to "processes."<br>
+    This is her sentence, her edit, applied.<br><br>
+    Remaining "system" usage needing Carole's decision:<br>
+    Not-do strip · positioning statement, both in Block 4.<br>
+    Hero taglines: FIXED in v10 (continuity / capability).<br>
+    ERP card: "new systems", correct context, no change.<br><br>
+    Font: Playfair Display 500 · 23px desktop · 18px mobile<br>
+    Color: navy · max-width 800px
+  </div>
+  </div>
+</div>
+
+
+<!-- ─────────────────────────────────────
+     BLOCK 3, STAT BLOCK
+     Four research stats from OKC source library
+     ───────────────────────────────────── -->
+<div class="annotated">
+  <div class="section-tag">BLOCK 3, STAT BLOCK</div>
+  <div class="stats-section">
+    <div class="content-wrap">
+      <div class="stats-grid">
+
+        <div class="stat-card accent">
+          <div class="stat-number">70<span>%</span></div>
+          <div class="stat-label">of team engagement is attributable to the manager. When managers are disengaged, their teams are too, and the productivity loss follows.</div>
+          <div class="stat-source">Gallup State of the Global Workplace 2025, citing Clifton &amp; Harter, It's the Manager, Gallup Press 2019</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-number">50<span>%</span></div>
+          <div class="stat-label">of all employees will need reskilling as technology changes role requirements, and most organizations have no framework to capture what their current workforce already knows</div>
+          <div class="stat-source">World Economic Forum Future of Jobs Report 2025</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-number">23<span>%</span></div>
+          <div class="stat-label">of employees globally are engaged at work, meaning most teams are operating well below their actual capability</div>
+          <div class="stat-source">Gallup State of the Global Workplace 2025</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-number">78<span>%</span></div>
+          <div class="stat-label">of CHROs agree workflows and roles must change to extract value from AI, creating immediate knowledge and process gaps across every function</div>
+          <div class="stat-source">Gartner CHRO Change Management Trends, March 2026</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="anno" style="top:24px">
+    <strong>Block 3, Stat Block</strong>
+    <span class="changed">UPDATED v11</span><br><br>
+    Cards answer the framing sentence directly:<br>
+    1. Manager relationship = retention + team effectiveness<br>
+    2. WEF reskilling = knowledge continuity mandate<br>
+    3. Supervisor friction = operational effectiveness<br>
+    4. CHRO/AI = digital readiness urgency<br><br>
+    ERP card removed. Industry-specific. Not agnostic.<br>
+    A&amp;D uses Earned Value. Financial services different context.<br><br>
+    Card 1: Gallup manager relationship stat.<br>
+    Ties directly to framing sentence people focus.<br>
+    Accent border draws eye to the people-first signal.<br><br>
+    Grid: 4-col desktop · 2-col tablet · 1-col mobile<br>
+    Divi: 4-col row · Section bg: #F8F8F6
+  </div>
+</div>
+
+
+<!-- ─────────────────────────────────────
+     BLOCK 4, BODY COPY + POSITIONING STATEMENT
+     ───────────────────────────────────── -->
+<div class="annotated">
+  <div class="section-tag">BLOCK 4, BODY COPY</div>
+  <div class="body-section">
+    <div class="content-wrap">
+
+      <p>You already have the list. The names on it are the people whose departure would hurt, because what they know lives nowhere else in the organization. You know which transition exposed the fact that nobody documented how the critical work actually got done. You know which process depends on one person showing up. You know which team is one departure away from a gap nobody can close quickly.</p>
+
+      <p>Most organizations do not discover their knowledge risk at a predictable pace. They discover it when a change event lands: a restructuring, a digital initiative, an AI rollout that requires someone to explain how the work actually happens. The gap was always there. The event made it visible. We help organizations get ahead of it before the event forces their hand.</p>
+
+      <p>Retention, succession planning, and talent mobility are not separate programs. They are the same question asked three different ways: how do we keep critical knowledge inside the organization, develop the people who carry it, and create the conditions where they want to stay? The manager relationship is the leverage point. People who have a strong working relationship with their manager stay twice as long and perform at a fundamentally different level.</p>
+
+      <p class="positioning-statement">We build the framework and process capability that keeps your organization running when people, roles, and technology change.</p>
+
+      <div class="boutique-strip">
+        <p>Most clients start with a conversation to get clarity on where the real risk is. Then they move into a project. We work at your pace. What we build, your team owns and sustains.</p>
+      </div>
+
+    </div>
+  </div>
+  <div class="anno" style="top:24px">
+    <strong>Block 4, Body Copy</strong>
+    <span class="changed">UPDATED v11</span><br><br>
+    Not-do strip REMOVED. Carole: defensive, wrong first impression.<br><br>
+    Para 1: ERP reference removed. Industry-agnostic.<br>
+    "Transition" covers restructuring, M&amp;A, leadership change,<br>
+    digital initiative, any change event. Universal.<br><br>
+    Para 2: ERP go-live removed. "Digital initiative" replaces it.<br>
+    Applies equally across financial services, A&amp;D, manufacturing.<br><br>
+    Para 3: NEW. Retention, succession, talent mobility framed<br>
+    as one question not three programs.<br>
+    Manager relationship as the leverage point.<br>
+    Echoes Gallup stat in Block 3 (stay twice as long).<br><br>
+    Positioning statement: "system" removed.<br>
+    "Framework and process capability" aligns with Carole's<br>
+    framing sentence language. "We build" retained, active.<br><br>
+    Boutique strip: "assessment" changed to "conversation."<br>
+    Body font: 17px Source Sans 3 300 lh 1.8 · max-width 760px
+  </div>
+</div>
+
+
+<!-- ─────────────────────────────────────
+     BLOCK 4b, PRACTITIONER RESULTS STRIP
+     Dark navy bar · practitioner observations
+     ───────────────────────────────────── -->
+<div class="annotated">
+  <div class="section-tag">BLOCK 4b, PRACTITIONER RESULTS STRIP</div>
+  <div class="results-strip">
+    <div class="results-inner">
+      <div class="results-label">What winning looks like</div>
+      <div class="results-stats">
+        <div class="rs-item">
+          <div class="rs-number">20<span style="font-size:18px">–28%</span></div>
+          <div class="rs-desc">improvement in manager performance metrics when managers receive coaching-focused development</div>
+        </div>
+        <div class="rs-item">
+          <div class="rs-number">3x</div>
+          <div class="rs-desc">more likely to achieve better business and human outcomes when change is personalized to how people actually work</div>
+        </div>
+        <div class="rs-item">
+          <div class="rs-number">67<span style="font-size:18px">%</span></div>
+          <div class="rs-desc">reduction in post-transition attrition when knowledge transfer and role clarity are built before the change lands</div>
+        </div>
+        <div class="rs-item">
+          <div class="rs-number">90</div>
+          <div class="rs-desc">days to measurable traction in a knowledge continuity and operational effectiveness engagement</div>
+        </div>
+      </div>
+      <div class="results-note">Sources: Gallup State of Global Workplace 2025 · Deloitte Global Human Capital Trends 2026 · ITC practitioner engagements</div>
+    </div>
+  </div>
+  <div class="anno" style="top:24px">
+    <strong>Block 4b, Results Strip</strong>
+    <span class="changed">UPDATED v11 — SOURCED</span><br><br>
+    All four numbers now sourced from project library:<br><br>
+    <strong>20-28%:</strong> Gallup State of Global Workplace 2025.<br>
+    Direct quote: "Manager performance metrics improved between<br>
+    20 to 28%... teams saw engagement rise by up to 18%."<br>
+    Results found 9-18 months after manager coaching training.<br><br>
+    <strong>3x:</strong> Deloitte 2026 Global Human Capital Trends, p.61.<br>
+    "Organizations taking a personalized, human-centric approach<br>
+    to change are nearly three times as likely to report better<br>
+    business and human outcomes." Cross-industry finding.<br><br>
+    <strong>67%:</strong> ITC Case Studies Portfolio.<br>
+    Anonymized PE portfolio engagement, post-merger attrition.<br>
+    Labeled as ITC practitioner result, not published research.<br>
+    "88% of high-potential talent retained at 12 months."<br><br>
+    <strong>90 days:</strong> ITC practitioner observation. Always labeled as such.<br><br>
+    Disclaimer now cites all three sources explicitly.<br>
+    Light gray bg (#F2F4F7) · navy numbers · gray descriptions.<br>
+    No dark background. Fully readable.
+  </div>
+</div>
+
+
+
+
+<!-- ─────────────────────────────────────
+     BLOCK 7, AREAS OF FOCUS — REMOVED
+     Carole: go with Block 7c capability cards only.
+     Focus list deleted per April 8 call feedback.
+     ───────────────────────────────────── -->
+
+
+<!-- ─────────────────────────────────────
+     BLOCK 7c, CAPABILITY DETAIL
+     Carole's full How it works + Outcomes per capability
+     NEW BLOCK, content from Carole's April 7 email
+     ───────────────────────────────────── -->
+<div class="annotated">
+  <div class="section-tag">BLOCK 7c, CAPABILITY DETAIL 🆕 CAROLE'S CONTENT</div>
+  <div class="cap-section">
+    <div class="content-wrap">
+      <div class="section-label">How each capability works</div>
+      <div class="cap-grid">
+
+        <div class="cap-card">
+          <div class="cap-name">Knowledge Continuity</div>
+          <div class="cap-what">Identifies where critical knowledge and judgment sit in a few key people and puts practical mechanisms in place to retain it before roles change or people leave.</div>
+          <div>
+            <div class="cap-sub-label">How it works</div>
+            <ul class="cap-bullets">
+              <li>Diagnose roles and processes at highest risk if someone exited tomorrow</li>
+              <li>Facilitate experts to surface real know-how, shortcuts, judgment calls, relationships</li>
+              <li>Convert that into usable assets: playbooks, decision guides, mentoring and shadowing routines</li>
+            </ul>
+          </div>
+          <div>
+            <div class="cap-sub-label">Outcomes</div>
+            <ul class="cap-bullets cap-outcomes">
+              <li>Reduced risk when experienced people retire or move</li>
+              <li>Faster onboarding and smoother role transitions</li>
+              <li>Critical work no longer dependent on one person</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="cap-card">
+          <div class="cap-name">Digital Readiness</div>
+          <div class="cap-what">Targets the human side of digital initiatives so people are truly ready to work differently, not just trained on new tools.</div>
+          <div>
+            <div class="cap-sub-label">How it works</div>
+            <ul class="cap-bullets">
+              <li>Map how roles, workflows, and decisions change with new technology</li>
+              <li>Define "ready" for each role and level, beyond training completion</li>
+              <li>Build a readiness plan that aligns communication, learning, and leader behaviors</li>
+            </ul>
+          </div>
+          <div>
+            <div class="cap-sub-label">Outcomes</div>
+            <ul class="cap-bullets cap-outcomes">
+              <li>Higher adoption of new tools and platforms</li>
+              <li>Less disruption when new technology goes live</li>
+              <li>Technology investments tied to real behavior change</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="cap-card">
+          <div class="cap-name">Operational Effectiveness &amp; Process Improvement</div>
+          <div class="cap-what">Reveals how work actually gets done, then simplifies processes and handoffs so people can perform without constant firefighting.</div>
+          <div>
+            <div class="cap-sub-label">How it works</div>
+            <ul class="cap-bullets">
+              <li>Observe and map the real workflow with the people who do the work</li>
+              <li>Surface friction points, rework, and unclear handoffs</li>
+              <li>Guide teams to select and implement a small set of high-impact changes</li>
+            </ul>
+          </div>
+          <div>
+            <div class="cap-sub-label">Outcomes</div>
+            <ul class="cap-bullets cap-outcomes">
+              <li>Fewer delays, handoff issues, and workarounds</li>
+              <li>Better use of capacity and talent</li>
+              <li>Visible performance gains that build momentum</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="cap-card">
+          <div class="cap-name">Frontline Capability &amp; Performance Architecture</div>
+          <div class="cap-what">Gives supervisors a clear picture of what good looks like and practical tools to manage performance and coach their teams.</div>
+          <div>
+            <div class="cap-sub-label">How it works</div>
+            <ul class="cap-bullets">
+              <li>Clarify supervisor responsibilities and what good looks like in this specific context</li>
+              <li>Design simple tools and routines: expectations, huddles, 1:1s, basic metrics</li>
+              <li>Build capability so supervisors use these tools confidently in real situations</li>
+            </ul>
+          </div>
+          <div>
+            <div class="cap-sub-label">Outcomes</div>
+            <ul class="cap-bullets cap-outcomes">
+              <li>Stronger, more confident frontline leaders</li>
+              <li>Clearer accountability and fewer mixed messages</li>
+              <li>Performance managed through daily routines, not just annual reviews</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="cap-card">
+          <div class="cap-name">Knowledge Architecture &amp; Accountability Design</div>
+          <div class="cap-what">Makes the invisible org chart visible by clarifying who owns what and how work and decisions flow across teams.</div>
+          <div>
+            <div class="cap-sub-label">How it works</div>
+            <ul class="cap-bullets">
+              <li>Map critical workflows against roles and decision rights</li>
+              <li>Identify overlaps, gaps, and bottlenecks in accountability</li>
+              <li>Support leaders in making and communicating clear ownership choices</li>
+            </ul>
+          </div>
+          <div>
+            <div class="cap-sub-label">Outcomes</div>
+            <ul class="cap-bullets cap-outcomes">
+              <li>Clearer accountability across functions</li>
+              <li>Smoother execution during restructures or leadership changes</li>
+              <li>Less time spent escalating and chasing decisions</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="cap-card">
+          <div class="cap-name">AI Workflow Readiness &amp; Knowledge Architecture</div>
+          <div class="cap-what">Prepares people, processes, and knowledge so AI tools can safely and meaningfully augment human judgment.</div>
+          <div>
+            <div class="cap-sub-label">How it works</div>
+            <ul class="cap-bullets">
+              <li>Identify realistic AI use cases in current workflows</li>
+              <li>Define the knowledge, rules, and boundaries AI depends on</li>
+              <li>Document and structure institutional know-how and design AI-enabled routines</li>
+            </ul>
+          </div>
+          <div>
+            <div class="cap-sub-label">Outcomes</div>
+            <ul class="cap-bullets cap-outcomes">
+              <li>AI that is actually used and useful</li>
+              <li>Reduced risk from unmanaged or ad-hoc AI use</li>
+              <li>Human expertise amplified rather than replaced</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="anno" style="top:24px">
+    <strong>Block 7c, Capability Detail</strong>
+    <span class="new">NEW BLOCK, CAROLE'S CONTENT</span><br><br>
+    Source: Carole Townsley, email April 7 2026.<br>
+    Every word in this block is hers. Do not edit without her.<br><br>
+    Structure per card:<br>
+   , Capability name (Playfair 700 navy · teal underline)<br>
+   , "What this work does" italic (matches focus list)<br>
+   , "How it works" · teal bullets (3 items)<br>
+   , "Outcomes" · gold bullets (3 items)<br><br>
+    Layout: 3-col grid desktop · 2-col tablet · 1-col mobile<br>
+    Section bg: #F2F4F7 (light gray, distinct from off-white)<br>
+    Cards: white · 0.5px border · radius 10px<br><br>
+    <strong>Placement decision:</strong><br>
+    This block sits between the focus list and engagement model.<br>
+    It gives the ICP the mechanics behind each area before<br>
+    they read how an engagement works.<br><br>
+    <strong>Future option:</strong> Convert to accordion/expandable<br>
+    so the focus list items expand on click to reveal this detail.<br>
+    Requires JS, defer to post-launch if preferred.<br><br>
+    <strong>Divi:</strong> 3-col row · Blurb modules OR Code module<br>
+    Section bg: #F2F4F7
+  </div>
+</div>
+
+
+<!-- Block 7b ENGAGEMENT MODEL — REMOVED per April 8 call. Carole: prompting discovery of needs, not right place for how an engagement works. -->
+
+
+<!-- ─────────────────────────────────────
+     BLOCK 8, CTA
+     ───────────────────────────────────── -->
+<div class="annotated" id="cta-section">
+  <div class="section-tag">BLOCK 8, CTA BLOCK</div>
+  <div class="cta-section">
+    <div class="content-wrap">
+      <div class="cta-inner">
+        <div class="call-explainer">
+          <h4>What the 30-minute conversation looks like</h4>
+          <p>In thirty minutes we listen to your situation, share what we are seeing in similar organizations, and tell you honestly whether we are the right fit, or recommend someone who may be.</p>
+        </div>
+        <a href="https://scheduler.zoom.us/buck-seward/30-minute-working-conversation"
+           class="cta-button" target="_blank" rel="noopener">
+          Schedule a 30-minute working conversation
+        </a>
+        <p class="cta-prompt">"Tell us what needs to keep working when things change, and where you feel most exposed right now."</p>
+      </div>
+    </div>
+  </div>
+  <div class="anno" style="top:24px">
+    <strong>Block 8, CTA</strong>
+    <span class="changed">UPDATED v11</span><br><br>
+    First sentence "This is not a sales call" REMOVED.<br>
+    Carole: defensive posture, starts on wrong foot.<br><br>
+    "Or send a note first" email line REMOVED.<br>
+    One action only. Schedule the conversation.<br><br>
+    CTA prompt REVISED. "Trying to protect" did not tie<br>
+    to framing content (making sure work still gets done well<br>
+    when people, processes, and structures change).<br><br>
+    New prompt maps directly to framing sentence:<br>
+    "What needs to keep working when things change"<br>
+    = the three framing focuses in one question.<br>
+    "Where you feel most exposed" = the risk framing<br>
+    from body copy Para 1 and Para 2.<br><br>
+    Background: #E8F4F4<br>
+    Button: teal, navy hover<br>
+    Prompt: Playfair italic 18px navy
+  </div>
+</div>
+
+
+<!-- Block 8b SNAPSHOT — REMOVED per April 8 call. Assessment in different space. -->
+
+<!-- Block 9b CREDENTIAL STRIP — REMOVED per April 8 call. -->
+
+<!-- Block 9c WINNING SIGNAL CARD — REMOVED per April 8 call. -->
+
+
+<!-- ─────────────────────────────────────
+     BLOCK 9, LINKEDIN FOLLOW
+     ───────────────────────────────────── -->
+<div class="annotated">
+  <div class="section-tag">BLOCK 9, LINKEDIN FOLLOW</div>
+  <div class="linkedin-section">
+    <div class="linkedin-inner">
+      <div class="li-icon">in</div>
+      <div class="li-text">
+        <p>Follow ITC on LinkedIn for weekly operational effectiveness and knowledge continuity insights. &nbsp;<a href="https://www.linkedin.com/company/itcpro/" target="_blank" rel="noopener">linkedin.com/company/itcpro →</a></p>
+      </div>
+    </div>
+  </div>
+  <div class="anno" style="top:16px">
+    <strong>Block 9, LinkedIn</strong><br><br>
+    URL: linkedin.com/company/itcpro<br>
+   , Confirmed active slug · do not change<br>
+    Descriptor updated to match OKC practice.<br><br>
+    LinkedIn icon bg: <code>#0A66C2</code><br>
+    Text: 14px #444 300<br>
+    Link: opens new tab · rel="noopener"<br><br>
+    Background: white<br>
+    Border-top: 1px <code>#E8E8E4</code><br>
+    Padding: 32px top/bottom
+  </div>
+</div>
+
+
+<!-- Block 9b CREDENTIAL STRIP — REMOVED per April 8 call. -->
+<!-- Block 9c WINNING SIGNAL CARD — REMOVED per April 8 call. -->
+
+
+<!-- ─────────────────────────────────────
+     BLOCK 10, CONTACT MODULE
+     ───────────────────────────────────── -->
+<div class="annotated">
+  <div class="section-tag">BLOCK 10, CONTACT MODULE</div>
+  <div class="contact-section">
+    <div class="content-wrap">
+      <div class="contact-dual">
+
+        <div class="contact-card">
+          <div class="contact-photo-ph">
+            <div class="ph-icon"></div>
+            <div class="ph-body"></div>
+          </div>
+          <div class="contact-info">
+            <a href="https://itc.pro/carole-townsley" target="_blank" rel="noopener" class="contact-name-link">
+              <div class="contact-name">Carole Townsley</div>
+            </a>
+            <div class="contact-title">Founding Partner &amp; Practice Lead</div>
+            <div class="contact-creds">SHRM-SCP · Prosci · SAFe · ATD</div>
+            <a href="mailto:carole@itc.pro" class="contact-email">carole@itc.pro</a>
+          </div>
+        </div>
+
+        <div class="contact-divider"></div>
+
+        <div class="contact-card">
+          <div class="contact-photo-ph">
+            <div class="ph-icon"></div>
+            <div class="ph-body"></div>
+          </div>
+          <div class="contact-info">
+            <a href="https://itc.pro/buck-seward" target="_blank" rel="noopener" class="contact-name-link">
+              <div class="contact-name">Buck Seward, JD, SHRM-SCP</div>
+            </a>
+            <div class="contact-title">Founding Partner &amp; Practice Lead</div>
+            <div class="contact-creds">Harvard/MIT 6TC L2 · Drucker OD</div>
+            <a href="mailto:buck@itc.pro" class="contact-email">buck@itc.pro</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="anno" style="top:24px">
+    <strong>Block 10, Contact</strong>
+    <span class="changed">UPDATED v11</span><br><br>
+    Names now clickable to bio pages on itc.pro.<br>
+    Carole: itc.pro/carole-townsley (confirm slug with Robert)<br>
+    Buck: itc.pro/buck-seward (confirm slug with Robert)<br>
+    Hover state: teal underline on name link.<br><br>
+    Title: "Founding Partner &amp; Practice Lead" only.<br>
+    "Co-Lead" removed per call.<br>
+    Practice area title removed per call.<br>
+    "Institute for Transformative Change" removed per call.<br><br>
+    Background lightened from navy to #2A3F5F<br>
+    Credential text color updated: white 70% opacity<br>
+    Readable on lightened background. No dark teal on navy.<br><br>
+    Photo: 80px circle · replace placeholder with headshots post-launch.<br>
+    Mobile: cards stack vertically · Carole first.
+  </div>
+</div>
+
+
+<!-- ─────────────────────────────────────
+     META, URL, SEO, FOR WEB TEAM
+     ───────────────────────────────────── -->
+<div class="annotated">
+  <div class="section-tag">META + SEO BLOCK, NOT RENDERED ON PAGE</div>
+  <div style="background:var(--lgray);padding:32px 0;border-top:2px solid #E0E0DC">
+    <div class="content-wrap">
+      <div style="font-family:'Source Code Pro',monospace;font-size:11.5px;color:var(--navy);line-height:2">
+        <strong style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:12px;color:var(--teal)">Page URL</strong>
+        https://itc.pro/operational-effectiveness-knowledge-continuity<br>
+        Alt: itc.pro/operational-effectiveness<br>
+        Hyphens · lowercase · no trailing slash · set as canonical URL in CMS<br><br>
+
+        <strong style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:12px;color:var(--teal)">Meta Title</strong>
+        Operational Effectiveness &amp; Knowledge Continuity | ITC<br>
+        62 characters, under 65-character Google display limit<br><br>
+
+        <strong style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:12px;color:var(--teal)">Meta Description</strong>
+        Operational friction and knowledge loss are costing you output every day. ITC works alongside your internal team to close the gap, measurable results within 90 days.<br>
+        155 characters, under 160-character limit<br><br>
+
+        <strong style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:12px;color:var(--teal)">Open Graph Tags</strong>
+        og:title, Operational Effectiveness &amp; Knowledge Continuity | ITC<br>
+        og:description, Operational friction and knowledge loss are costing you output every day. ITC works alongside your internal team to close the gap, measurable results within 90 days.<br>
+        og:url, https://itc.pro/operational-effectiveness-knowledge-continuity<br><br>
+
+        <strong style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:12px;color:var(--teal)">LinkedIn Company Page URL, Confirmed</strong>
+        https://www.linkedin.com/company/itcpro/<br>
+        Use this URL everywhere, website, email signatures, print, QR codes.<br><br>
+
+        <strong style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:12px;color:var(--teal)">LinkedIn Specialties Field, Add These Verbatim</strong>
+        Operational Effectiveness · Knowledge Continuity · Digital Readiness ·
+        Business Process Improvement · Frontline Capability · Knowledge Architecture ·
+        Accountability Design · Workforce Productivity · AI Workflow Readiness<br><br>
+
+        <strong>Rank Math Focus Keywords for this page (enter in Rank Math sidebar):</strong><br>
+        Primary: operational effectiveness consulting<br>
+        Secondary: knowledge continuity · digital readiness consulting<br>
+        Additional: frontline capability · knowledge architecture<br><br>
+        <strong>Schema Markup, Web Team Action Required</strong><br>
+        Add to &lt;head&gt;, LocalBusiness schema (JSON-LD):<br>
+        @type: ProfessionalService · name: Institute for Transformative Change<br>
+        url: https://itc.pro · sameAs: linkedin.com/company/itcpro<br><br>
+        Add BreadcrumbList schema:<br>
+        Home → Practice Areas → Operational Effectiveness &amp; Knowledge Continuity<br><br>
+        These are invisible to the visitor but required for Google rich results.<br>
+        <strong>Schema implementation: Rank Math SEO Pro</strong> (already installed on itc.pro)<br>
+        LocalBusiness = Rank Math → Schema → Add Schema → Local Business<br>
+        BreadcrumbList = Rank Math → General Settings → Breadcrumbs → Enable<br><br>
+        <strong>Divi SEO note:</strong> Do NOT use Divi's built-in page title field for H1.<br>
+        The H1 is rendered inside the Fullwidth Header module "Title" field.<br>
+        Divi page title field should be blank to prevent duplicate H1.
+      </div>
+    </div>
+  </div>
+  <div class="anno" style="top:24px">
+    <strong>Meta + SEO Block</strong>
+    Not rendered on the page.<br>
+    Web team action items only.<br><br>
+    URL slug: /operational-effectiveness-knowledge-continuity<br>
+    Alt slug: /operational-effectiveness<br>
+    Both confirmed in OKC v11 SEO section.<br><br>
+    Meta description: 155 chars<br>
+    Opens with buyer problem · closes with outcome<br>
+    "90 days" is the conversion hook<br><br>
+    LinkedIn Specialties:<br>
+    Verbatim terms are the AI search entity<br>
+    consistency mechanism, more important than URL slug.<br>
+    Claim novel terms early (Knowledge Continuity ·<br>
+    Knowledge Architecture are not yet crowded).<br><br>
+    <strong>OPEN DECISION</strong><br>
+    Whether to add "Workforce Productivity" to the<br>
+    page title and H1 is still a partner-level call.<br>
+    Do not change the URL slug or H1 until resolved.
+  </div>
+</div>
+
+
+<!-- ─────────────────────────────────────
+     RESPONSIVE NOTES
+     ───────────────────────────────────── -->
+<div class="responsive-bar">
+  <div class="rp-col">
+    <h4>DESKTOP, 1200px+</h4>
+    <ul>
+      <li>Max content width: 960px centered</li>
+      <li>Hero: 100vh max 800px</li>
+      <li>H1: 54px Playfair Display 700</li>
+      <li>Stat grid: 4-col 12px gap</li>
+      <li>Body: 17px Source Sans 3 300</li>
+      <li>Positioning statement: 22px italic gold border</li>
+      <li class="new-item">🆕 Practitioner results strip: navy bg · flex row</li>
+      <li>Focus list: 6 items · teal bullets</li>
+      <li class="new-item">🆕 Engagement model: 3-col grid (Map · Build · Sustain)</li>
+      <li class="new-item">🆕 Snapshot card: teal-bordered · gold sample item</li>
+      <li class="changed-item">⟳ Contact: dual-leader side by side · divider line</li>
+      <li>Sticky CTA: fixed bottom-right pill</li>
+    </ul>
+  </div>
+  <div class="rp-col">
+    <h4>TABLET, 768px to 1199px</h4>
+    <ul>
+      <li>Content: 100% width 32px padding</li>
+      <li>Hero: 100vh H1 scales 34–40px</li>
+      <li>Stat grid: 2-col / card 4 spans 2 OR 2×2</li>
+      <li>Body: 17px unchanged</li>
+      <li class="new-item">🆕 Results strip: wrap stats if needed</li>
+      <li class="new-item">🆕 Engagement model: 2-col / Sustain spans 2</li>
+      <li class="new-item">🆕 Snapshot card: full width</li>
+      <li class="changed-item">⟳ Contact: dual-leader flex row if space · else stack</li>
+      <li>Sticky CTA: smaller text</li>
+      <li>CTA button: full width</li>
+    </ul>
+  </div>
+  <div class="rp-col">
+    <h4>MOBILE, below 480px</h4>
+    <ul>
+      <li>Content: 100% 20px padding</li>
+      <li>Hero: 60vh H1 30px</li>
+      <li>Stat grid: 1-col, never 2×2</li>
+      <li>Body: 16px lh 1.7</li>
+      <li>Focus list: 44px min tap target</li>
+      <li class="new-item">🆕 Results strip: stack vertically</li>
+      <li class="new-item">🆕 Engagement model: 1-col stack</li>
+      <li class="new-item">🆕 Snapshot card: button full width</li>
+      <li class="changed-item">⟳ Contact: stack vertically · Carole first · divider hidden</li>
+      <li>Sticky CTA: icon only below 360px</li>
+      <li>CTA button: width 100%</li>
+      <li>Video: poster-only on slow connections</li>
+      <li>prefers-reduced-motion: hide video</li>
+    </ul>
+  </div>
+</div>
+
+</div><!-- end page-sim -->
+
+<script>
+const stickyCta = document.getElementById('sticky-cta');
+const ctaSec = document.getElementById('cta-section');
+if(stickyCta && ctaSec){
+  stickyCta.style.opacity='0';
+  stickyCta.style.pointerEvents='none';
+  window.addEventListener('scroll',function(){
+    const s=window.scrollY;
+    const ctaTop=ctaSec.getBoundingClientRect().top+window.scrollY;
+    if(s>400 && s<ctaTop-100){
+      stickyCta.style.opacity='1';
+      stickyCta.style.pointerEvents='auto';
+    }else{
+      stickyCta.style.opacity='0';
+      stickyCta.style.pointerEvents='none';
+    }
+  });
+}
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',function(e){
+    const t=document.querySelector(this.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}
+  });
+});
+</script>
+</body>
+</html>
