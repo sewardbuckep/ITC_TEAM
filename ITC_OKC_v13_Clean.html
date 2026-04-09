@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Operational Effectiveness &amp; Knowledge Continuity | ITC</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&amp;family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,400&amp;family=Source+Code+Pro:wght@400&amp;display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#1B2A4A;--teal:#2E8B8B;--gold:#D4A439;--gray:#666;--lgray:#F2F4F7;--lgray2:#E8F4F4;--off:#F8F8F6;--max:960px}
+body{font-family:'Source Sans 3',sans-serif;font-size:16px;background:#fff;color:#1a1a1a}
+
+@media(min-width:1520px){}
+
+.content-wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+
+/* ─── STICKY CTA ─── */
+.sticky-cta{position:fixed;bottom:28px;right:28px;z-index:900;background:var(--teal);color:#fff;padding:12px 22px;border-radius:32px;font-size:13px;font-weight:600;text-decoration:none;box-shadow:0 4px 20px rgba(46,139,139,.35);letter-spacing:.03em;display:flex;align-items:center;gap:8px;transition:background .2s,transform .2s,opacity .3s}
+.sticky-cta:hover{background:var(--navy);transform:translateY(-2px)}
+
+/* ─── HERO ─── */
+.hero{position:relative;height:100vh;min-height:520px;max-height:800px;background:#0D1B2E;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,#0D1B2E 0%,#1B2A4A 40%,#0F3344 100%)}
+.hero-bg::before{content:'';position:absolute;inset:0;background-image:radial-gradient(ellipse 80% 60% at 30% 50%,rgba(46,139,139,.12) 0%,transparent 70%),radial-gradient(ellipse 60% 80% at 70% 40%,rgba(212,164,57,.08) 0%,transparent 70%)}
+.hero-video-ph{position:absolute;inset:24px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;border:2px dashed rgba(46,139,139,.35);border-radius:4px}
+.vp-icon{width:48px;height:48px;border:2px solid rgba(46,139,139,.5);border-radius:50%;display:flex;align-items:center;justify-content:center}
+.vp-icon::after{content:'';border-left:16px solid rgba(46,139,139,.7);border-top:9px solid transparent;border-bottom:9px solid transparent;margin-left:3px}
+.hero-video-ph p{font-family:'Source Code Pro',monospace;font-size:10.5px;color:rgba(46,139,139,.6);text-align:center;line-height:1.7}
+.hero-overlay{position:absolute;inset:0;background:rgba(27,42,74,.45)}
+.hero-content{position:relative;z-index:2;text-align:center;padding:0 2rem;max-width:760px}
+.hero-content h1{font-family:'Playfair Display',serif;font-size:clamp(30px,5vw,54px);font-weight:700;color:#fff;letter-spacing:-.01em;line-height:1.1;margin-bottom:18px}
+.hero-taglines p{font-size:clamp(14px,1.8vw,18px);color:var(--teal);font-style:italic;margin:5px 0;font-weight:300}
+.hero-cta-link{display:inline-block;margin-top:28px;color:rgba(255,255,255,.75);font-size:14px;font-weight:400;text-decoration:none;letter-spacing:.06em;border-bottom:1px solid rgba(255,255,255,.25);padding-bottom:2px;transition:color .2s,border-color .2s}
+.hero-cta-link:hover{color:#fff;border-color:var(--teal)}
+.hero-scroll{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;color:rgba(255,255,255,.3);font-size:10px;letter-spacing:.12em;text-transform:uppercase;animation:bounce 2.2s ease-in-out infinite}
+.hero-scroll::after{content:'';width:1px;height:28px;background:linear-gradient(to bottom,rgba(255,255,255,.3),transparent)}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
+
+/* ─── FRAMING ─── */
+.framing-section{padding:64px 0 48px;background:#fff;border-bottom:1px solid #E8E8E4}
+.framing-sentence{font-family:'Playfair Display',serif;font-size:clamp(17px,2.2vw,23px);font-weight:500;color:var(--navy);line-height:1.5;max-width:800px}
+
+/* ─── STATS ─── */
+.stats-section{padding:48px 0;background:var(--off);border-bottom:1px solid #E0E0DC}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.stat-card{background:#fff;border-radius:10px;padding:24px 20px;border:.5px solid #DDDDD8}
+.stat-card.accent{border-left:4px solid var(--teal)}
+.stat-number{font-family:'Playfair Display',serif;font-size:48px;font-weight:700;color:var(--navy);line-height:1;margin-bottom:10px}
+.stat-number span{font-size:24px;font-weight:500}
+.stat-label{font-size:13px;color:#444;line-height:1.45;margin-bottom:10px}
+.stat-source{font-size:10.5px;color:var(--gray);font-style:italic;line-height:1.4}
+
+/* ─── NOT-DO STRIP ─── */
+.not-do-strip{background:var(--navy);padding:22px 28px;margin:0 0 32px;max-width:760px;border-radius:6px}
+.not-do-strip p{font-size:16px;color:#fff;font-weight:400;line-height:1.7;margin:0;letter-spacing:.01em}
+.not-do-strip p strong{color:var(--teal);font-weight:600}
+
+/* ─── CREDENTIAL STRIP ─── */
+.credential-section{padding:40px 0;background:var(--off);border-top:1px solid #E0E0DC;border-bottom:1px solid #E0E0DC}
+.credential-inner{max-width:760px}
+.credential-label{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:14px}
+.credential-statement{font-family:'Playfair Display',serif;font-size:17px;font-weight:500;color:var(--navy);line-height:1.6;margin-bottom:0}
+.credential-attribution{font-size:12px;color:var(--gray);font-style:italic;margin-top:10px;line-height:1.5}
+
+/* ─── BODY ─── */
+.body-section{padding:56px 0 0;background:#fff}
+.body-section p{font-size:17px;line-height:1.8;color:#2A2A2A;margin-bottom:24px;max-width:760px;font-weight:300}
+.positioning-statement{font-family:'Playfair Display',serif;font-size:22px!important;font-style:italic;color:var(--navy)!important;border-left:4px solid var(--gold);padding-left:20px;margin:36px 0!important;line-height:1.4!important;font-weight:500!important}
+.boutique-strip{background:var(--lgray2);border-left:4px solid var(--teal);padding:18px 24px;margin:0 0 32px;max-width:760px;border-radius:0 6px 6px 0}
+.boutique-strip p{font-size:15px;color:var(--navy);font-style:italic;margin:0;line-height:1.6;font-weight:300}
+.social-proof{background:var(--off);border-top:1px solid #E8E8E4;padding:32px 0}
+.social-proof-inner{max-width:var(--max);margin:0 auto;padding:0 24px}
+.sp-label{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:10px}
+.sp-text{font-size:15px;color:#444;line-height:1.6;font-weight:300;max-width:700px}
+
+/* ─── PRACTITIONER RESULTS STRIP ─── */
+.results-strip{background:var(--lgray);padding:28px 0;border-top:1px solid #E0E0DC;border-bottom:1px solid #E0E0DC}
+.results-inner{max-width:var(--max);margin:0 auto;padding:0 24px;display:flex;align-items:center;gap:32px;flex-wrap:wrap}
+.results-label{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);flex-shrink:0;font-family:'Source Code Pro',monospace}
+.results-stats{display:flex;gap:40px;flex-wrap:wrap}
+.rs-item{display:flex;flex-direction:column;gap:3px}
+.rs-number{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--navy);line-height:1}
+.rs-desc{font-size:12px;color:var(--gray);font-weight:300;line-height:1.4;max-width:160px}
+.results-note{font-size:11px;color:#888;font-style:italic;margin-left:auto;max-width:240px;line-height:1.5}
+
+/* ─── FOCUS ─── */
+.focus-section{padding:56px 0;background:#fff}
+.section-label{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:20px}
+.focus-list{list-style:none;display:flex;flex-direction:column}
+.focus-list li{display:flex;align-items:flex-start;gap:14px;padding:16px 0;border-bottom:.5px solid #E8E8E4;min-height:44px}
+.focus-list li::before{content:'';width:8px;height:8px;background:var(--teal);border-radius:50%;flex-shrink:0;margin-top:7px}
+.focus-main{font-size:17px;color:var(--navy);font-weight:300;line-height:1.4;display:block}
+.focus-sub{font-size:12px;color:var(--gray);font-style:italic;font-weight:300;display:block;margin-top:3px;letter-spacing:.01em}
+
+/* ─── ENGAGEMENT MODEL ─── */
+.engagement-section{padding:56px 0;background:var(--off);border-top:1px solid #E0E0DC}
+.engage-label{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:8px}
+.engage-headline{font-family:'Playfair Display',serif;font-size:22px;font-weight:500;color:var(--navy);margin-bottom:32px;max-width:600px;line-height:1.4}
+.engage-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:var(--max)}
+.engage-card{background:#fff;border-radius:10px;padding:28px 24px;border:.5px solid #DDDDD8}
+.engage-phase{font-family:'Source Code Pro',monospace;font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:8px}
+.engage-weeks{font-size:12px;color:var(--gray);font-style:italic;margin-bottom:12px}
+.engage-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:500;color:var(--navy);margin-bottom:12px}
+.engage-desc{font-size:14px;color:#444;line-height:1.65;font-weight:300}
+
+/* ─── SNAPSHOT BLOCK ─── */
+.snapshot-section{padding:56px 0;background:#fff;border-top:1px solid #E8E8E4}
+.snapshot-card{background:var(--lgray2);border:1.5px solid rgba(46,139,139,.3);border-radius:10px;padding:36px 40px;max-width:760px}
+.snapshot-badge{display:inline-block;background:var(--teal);color:#fff;font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:4px 12px;border-radius:3px;margin-bottom:14px;font-family:'Source Code Pro',monospace}
+.snapshot-card h3{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--navy);margin-bottom:6px}
+.snapshot-tagline{font-size:15px;color:var(--gray);font-style:italic;font-weight:300;margin-bottom:18px}
+.snapshot-card p{font-size:14px;color:#444;line-height:1.65;font-weight:300;margin-bottom:14px;max-width:640px}
+.snapshot-example{background:#fff;border-left:3px solid var(--gold);padding:12px 16px;border-radius:0 6px 6px 0;margin-bottom:20px;font-size:13px;font-style:italic;color:var(--navy);line-height:1.6;max-width:640px}
+.snapshot-steps{font-size:13px;color:#555;line-height:1.7;margin-bottom:24px;font-weight:300}
+.snapshot-btn{display:inline-block;background:var(--teal);color:#fff;font-size:15px;font-weight:600;padding:14px 32px;border-radius:6px;text-decoration:none;letter-spacing:.02em;font-family:'Source Sans 3',sans-serif}
+.snapshot-btn:hover{background:var(--navy)}
+
+/* ─── CTA ─── */
+.cta-section{padding:72px 0;background:var(--lgray2);border-top:1px solid rgba(46,139,139,.2)}
+.cta-inner{display:flex;flex-direction:column;align-items:center;text-align:center;gap:0;max-width:600px;margin:0 auto}
+.call-explainer{background:#fff;border-radius:10px;padding:24px 28px;margin-bottom:36px;width:100%;text-align:left;border:.5px solid #DDDDD8}
+.call-explainer h4{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:8px}
+.call-explainer p{font-size:14px;color:#444;line-height:1.65;font-weight:300}
+.cta-button{display:inline-block;background:var(--teal);color:#fff;font-size:16px;font-weight:600;padding:16px 36px;border-radius:6px;text-decoration:none;letter-spacing:.02em;font-family:'Source Sans 3',sans-serif;margin-bottom:14px}
+.cta-button:hover{background:var(--navy)}
+.cta-email-link{font-size:14px;color:var(--gray);margin-bottom:24px}
+.cta-email-link a{color:var(--teal);text-decoration:none;font-weight:600}
+.cta-email-link a:hover{text-decoration:underline}
+.cta-prompt{font-family:'Playfair Display',serif;font-size:18px;font-style:italic;color:var(--navy);line-height:1.5}
+
+/* ─── LINKEDIN ─── */
+.linkedin-section{padding:32px 0;background:#fff;border-top:1px solid #E8E8E4}
+.linkedin-inner{display:flex;align-items:center;gap:16px;max-width:var(--max);margin:0 auto;padding:0 24px}
+.li-icon{width:36px;height:36px;background:#0A66C2;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;font-size:16px;font-weight:700;font-family:Georgia,serif}
+.li-text{flex:1}
+.li-text p{font-size:14px;color:#444;font-weight:300}
+.li-text p a{color:#0A66C2;text-decoration:none;font-weight:600}
+.li-text p a:hover{text-decoration:underline}
+
+/* ─── CONTACT, DUAL LEADER ─── */
+.contact-section{padding:48px 0;background:#2A3F5F}
+.contact-dual{display:flex;gap:48px;flex-wrap:wrap;max-width:760px}
+.contact-card{display:flex;align-items:center;gap:20px;flex:1;min-width:280px}
+.contact-photo-ph{width:80px;height:80px;border-radius:50%;border:2px dashed rgba(255,255,255,.3);display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;gap:4px}
+.ph-icon{width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.2)}
+.ph-body{width:36px;height:18px;border-radius:18px 18px 0 0;background:rgba(255,255,255,.15)}
+.contact-info{display:flex;flex-direction:column;gap:4px}
+.contact-name-link{text-decoration:none}
+.contact-name-link:hover .contact-name{color:var(--teal);text-decoration:underline;text-underline-offset:3px}
+.contact-name{font-family:'Playfair Display',serif;font-size:18px;color:#fff;font-weight:500;transition:color .15s}
+.contact-title{font-size:12px;color:rgba(255,255,255,.7);line-height:1.5;font-weight:300}
+.contact-creds{font-size:11px;color:rgba(255,255,255,.55);font-weight:300;margin-top:2px}
+.contact-email{font-size:14px;color:#7ECECE;text-decoration:none;margin-top:4px}
+.contact-email:hover{text-decoration:underline}
+.contact-divider{width:1px;background:rgba(255,255,255,.15);align-self:stretch}
+
+/* ─── TECH STACK BAR ─── */
+
+/* ─── CAPABILITY DETAIL ─── */
+.cap-section{padding:56px 0;background:var(--lgray);border-top:1px solid #E0E0DC}
+.cap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:var(--max)}
+.cap-card{background:#fff;border-radius:10px;padding:28px 24px;border:.5px solid #DDDDD8;display:flex;flex-direction:column;gap:14px}
+.cap-micro{font-size:17px;font-weight:700;color:var(--navy);line-height:1.3}
+.cap-pain{font-size:13px;color:#555;line-height:1.65;font-weight:300;font-style:italic;padding-bottom:14px;border-bottom:2px solid var(--gold)}
+.cap-sub-label{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:6px;font-family:'Source Code Pro',monospace}
+.cap-bullets{list-style:none;display:flex;flex-direction:column;gap:6px}
+.cap-bullets li{font-size:13px;color:#444;line-height:1.5;font-weight:300;padding-left:14px;position:relative}
+.cap-bullets li::before{content:'';position:absolute;left:0;top:7px;width:5px;height:5px;background:var(--teal);border-radius:50%}
+.cap-outcomes li::before{background:var(--gold)}
+.cap-service{font-size:11px;color:var(--gray);font-style:italic;margin-top:auto;padding-top:12px;border-top:1px solid #E8E8E4}
+
+/* ─── WINNING SIGNAL CARD ─── */
+.win-section{padding:48px 0;background:#fff;border-top:1px solid #E8E8E4}
+.win-card{display:flex;gap:0;max-width:760px;border-radius:10px;overflow:hidden;border:.5px solid #DDDDD8;box-shadow:0 2px 16px rgba(27,42,74,.08)}
+.win-left{background:var(--navy);padding:36px 32px;flex:0 0 280px;display:flex;flex-direction:column;justify-content:center;gap:8px}
+.win-outcome{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:#fff;line-height:1.2}
+.win-outcome-label{font-size:11px;color:rgba(255,255,255,.45);font-weight:300;letter-spacing:.08em;text-transform:uppercase;margin-top:4px}
+.win-right{background:var(--off);padding:36px 32px;flex:1;display:flex;flex-direction:column;justify-content:center;gap:14px;border-left:4px solid var(--gold)}
+.win-situation{font-size:15px;color:#2A2A2A;line-height:1.7;font-weight:300}
+.win-placeholder{display:inline-block;background:var(--note-bg);border:1px dashed var(--note-bd);border-radius:4px;padding:2px 8px;font-size:11px;color:var(--note-tx);font-family:'Source Code Pro',monospace;margin-left:4px}
+
+/* ─── RESPONSIVE BAR ─── */
+.responsive-bar{background:#1A1A18;padding:24px 32px;display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+.rp-col h4{font-family:'Source Code Pro',monospace;font-size:11px;color:var(--gold);letter-spacing:.1em;margin-bottom:12px}
+.rp-col ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+.rp-col li{font-size:11.5px;color:rgba(255,255,255,.55);line-height:1.5;padding-left:14px;position:relative}
+.rp-col li::before{content:'—';position:absolute;left:0;color:var(--teal);font-size:10px}
+.rp-col li.new-item{color:rgba(100,220,130,.8)}
+.rp-col li.new-item::before{color:#64DC82}
+.rp-col li.changed-item{color:rgba(255,200,80,.8)}
+.rp-col li.changed-item::before{color:#FFC850}
+</style>
+<meta content="Operational friction and knowledge loss are costing you output every day. ITC works alongside your internal team to close the gap — measurable results within 90 days." name="description"/><link href="https://itc.pro/operational-effectiveness-knowledge-continuity" rel="canonical"/></head>
+<body>
+<!-- ══════════════════════════════════════════════════════════
+     PRACTICE AREA PAGE, itc.pro/operational-effectiveness-knowledge-continuity
+     ITC OKC Wireframe v6 · Co-led by Carole Townsley + Buck Seward
+     v6 changes: Block 2 framing replaced with Carole's own language ·
+     Block 7 all six focus items replaced with Carole's "What this work does" sentences ·
+     Block 7c added, full capability detail 6-card grid (Carole's April 7 content) ·
+     Companion document v3 issued
+     ══════════════════════════════════════════════════════════ -->
+<a class="sticky-cta" href="https://scheduler.zoom.us/buck-seward/30-minute-working-conversation" id="sticky-cta" rel="noopener" target="_blank">
+  📅 Schedule a conversation
+</a>
+
+<!-- ─────────────────────────────────────
+     BLOCK 1, HERO VIDEO
+     ───────────────────────────────────── -->
+
+
+<div class="hero">
+<div class="hero-bg"></div>
+<div class="hero-video-ph">
+<div class="vp-icon"></div>
+<p>ADOBE STOCK VIDEO, LICENSED<br/>
+        Operational environment, manufacturing floor, frontline supervisor with technician,<br/>
+        equipment in use, or practitioner alongside internal team in plant or field service setting.<br/>
+        Tone: grounded, operational, real. Not a conference room. Work is actually happening.<br/><br/>
+        Suggested search: "manufacturing floor supervisor training" · "operations team working session plant"<br/>
+        "frontline worker knowledge transfer" · "industrial facility team"<br/><br/>
+        4K · 10–15 sec · MOV · H.264<br/>
+        Export: 1920×1080 desktop · 1280×720 tablet · 854×480 mobile<br/>
+        autoplay · muted · loop · playsinline · poster: export JPG at 0:05
+      </p>
+</div>
+<div class="hero-overlay"></div>
+<div class="hero-content">
+<h1>Operational Effectiveness &amp; Knowledge Continuity</h1>
+<div class="hero-taglines">
+<p>Most organizations don't have a knowledge problem. They have a continuity problem.</p>
+<p>We build the capability. Your team runs it.</p>
+</div>
+<a class="hero-cta-link" href="#framing">See how we work ↓</a>
+</div>
+<div class="hero-scroll">scroll</div>
+</div>
+
+<!-- ─────────────────────────────────────
+     BLOCK 2, FRAMING SENTENCE
+     ───────────────────────────────────── -->
+
+
+<div class="framing-section">
+<div class="content-wrap">
+<p class="framing-sentence">Organizational Effectiveness and Knowledge Continuity is about making sure work still gets done well when people, processes, and structures change. The focus is on three things: keeping critical know-how inside the organization, making day-to-day operations easier and more effective, and getting teams ready to work with new technology and AI.</p>
+</div>
+</div>
+
+<!-- ─────────────────────────────────────
+     BLOCK 3, STAT BLOCK
+     Four research stats from OKC source library
+     ───────────────────────────────────── -->
+
+
+<div class="stats-section">
+<div class="content-wrap">
+<div class="stats-grid">
+<div class="stat-card accent">
+<div class="stat-number">50<span>%</span></div>
+<div class="stat-label">of all employees will need reskilling as technology changes role requirements, and most organizations have no documented framework to capture what their current workforce already knows</div>
+<div class="stat-source">World Economic Forum Future of Jobs Report 2025</div>
+</div>
+<div class="stat-card">
+<div class="stat-number">30<span>%</span></div>
+<div class="stat-label">of organizations successfully scale and sustain digital and process improvement, the rest see early gains that do not hold when the human side of the work is not built alongside the technology</div>
+<div class="stat-source">McKinsey "Breaking Operational Barriers to Peak Productivity" 2024</div>
+</div>
+<div class="stat-card">
+<div class="stat-number">86<span>%</span></div>
+<div class="stat-label">of leaders say their organizations are not prepared to adopt AI in day-to-day operations, the gap is not ambition or budget, it is knowledge, process clarity, and people readiness</div>
+<div class="stat-source">McKinsey State of Organizations 2026</div>
+</div>
+<div class="stat-card">
+<div class="stat-number">&lt;20<span>%</span></div>
+<div class="stat-label">of organizations that have tried to adopt AI have seen significant tangible impact, the missing ingredient is almost always institutional knowledge and process context, not the technology</div>
+<div class="stat-source">McKinsey State of Organizations 2026</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- ─────────────────────────────────────
+     BLOCK 4, BODY COPY + POSITIONING STATEMENT
+     ───────────────────────────────────── -->
+
+
+<div class="body-section">
+<div class="content-wrap">
+<p>You already have the list. The names on it are the people whose departure would hurt, because what they know lives nowhere else in the organization. You know which transition exposed the fact that nobody documented how the critical work actually got done. You know which process depends on one person showing up. You know which team is one departure away from a gap nobody can close quickly.</p>
+<p>Most organizations do not discover their knowledge risk at a predictable pace. They discover it when a change event lands: a restructuring, a digital initiative, an AI rollout that requires someone to explain how the work actually happens. The gap was always there. The event made it visible. We help organizations get ahead of it before the event forces their hand.</p>
+<p>Retention, succession planning, and talent mobility are not separate programs. They are the same question asked three different ways: how do we keep critical knowledge inside the organization, develop the people who carry it, and create the conditions where they want to stay?</p>
+<p class="positioning-statement">We build the framework and process capability that keeps your organization running when people, roles, and technology change.</p>
+<div class="boutique-strip">
+<p>Most clients start with a conversation to get clarity on where the real risk is. Then they move into a project. We work at your pace. What we build, your team owns and sustains.</p>
+</div>
+</div>
+</div>
+
+
+<!-- ─────────────────────────────────────
+     BLOCK 4b, PRACTITIONER RESULTS STRIP
+     Dark navy bar · practitioner observations
+     ───────────────────────────────────── -->
+
+
+<div class="results-strip">
+<div class="results-inner">
+<div class="results-label">What winning looks like</div>
+<div class="results-stats">
+<div class="rs-item">
+<div class="rs-number">50<span style="font-size:14px">–200%</span></div>
+<div class="rs-desc">of annual salary is what replacing a single employee costs, before counting what left with them when they walked out the door</div>
+</div>
+<div class="rs-item">
+<div class="rs-number">25<span style="font-size:16px">%+</span></div>
+<div class="rs-desc">productivity improvement in organizations that apply continuous improvement and clear process accountability across functions</div>
+</div>
+<div class="rs-item">
+<div class="rs-number">2.4<span style="font-size:16px">x</span></div>
+<div class="rs-desc">more likely to report better financial results when organizations take a human-centric approach to technology and change</div>
+</div>
+<div class="rs-item">
+<div class="rs-number">17</div>
+<div class="rs-desc">days faster critical role fills for organizations with strong workforce planning, a gap that compounds across every transition</div>
+</div>
+</div>
+<div class="results-note">Sources: SHRM Human Capital Benchmarking · McKinsey Operational Excellence Research 2024 · Deloitte Global Human Capital Trends 2026 · BCG Creating People Advantage 2026</div>
+</div>
+</div>
+
+
+<!-- ─────────────────────────────────────
+     BLOCK 7, AREAS OF FOCUS — REMOVED
+     Carole: go with Block 7c capability cards only.
+     Focus list deleted per April 8 call feedback.
+     ───────────────────────────────────── -->
+<!-- ─────────────────────────────────────
+     BLOCK 7c, CAPABILITY DETAIL
+     Carole's full How it works + Outcomes per capability
+     NEW BLOCK, content from Carole's April 7 email
+     ───────────────────────────────────── -->
+
+
+<div class="cap-section">
+<div class="content-wrap">
+<div class="section-label">Do any of these sound familiar?</div>
+<div class="cap-grid">
+<div class="cap-card">
+<div class="cap-micro">Someone on your team holds everything. Nothing is written down.</div>
+<div class="cap-pain">You could name them right now — the people whose departure would hurt most. What you don't have is any documented way to replace what they know when they leave.</div>
+<div>
+<div class="cap-sub-label">How it works</div>
+<ul class="cap-bullets">
+<li>Identify which roles and processes are most exposed if someone left tomorrow</li>
+<li>Facilitate experts to surface real know-how: shortcuts, judgment calls, relationships</li>
+<li>Convert that into usable assets — playbooks, decision guides, mentoring routines</li>
+</ul>
+</div>
+<div>
+<div class="cap-sub-label">What you get</div>
+<ul class="cap-bullets cap-outcomes">
+<li>Critical knowledge documented before a departure forces the issue</li>
+<li>Incoming talent that reaches effectiveness faster because the knowledge exists somewhere they can actually use it</li>
+</ul>
+</div>
+<div class="cap-service">Knowledge Continuity</div>
+</div>
+<div class="cap-card">
+<div class="cap-micro">You trained everyone on the new platform. The way work actually happens hasn't changed.</div>
+<div class="cap-pain">Training completion rates look fine. Adoption is not. People learned the tool but nobody redesigned the work it was supposed to improve.</div>
+<div>
+<div class="cap-sub-label">How it works</div>
+<ul class="cap-bullets">
+<li>Map how roles, workflows, and decisions actually change with new technology</li>
+<li>Define what ready looks like for each role and level, beyond training completion</li>
+<li>Build a readiness plan that aligns communication, learning, and leader behaviors</li>
+</ul>
+</div>
+<div>
+<div class="cap-sub-label">What you get</div>
+<ul class="cap-bullets cap-outcomes">
+<li>Higher adoption because people understand how their work changes, not just how the tool works</li>
+<li>Less disruption when new technology goes live because readiness was built before it did</li>
+</ul>
+</div>
+<div class="cap-service">Digital Readiness</div>
+</div>
+<div class="cap-card">
+<div class="cap-micro">Everyone is busy. Half of what they're doing is working around a process that was never fixed.</div>
+<div class="cap-pain">The rework, the handoff delays, the unclear ownership between teams — it is not new. It just never had a name or a fix. It got absorbed as how things work here.</div>
+<div>
+<div class="cap-sub-label">How it works</div>
+<ul class="cap-bullets">
+<li>Observe and map the real workflow with the people who actually do the work</li>
+<li>Surface friction points, rework, and unclear handoffs costing time without appearing on any report</li>
+<li>Guide teams to select and implement a small set of high-impact changes</li>
+</ul>
+</div>
+<div>
+<div class="cap-sub-label">What you get</div>
+<ul class="cap-bullets cap-outcomes">
+<li>Fewer delays and workarounds that became invisible because everyone adapted to them</li>
+<li>Capacity freed from rework and redirected to work that actually moves things forward</li>
+</ul>
+</div>
+<div class="cap-service">Operational Effectiveness &amp; Process Improvement</div>
+</div>
+<div class="cap-card">
+<div class="cap-micro">Your supervisors know how to manage. They were never shown how to develop people.</div>
+<div class="cap-pain">Most frontline leaders got promoted because they were good at the work. Nobody prepared them to lead it. Performance is managed at annual reviews, not in daily routines.</div>
+<div>
+<div class="cap-sub-label">How it works</div>
+<ul class="cap-bullets">
+<li>Clarify what good supervision looks like specifically in this organization and context</li>
+<li>Design simple tools and routines: expectations, check-ins, basic performance metrics</li>
+<li>Build capability so supervisors use these tools with confidence, not just compliance</li>
+</ul>
+</div>
+<div>
+<div class="cap-sub-label">What you get</div>
+<ul class="cap-bullets cap-outcomes">
+<li>Supervisors who manage performance daily instead of at the annual review</li>
+<li>Clearer accountability and fewer mixed messages reaching the frontline</li>
+</ul>
+</div>
+<div class="cap-service">Frontline Capability &amp; Performance Architecture</div>
+</div>
+<div class="cap-card">
+<div class="cap-micro">Nobody knows who owns what. Everyone has a guess.</div>
+<div class="cap-pain">Decisions get escalated that shouldn't. Work falls between teams because the boundary was never drawn. The invisible org chart runs things, and it doesn't match the real one.</div>
+<div>
+<div class="cap-sub-label">How it works</div>
+<ul class="cap-bullets">
+<li>Map critical workflows against actual roles and decision rights</li>
+<li>Identify overlaps, gaps, and bottlenecks where accountability is assumed rather than assigned</li>
+<li>Support leaders in making and communicating clear ownership choices</li>
+</ul>
+</div>
+<div>
+<div class="cap-sub-label">What you get</div>
+<ul class="cap-bullets cap-outcomes">
+<li>Accountability that holds when leaders change, teams shift, or the organization restructures</li>
+<li>Less time spent escalating decisions that should be made one or two levels down</li>
+</ul>
+</div>
+<div class="cap-service">Knowledge Architecture &amp; Accountability Design</div>
+</div>
+<div class="cap-card">
+<div class="cap-micro">The tools are coming. Nobody has mapped what actually needs to change in how people work.</div>
+<div class="cap-pain">Leadership wants AI in the operation. The technology is not the bottleneck. The question is whether the knowledge, the processes, and the people are ready to work differently alongside it.</div>
+<div>
+<div class="cap-sub-label">How it works</div>
+<ul class="cap-bullets">
+<li>Identify which AI use cases in your current workflows are realistic and actually ready</li>
+<li>Define the knowledge, rules, and boundaries AI depends on to be useful</li>
+<li>Document and structure institutional know-how so AI tools can safely augment it</li>
+</ul>
+</div>
+<div>
+<div class="cap-sub-label">What you get</div>
+<ul class="cap-bullets cap-outcomes">
+<li>AI tools that are actually used because the work around them was designed, not assumed</li>
+<li>Institutional expertise preserved and organized rather than siloed in people who are about to leave</li>
+</ul>
+</div>
+<div class="cap-service">AI Workflow Readiness &amp; Knowledge Architecture</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- Block 7b ENGAGEMENT MODEL — REMOVED per April 8 call. Carole: prompting discovery of needs, not right place for how an engagement works. -->
+<!-- ─────────────────────────────────────
+     BLOCK 8, CTA
+     ───────────────────────────────────── -->
+
+
+<div class="cta-section">
+<div class="content-wrap">
+<div class="cta-inner">
+<div class="call-explainer">
+<h4>What the 30-minute conversation looks like</h4>
+<p>In thirty minutes we listen to your situation, share what we are seeing in similar organizations, and tell you honestly whether we are the right fit, or recommend someone who may be.</p>
+</div>
+<a class="cta-button" href="https://scheduler.zoom.us/buck-seward/30-minute-working-conversation" rel="noopener" target="_blank">
+          Schedule a 30-minute working conversation
+        </a>
+<p class="cta-prompt">"Tell us what needs to keep working when things change, and where you feel most exposed right now."</p>
+</div>
+</div>
+</div>
+
+
+<!-- Block 8b SNAPSHOT — REMOVED per April 8 call. Assessment in different space. -->
+<!-- Block 9b CREDENTIAL STRIP — REMOVED per April 8 call. -->
+<!-- Block 9c WINNING SIGNAL CARD — REMOVED per April 8 call. -->
+<!-- ─────────────────────────────────────
+     BLOCK 9, LINKEDIN FOLLOW
+     ───────────────────────────────────── -->
+
+
+<div class="linkedin-section">
+<div class="linkedin-inner">
+<div class="li-icon">in</div>
+<div class="li-text">
+<p>Follow ITC on LinkedIn for weekly operational effectiveness and knowledge continuity insights.  <a href="https://www.linkedin.com/company/itcpro/" rel="noopener" target="_blank">linkedin.com/company/itcpro →</a></p>
+</div>
+</div>
+</div>
+
+
+<!-- Block 9b CREDENTIAL STRIP — REMOVED per April 8 call. -->
+<!-- Block 9c WINNING SIGNAL CARD — REMOVED per April 8 call. -->
+<!-- ─────────────────────────────────────
+     BLOCK 10, CONTACT MODULE
+     ───────────────────────────────────── -->
+
+
+<div class="contact-section">
+<div class="content-wrap">
+<div class="contact-dual">
+<div class="contact-card">
+<div class="contact-photo-ph">
+<div class="ph-icon"></div>
+<div class="ph-body"></div>
+</div>
+<div class="contact-info">
+<a class="contact-name-link" href="https://itc.pro/carole-townsley" rel="noopener" target="_blank">
+<div class="contact-name">Carole Townsley</div>
+</a>
+<div class="contact-title">Founding Partner &amp; Practice Lead</div>
+<div class="contact-creds">SHRM-SCP · Prosci · SAFe · ATD</div>
+<a class="contact-email" href="mailto:carole@itc.pro">carole@itc.pro</a>
+</div>
+</div>
+<div class="contact-divider"></div>
+<div class="contact-card">
+<div class="contact-photo-ph">
+<div class="ph-icon"></div>
+<div class="ph-body"></div>
+</div>
+<div class="contact-info">
+<a class="contact-name-link" href="https://itc.pro/buck-seward" rel="noopener" target="_blank">
+<div class="contact-name">Buck Seward, JD, SHRM-SCP</div>
+</a>
+<div class="contact-title">Founding Partner &amp; Practice Lead</div>
+<div class="contact-creds">Harvard/MIT 6TC L2 · Drucker OD</div>
+<a class="contact-email" href="mailto:buck@itc.pro">buck@itc.pro</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- ─────────────────────────────────────
+     META, URL, SEO, FOR WEB TEAM
+     ───────────────────────────────────── -->
+
+<!-- ─────────────────────────────────────
+     RESPONSIVE NOTES
+     ───────────────────────────────────── -->
+<div class="responsive-bar">
+<div class="rp-col">
+<h4>DESKTOP, 1200px+</h4>
+<ul>
+<li>Max content width: 960px centered</li>
+<li>Hero: 100vh max 800px</li>
+<li>H1: 54px Playfair Display 700</li>
+<li>Stat grid: 4-col 12px gap</li>
+<li>Body: 17px Source Sans 3 300</li>
+<li>Positioning statement: 22px italic gold border</li>
+<li class="new-item">🆕 Practitioner results strip: navy bg · flex row</li>
+<li>Focus list: 6 items · teal bullets</li>
+<li class="new-item">🆕 Engagement model: 3-col grid (Map · Build · Sustain)</li>
+<li class="new-item">🆕 Snapshot card: teal-bordered · gold sample item</li>
+<li class="changed-item">⟳ Contact: dual-leader side by side · divider line</li>
+<li>Sticky CTA: fixed bottom-right pill</li>
+</ul>
+</div>
+<div class="rp-col">
+<h4>TABLET, 768px to 1199px</h4>
+<ul>
+<li>Content: 100% width 32px padding</li>
+<li>Hero: 100vh H1 scales 34–40px</li>
+<li>Stat grid: 2-col / card 4 spans 2 OR 2×2</li>
+<li>Body: 17px unchanged</li>
+<li class="new-item">🆕 Results strip: wrap stats if needed</li>
+<li class="new-item">🆕 Engagement model: 2-col / Sustain spans 2</li>
+<li class="new-item">🆕 Snapshot card: full width</li>
+<li class="changed-item">⟳ Contact: dual-leader flex row if space · else stack</li>
+<li>Sticky CTA: smaller text</li>
+<li>CTA button: full width</li>
+</ul>
+</div>
+<div class="rp-col">
+<h4>MOBILE, below 480px</h4>
+<ul>
+<li>Content: 100% 20px padding</li>
+<li>Hero: 60vh H1 30px</li>
+<li>Stat grid: 1-col, never 2×2</li>
+<li>Body: 16px lh 1.7</li>
+<li>Focus list: 44px min tap target</li>
+<li class="new-item">🆕 Results strip: stack vertically</li>
+<li class="new-item">🆕 Engagement model: 1-col stack</li>
+<li class="new-item">🆕 Snapshot card: button full width</li>
+<li class="changed-item">⟳ Contact: stack vertically · Carole first · divider hidden</li>
+<li>Sticky CTA: icon only below 360px</li>
+<li>CTA button: width 100%</li>
+<li>Video: poster-only on slow connections</li>
+<li>prefers-reduced-motion: hide video</li>
+</ul>
+</div>
+</div>
+<!-- end page-sim -->
+<script>
+const stickyCta = document.getElementById('sticky-cta');
+const ctaSec = document.getElementById('cta-section');
+if(stickyCta && ctaSec){
+  stickyCta.style.opacity='0';
+  stickyCta.style.pointerEvents='none';
+  window.addEventListener('scroll',function(){
+    const s=window.scrollY;
+    const ctaTop=ctaSec.getBoundingClientRect().top+window.scrollY;
+    if(s>400 && s<ctaTop-100){
+      stickyCta.style.opacity='1';
+      stickyCta.style.pointerEvents='auto';
+    }else{
+      stickyCta.style.opacity='0';
+      stickyCta.style.pointerEvents='none';
+    }
+  });
+}
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',function(e){
+    const t=document.querySelector(this.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}
+  });
+});
+</script>
+</body>
+</html>
