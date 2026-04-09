@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ITC Organization Design &amp; Execution, Practice Area Page</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,400&family=Source+Code+Pro:wght@400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#1B2A4A;--teal:#2E8B8B;--gold:#D4A439;--gray:#666;--lgray:#F2F4F7;--lgray2:#E8F4F4;--off:#F8F8F6;--note-bg:#FFFDE7;--note-bd:#F9A825;--note-tx:#5D3A00;--red:#C0392B;--green:#1A6B2E;--max:960px}
+body{font-family:'Source Sans 3',sans-serif;font-size:16px;background:#EDEDEA;color:#1a1a1a}
+.wf-banner{position:sticky;top:0;z-index:1000;background:var(--navy);padding:10px 24px;display:flex;align-items:center;gap:16px;border-bottom:3px solid var(--gold)}
+.wf-title{font-family:'Source Code Pro',monospace;font-size:12px;color:var(--gold);letter-spacing:.08em}
+.wf-url{font-family:'Source Code Pro',monospace;font-size:12px;color:#7EB8B8}
+.wf-badge{margin-left:auto;background:var(--red);color:#fff;font-size:10px;font-weight:600;padding:3px 10px;border-radius:3px;letter-spacing:.1em;text-transform:uppercase}
+.anno{position:absolute;right:-290px;top:0;width:270px;background:var(--note-bg);border:1px solid var(--note-bd);border-left:4px solid var(--note-bd);border-radius:0 6px 6px 0;padding:10px 12px;font-size:11.5px;line-height:1.55;color:var(--note-tx);z-index:10}
+.anno strong{font-weight:600;display:block;margin-bottom:4px;font-size:11px;text-transform:uppercase;letter-spacing:.06em}
+.anno code{font-family:'Source Code Pro',monospace;font-size:10.5px;background:rgba(0,0,0,.06);padding:1px 4px;border-radius:2px}
+.anno .new{color:var(--green);font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:.08em;display:inline-block;margin-bottom:4px}
+.anno .changed{color:#B85C00;font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:.08em;display:inline-block;margin-bottom:4px}
+.annotated{position:relative;margin-bottom:6px}
+@media(min-width:1520px){.annotated{margin-right:310px}}
+.section-tag{position:absolute;top:12px;left:12px;z-index:5;background:rgba(27,42,74,.88);color:var(--gold);font-size:10px;padding:3px 10px;border-radius:3px;font-family:'Source Code Pro',monospace;letter-spacing:.08em}
+.page-sim{max-width:1200px;margin:0 auto;background:#fff;box-shadow:0 4px 32px rgba(0,0,0,.12)}
+.bp-bar{background:var(--navy);padding:6px 24px;font-size:11px;color:#7EB8B8;font-family:'Source Code Pro',monospace;display:flex;gap:24px}
+.bp-bar span{opacity:.6}
+.bp-bar span.active{opacity:1;color:var(--gold)}
+.content-wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+.sticky-cta{position:fixed;bottom:28px;right:28px;z-index:900;background:var(--teal);color:#fff;padding:12px 22px;border-radius:32px;font-size:13px;font-weight:600;text-decoration:none;box-shadow:0 4px 20px rgba(46,139,139,.35);letter-spacing:.03em;display:flex;align-items:center;gap:8px;transition:background .2s,transform .2s,opacity .3s}
+.sticky-cta:hover{background:var(--navy);transform:translateY(-2px)}
+.sticky-anno{position:fixed;bottom:80px;right:28px;z-index:901;width:250px;background:var(--note-bg);border:1px solid var(--note-bd);border-left:4px solid var(--note-bd);border-radius:6px;padding:10px 12px;font-size:11px;color:var(--note-tx);line-height:1.55}
+.sticky-anno strong{display:block;margin-bottom:4px;font-weight:600;font-size:10.5px;text-transform:uppercase;letter-spacing:.06em}
+.hero{position:relative;height:100vh;min-height:520px;max-height:800px;background:#0D1B2E;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,#0D1B2E 0%,#1B2A4A 40%,#0F3344 100%)}
+.hero-bg::before{content:'';position:absolute;inset:0;background-image:radial-gradient(ellipse 80% 60% at 30% 50%,rgba(46,139,139,.12) 0%,transparent 70%),radial-gradient(ellipse 60% 80% at 70% 40%,rgba(212,164,57,.08) 0%,transparent 70%)}
+.hero-video-ph{position:absolute;inset:24px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;border:2px dashed rgba(46,139,139,.35);border-radius:4px}
+.vp-icon{width:48px;height:48px;border:2px solid rgba(46,139,139,.5);border-radius:50%;display:flex;align-items:center;justify-content:center}
+.vp-icon::after{content:'';border-left:16px solid rgba(46,139,139,.7);border-top:9px solid transparent;border-bottom:9px solid transparent;margin-left:3px}
+.hero-video-ph p{font-family:'Source Code Pro',monospace;font-size:10.5px;color:rgba(46,139,139,.6);text-align:center;line-height:1.7}
+.hero-overlay{position:absolute;inset:0;background:rgba(27,42,74,.45)}
+.hero-content{position:relative;z-index:2;text-align:center;padding:0 2rem;max-width:760px}
+.hero-content h1{font-family:'Playfair Display',serif;font-size:clamp(30px,5vw,54px);font-weight:700;color:#fff;letter-spacing:-.01em;line-height:1.1;margin-bottom:18px}
+.hero-taglines p{font-size:clamp(14px,1.8vw,18px);color:var(--teal);font-style:italic;margin:5px 0;font-weight:300}
+.hero-cta-link{display:inline-block;margin-top:28px;color:rgba(255,255,255,.75);font-size:14px;font-weight:400;text-decoration:none;letter-spacing:.06em;border-bottom:1px solid rgba(255,255,255,.25);padding-bottom:2px;transition:color .2s,border-color .2s}
+.hero-cta-link:hover{color:#fff;border-color:var(--teal)}
+.hero-scroll{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;color:rgba(255,255,255,.3);font-size:10px;letter-spacing:.12em;text-transform:uppercase;animation:bounce 2.2s ease-in-out infinite}
+.hero-scroll::after{content:'';width:1px;height:28px;background:linear-gradient(to bottom,rgba(255,255,255,.3),transparent)}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
+.framing-section{padding:64px 0 48px;background:#fff;border-bottom:1px solid #E8E8E4}
+.framing-sentence{font-family:'Playfair Display',serif;font-size:clamp(17px,2.2vw,23px);font-weight:500;color:var(--navy);line-height:1.5;max-width:800px}
+.stats-section{padding:48px 0;background:var(--off);border-bottom:1px solid #E0E0DC}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.stat-card{background:#fff;border-radius:10px;padding:24px 20px;border:.5px solid #DDDDD8}
+.stat-card.accent{border-left:4px solid var(--teal)}
+.stat-number{font-family:'Playfair Display',serif;font-size:48px;font-weight:700;color:var(--navy);line-height:1;margin-bottom:10px}
+.stat-number span{font-size:24px;font-weight:500}
+.stat-label{font-size:13px;color:#444;line-height:1.45;margin-bottom:10px}
+.stat-source{font-size:10.5px;color:var(--gray);font-style:italic;line-height:1.4}
+.not-do-strip{background:var(--lgray2);border-left:4px solid var(--teal);padding:22px 28px;margin:0 0 32px;max-width:760px;border-radius:0 6px 6px 0}
+.credential-section{padding:40px 0;background:var(--off);border-top:1px solid #E0E0DC;border-bottom:1px solid #E0E0DC}
+.credential-inner{max-width:760px}
+.credential-label{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:14px}
+.credential-statement{font-family:'Playfair Display',serif;font-size:16px;font-weight:500;color:var(--navy);line-height:1.55;margin-bottom:0}
+.credential-attribution{font-size:12px;color:var(--gray);font-style:italic;margin-top:10px;line-height:1.5}
+.body-section{padding:56px 0 0;background:#fff;text-align:left}
+.body-section p{font-size:17px;line-height:1.8;color:#2A2A2A;margin-bottom:24px;max-width:760px;font-weight:300;text-align:left}
+/* Override body-section p cascade for elements nested inside body-section */
+.body-section .not-do-strip p{font-size:16px;color:var(--navy);font-weight:400;line-height:1.7;margin:0;letter-spacing:.01em;max-width:none}
+.body-section .not-do-strip p strong{color:var(--teal);font-weight:700}
+.positioning-statement{font-family:'Playfair Display',serif;font-size:22px!important;font-style:italic;color:var(--navy)!important;border-left:4px solid var(--gold);padding-left:20px;margin:36px 0!important;line-height:1.4!important;font-weight:500!important}
+.boutique-strip{background:var(--lgray2);border-left:4px solid var(--teal);padding:18px 24px;margin:0 0 32px;max-width:760px;border-radius:0 6px 6px 0}
+.boutique-strip p{font-size:15px;color:var(--navy);font-style:italic;margin:0;line-height:1.6;font-weight:300}
+.body-source{font-size:10.5px;color:var(--gray);font-style:italic;line-height:1.4;max-width:760px;margin-top:-12px;margin-bottom:32px}
+/* PAIN-FORWARD CARD ADDITIONS */
+.cap-micro{font-size:17px;font-weight:700;color:var(--navy);line-height:1.25;margin-bottom:4px}
+.cap-pain{font-size:14px;color:#444;line-height:1.55;font-weight:300;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid #EDEDEA;font-style:italic}
+.cap-service{font-size:11px;color:var(--gray);font-weight:300;letter-spacing:.05em;margin-top:auto;padding-top:10px;border-top:1px solid #EDEDEA}
+.cap-service span{font-style:italic}
+/* MOBILE LEGIBILITY */
+@media(max-width:480px){
+  .body-section p{font-size:16px;line-height:1.75}
+  .body-section .not-do-strip p{font-size:15px}
+  .cap-micro{font-size:16px}
+  .cap-pain{font-size:14px}
+  .cap-bullets li{font-size:14px}
+  .boutique-strip p{font-size:14px}
+  .framing-sentence{line-height:1.55}
+  .section-label{font-size:12px}
+  .results-label{font-size:11px}
+}
+.results-strip{background:var(--lgray);padding:28px 0;border-top:1px solid #E0E0DC;border-bottom:1px solid #E0E0DC}
+.results-inner{max-width:var(--max);margin:0 auto;padding:0 24px;display:flex;align-items:center;gap:32px;flex-wrap:wrap}
+.results-label{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);flex-shrink:0;font-family:'Source Code Pro',monospace}
+.results-stats{display:flex;gap:40px;flex-wrap:wrap}
+.rs-item{display:flex;flex-direction:column;gap:3px}
+.rs-number{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--navy);line-height:1}
+.rs-desc{font-size:12px;color:var(--gray);font-weight:300;line-height:1.4;max-width:160px}
+.results-note{font-size:11px;color:#888;font-style:italic;margin-left:auto;max-width:240px;line-height:1.5}
+.cap-section{padding:56px 0;background:var(--lgray);border-top:1px solid #E0E0DC}
+.cap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:var(--max)}
+.cap-card{background:#fff;border-radius:10px;padding:28px 24px;border:.5px solid #DDDDD8;display:flex;flex-direction:column;gap:12px}
+.cap-name{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--navy);line-height:1.3;padding-bottom:12px;border-bottom:2px solid var(--teal)}
+.cap-what{font-size:13px;color:#444;line-height:1.6;font-weight:300;font-style:italic}
+.cap-sub-label{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:6px;font-family:'Source Code Pro',monospace}
+.cap-bullets{list-style:none;display:flex;flex-direction:column;gap:6px}
+.cap-bullets li{font-size:13px;color:#444;line-height:1.5;font-weight:300;padding-left:14px;position:relative}
+.cap-bullets li::before{content:'';position:absolute;left:0;top:7px;width:5px;height:5px;background:var(--teal);border-radius:50%}
+.cap-outcomes li::before{background:var(--gold)}
+.win-section{padding:48px 0;background:#fff;border-top:1px solid #E8E8E4}
+/* win-card and snapshot CSS removed v8 - blocks not in use on this page */
+/* win-card family removed: Block 9c now uses cap-card format */
+/* snapshot family removed: Block 8b Health Check moved to resources page */
+.cap-card-feature{border-left:4px solid var(--gold)}
+.cta-section{padding:72px 0;background:var(--lgray2);border-top:1px solid rgba(46,139,139,.2)}
+.cta-inner{display:flex;flex-direction:column;align-items:center;text-align:center;gap:0;max-width:600px;margin:0 auto}
+.call-explainer{background:#fff;border-radius:10px;padding:24px 28px;margin-bottom:36px;width:100%;text-align:left;border:.5px solid #DDDDD8}
+.call-explainer h4{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:8px}
+.call-explainer p{font-size:14px;color:#444;line-height:1.65;font-weight:300}
+.cta-button{display:inline-block;background:var(--teal);color:#fff;font-size:16px;font-weight:600;padding:16px 36px;border-radius:6px;text-decoration:none;letter-spacing:.02em;font-family:'Source Sans 3',sans-serif;margin-bottom:14px}
+.cta-button:hover{background:var(--navy)}
+.cta-prompt{font-family:'Playfair Display',serif;font-size:18px;font-style:italic;color:var(--navy);line-height:1.5}
+.linkedin-section{padding:32px 0;background:#fff;border-top:1px solid #E8E8E4}
+.linkedin-inner{display:flex;align-items:center;gap:16px;max-width:var(--max);margin:0 auto;padding:0 24px}
+.li-icon{width:36px;height:36px;background:#0A66C2;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;font-size:16px;font-weight:700;font-family:Georgia,serif}
+.li-text{flex:1}
+.li-text p{font-size:14px;color:#444;font-weight:300}
+.li-text p a{color:#0A66C2;text-decoration:none;font-weight:600}
+.li-text p a:hover{text-decoration:underline}
+.contact-section{padding:48px 0;background:#2A3F5F}
+.contact-card{display:flex;align-items:center;gap:20px;max-width:480px}
+.contact-photo-ph{width:80px;height:80px;border-radius:50%;border:2px dashed rgba(255,255,255,.3);display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;gap:4px}
+.ph-icon{width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.2)}
+.ph-body{width:36px;height:18px;border-radius:18px 18px 0 0;background:rgba(255,255,255,.15)}
+.contact-info{display:flex;flex-direction:column;gap:4px}
+.contact-name-link{text-decoration:none}
+.contact-name-link:hover .contact-name{color:var(--teal);text-decoration:underline;text-underline-offset:3px}
+.contact-name{font-family:'Playfair Display',serif;font-size:18px;color:#fff;font-weight:500;transition:color .15s}
+.contact-title{font-size:12px;color:rgba(255,255,255,.7);line-height:1.5;font-weight:300}
+.contact-creds{font-size:11px;color:rgba(255,255,255,.55);font-weight:300;margin-top:2px}
+.contact-email{font-size:14px;color:#7ECECE;text-decoration:none;margin-top:4px}
+.contact-email:hover{text-decoration:underline}
+.tech-bar{background:#0F1E10;padding:10px 24px;display:flex;gap:0;flex-wrap:wrap;border-bottom:2px solid #2A4A2A}
+.tech-bar-label{font-family:'Source Code Pro',monospace;font-size:10px;color:#64A064;letter-spacing:.1em;text-transform:uppercase;font-weight:600;margin-right:16px;padding-right:16px;border-right:1px solid #2A4A2A;flex-shrink:0}
+.tech-item{font-family:'Source Code Pro',monospace;font-size:10px;color:rgba(255,255,255,.5);padding:0 12px;border-right:1px solid #2A4A2A}
+.tech-item strong{color:#9ED89E;font-weight:600}
+.tech-item:last-child{border-right:none}
+.section-label{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:20px}
+.responsive-bar{background:#1A1A18;padding:24px 32px;display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+.rp-col h4{font-family:'Source Code Pro',monospace;font-size:11px;color:var(--gold);letter-spacing:.1em;margin-bottom:12px}
+.rp-col ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+.rp-col li{font-size:11.5px;color:rgba(255,255,255,.55);line-height:1.5;padding-left:14px;position:relative}
+.rp-col li::before{content:'--';position:absolute;left:0;color:var(--teal);font-size:10px}
+.rp-col li.new-item{color:rgba(100,220,130,.8)}
+.rp-col li.new-item::before{color:#64DC82}
+.rp-col li.changed-item{color:rgba(255,200,80,.8)}
+.rp-col li.changed-item::before{color:#FFC850}
+</style>
+</head>
+<body>
+
+<a href="https://scheduler.zoom.us/buck-seward/30-minute-working-conversation" class="sticky-cta" target="_blank" rel="noopener" id="sticky-cta">Schedule a conversation</a>
+<div class="sticky-anno"><strong>Sticky CTA, unchanged</strong>Appears after scroll past framing sentence (~400px).<br>Hides when user reaches CTA section.<br><br>JS: scroll event listener<br>Position: fixed bottom-right, z-index 900<br>Hide entirely below 360px mobile</div>
+
+<div class="wf-banner">
+  <div class="wf-title">ITC ANNOTATED WIREFRAME v8 — ODE — WORDPRESS CONTRACTOR HANDOFF</div>
+  <div class="wf-url">itc.pro/organization-design-execution</div>
+  <div class="wf-badge">DRAFT, NOT FOR PUBLICATION</div>
+</div>
+
+<div class="page-sim">
+<div class="bp-bar">
+  <span class="active">DESKTOP 1200px, viewing now</span>
+  <span>TABLET 768-1199px</span>
+  <span>MOBILE below 480px, see responsive notes</span>
+</div>
+
+<div class="tech-bar">
+  <div class="tech-bar-label">Tech Stack</div>
+  <div class="tech-item"><strong>CMS:</strong> WordPress, Divi 5 Builder</div>
+  <div class="tech-item"><strong>Forms:</strong> Gravity Forms + Divi GF Premium</div>
+  <div class="tech-item"><strong>Payments:</strong> Stripe via GF Add-on</div>
+  <div class="tech-item"><strong>SEO:</strong> Rank Math SEO Pro</div>
+  <div class="tech-item"><strong>Analytics:</strong> MonsterInsights Pro + GSC</div>
+  <div class="tech-item"><strong>Hosting:</strong> Training Lion, rstaddon@traininglion.com</div>
+  <div class="tech-item"><strong>Web dev:</strong> Rich Cruz, richcruzchicago@gmail.com</div>
+</div>
+
+
+<!-- BLOCK 1, HERO VIDEO -->
+<div class="annotated">
+  <div class="section-tag">BLOCK 1, HERO VIDEO</div>
+  <div class="hero">
+    <div class="hero-bg"></div>
+    <!--
+    HERO VIDEO ACTIVATION INSTRUCTIONS
+    ============================================================
+    STEP 1: Obtain licensed video from Adobe Stock.
+      Search: "leadership team working session operations"
+      OR: "org design team whiteboard operations practitioner"
+      Tone: operational, purposeful, adult. Work is happening.
+      Spec: 4K (3840x2160), 10-15 sec, MOV, H.264
+
+    STEP 2: Export three web versions and one poster frame.
+      hero-ode-desktop.mp4  1920x1080  target under 8MB
+      hero-ode-tablet.mp4   1280x720
+      hero-ode-mobile.mp4   854x480
+      hero-ode-poster.jpg   export at 0:05 timecode
+
+    STEP 3: Upload all four files to WordPress.
+      Path: /wp-content/uploads/videos/
+      Exact filenames required. Do not rename.
+
+    STEP 4: Replace the hero-video-ph div below with this tag.
+      Remove the hero-video-ph div entirely.
+      Paste in:
+
+      <video class="hero-video"
+        autoplay muted loop playsinline
+        aria-hidden="true"
+        poster="/wp-content/uploads/videos/hero-ode-poster.jpg">
+        <source src="/wp-content/uploads/videos/hero-ode-desktop.mp4" type="video/mp4">
+      </video>
+
+    STEP 5: Add this CSS rule to the page stylesheet.
+      .hero-video{position:absolute;inset:0;width:100%;height:100%;
+      object-fit:cover;z-index:0}
+
+    STEP 6: Confirm prefers-reduced-motion is handled.
+      Add to CSS if not already present:
+      @media(prefers-reduced-motion:reduce){.hero-video{display:none}}
+
+    Note: aria-hidden="true" is required.
+    Decorative autoplay video must be invisible to screen readers.
+    ============================================================
+    -->
+    <div class="hero-video-ph">
+      <div class="vp-icon"></div>
+      <p>ADOBE STOCK VIDEO, LICENSED<br>
+        Leadership team in structured working session, whiteboard, operational mapping,<br>
+        practitioner alongside internal team in operations or professional services setting.<br>
+        Tone: operational, purposeful, adult. Work is actually happening, not being discussed.<br><br>
+        Suggested search: "leadership team working session operations" · "org design team whiteboard"<br>
+        "operations practitioner internal team" · "business leaders structured review"<br><br>
+        4K · 10-15 sec · MOV · H.264<br>
+        Export: 1920x1080 desktop · 1280x720 tablet · 854x480 mobile<br>
+        autoplay · muted · loop · playsinline · poster: export JPG at 0:05
+      </p>
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>Organization Design &amp; Execution</h1>
+      <div class="hero-taglines">
+        <p>Most organizations don't have a people problem. They have a design problem.</p>
+        <p>We redesign it alongside you. Your team owns what comes next.</p>
+      </div>
+      <a href="#framing" class="hero-cta-link">See how we work</a>
+    </div>
+    <div class="hero-scroll">scroll</div>
+  </div>
+  <div class="anno" style="top:40px">
+    <strong>Block 1, Hero Video</strong>
+    <span class="changed">CHANGED v5</span> Carole's voice pattern<br><br>
+    OKC v11 pattern:<br>
+    "Most organizations don't have a [X] problem.<br>
+    They have a [Y] problem."<br><br>
+    ODE v5 follows exactly:<br>
+    "Most organizations don't have a people problem.<br>
+    They have a design problem."<br><br>
+    This is the misdiagnosis reframe. Names what they have<br>
+    been told the problem is (people) and corrects it (design).<br>
+    Core ITC differentiator: process failures misdiagnosed<br>
+    as people problems.<br><br>
+    Tagline 2 mirrors OKC v11:<br>
+    OKC: "We build the capability. Your team runs it."<br>
+    ODE: "We redesign it alongside you. Your team owns what comes next."<br><br>
+    Height: 100vh desktop · 60vh mobile<br>
+    Overlay: rgba(27,42,74,0.45)
+  </div>
+</div>
+
+
+<!-- BLOCK 2, FRAMING SENTENCE -->
+<div class="annotated" id="framing">
+  <div class="section-tag">BLOCK 2, FRAMING SENTENCE</div>
+  <div class="framing-section">
+    <div class="content-wrap">
+      <p class="framing-sentence">Organization Design and Execution is about making sure the structure matches the work. The focus is on three things: making clear who owns which decisions and which work, removing the bottlenecks that slow capable teams down, and getting the operation ready for the workforce and technology changes already underway.</p>
+    </div>
+  </div>
+  <div class="anno" style="top:24px">
+    <strong>Block 2, Framing Sentence</strong>
+    <span class="changed">CHANGED v5</span> Carole's voice pattern<br><br>
+    OKC v11 exact pattern:<br>
+    "[Practice name] is about [plain definition].<br>
+    The focus is on three things: [A], [B], and [C]."<br><br>
+    ODE v5 follows that structure word for word.<br>
+    Plain definition: "making sure the structure matches the work"<br>
+    Three things anchor the six cap cards:<br>
+    1. Accountability (who owns what)<br>
+    2. Decision velocity (remove bottlenecks)<br>
+    3. Future readiness (workforce and technology)<br><br>
+    Font: Playfair Display 500, 23px desktop, 18px mobile<br>
+    Color: navy, max-width 800px
+  </div>
+</div>
+
+
+<!-- BLOCK 3, STAT BLOCK -->
+<div class="annotated">
+  <div class="section-tag">BLOCK 3, STAT BLOCK</div>
+  <div class="stats-section">
+    <div class="content-wrap">
+      <div class="stats-grid">
+        <div class="stat-card accent">
+          <div class="stat-number">9<span>:1</span></div>
+          <div class="stat-label">Dollars needed in talent and process change for every dollar invested in new technology, to realize the return organizations are expecting</div>
+          <div class="stat-source">Erik Brynjolfsson, Stanford, cited in HBR Reskilling &amp; Upskilling 2025</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">93<span>%</span></div>
+          <div class="stat-label">of senior leaders say moving away from rigid job structures is important or very important to their success in the next three years</div>
+          <div class="stat-source">Deloitte 2025 Global Human Capital Trends, 10,000+ leaders</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">19<span>%</span></div>
+          <div class="stat-label">of those same leaders whose organizations are actually ready to make that shift today</div>
+          <div class="stat-source">Deloitte 2025 Global Human Capital Trends, same study</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">63<span>%</span></div>
+          <div class="stat-label">more likely to achieve performance targets when the organization is designed around how work actually flows, not around legacy job structures</div>
+          <div class="stat-source">Deloitte Skills-based Organisation Report</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="anno" style="top:24px">
+    <strong>Block 3, Stat Block</strong>
+    <span class="changed">CHANGED v7</span> Card 4 swapped<br><br>
+    Cards 2 and 3 are intentionally paired.<br>
+    93% want it, only 19% are ready.<br>
+    That gap is the ICP's daily reality. Do not reorder.<br><br>
+    Card 4: Deloitte 63% replaces RSM 7-month contraction.<br>
+    RSM complexity finding now lives in Block 4 body copy<br>
+    with a source note. No need to carry it twice.<br>
+    63% connects structural design to performance targets<br>
+    at the level every ICP recognizes regardless of industry.<br>
+    First-time viewer in any sector reads this and connects.<br><br>
+    Card sequence logic:<br>
+    1. Brynjolfsson 9:1 -- technology ROI requires people investment<br>
+    2-3. Deloitte 93/19 pair -- the gap is the ICP's daily reality<br>
+    4. Deloitte 63% -- fixing the design produces measurable results<br><br>
+    Grid: 4-col desktop, 2-col tablet, 1-col mobile<br>
+    Background: #F8F8F6, accent border: card 1
+  </div>
+</div>
+
+
+<!-- BLOCK 4, BODY COPY
+     CHANGED v7: proposed content swap applied
+     Lighter tone, shorter sentences, mobile-friendly
+     RSM reference moved to source note below Para 3 -->
+<div class="annotated">
+  <div class="section-tag">BLOCK 4, BODY COPY</div>
+  <div class="body-section">
+    <div class="content-wrap">
+
+      <div class="not-do-strip">
+        <p>We do not produce org charts. We do not deliver redesign reports. We do not hand your leadership team a new structure and a handshake. <strong>We redesign the work alongside your internal team, and leave your organization running it.</strong></p>
+      </div>
+
+      <p>You have probably felt it for a while. Decisions that should happen at the team level keep landing on your desk. Roles were designed for an earlier version of the business. People carry accountability that exists nowhere in writing. You have sketched the redesign more than once and never had the runway to finish it. What you are short on is the time and depth to change it while keeping everything else running.</p>
+
+      <p>Most organizations do not schedule their structural problems. They get forced into them. An AI rollout that suddenly requires someone to define who actually owns a process. A post-acquisition integration where two teams are doing the same work and nobody has reconciled it yet. A leader departure that exposes how many decisions lived in one person's memory instead of in any defined structure. These are signals that the structure was under pressure long before the event made it visible.</p>
+
+      <p>Over the last fifteen years, middle market businesses have become far more complex in how they create revenue, allocate capital, and run their operations. Sales per employee and capital per employee have both climbed sharply, and supply chains, technology stacks, and decision paths have multiplied. The structures most organizations are still running were not built for that level of complexity. Accountability drifts informal. Workforce capability lives in people's heads rather than in any documented map. None of that feels like a crisis. Until something forces the issue.</p>
+
+      <p class="body-source">Source: RSM US LLP, middle market revenue, capital, and complexity research (2009-2024).</p>
+
+      <p class="positioning-statement">That is where we work.</p>
+
+      <div class="boutique-strip">
+        <p>Most clients start with a conversation about what they already know is not working and what they want to be different. From there, the work becomes a project. We move at your pace. What we design, your team owns and runs.</p>
+        <p>Most organizations at this scale see measurable value inside ninety days, in fewer escalations, faster decision cycles on critical work, and labor efficiency the CFO can see on the P&amp;L.</p>
+        <p>If that sounds like where you are, <a href="https://scheduler.zoom.us/buck-seward/30-minute-working-conversation" target="_blank" rel="noopener" style="color:var(--teal);font-weight:600;text-decoration:none">schedule a conversation.</a></p>
+      </div>
+
+    </div>
+  </div>
+  <div class="anno" style="top:24px">
+    <strong>Block 4, Body Copy</strong>
+    <span class="changed">CHANGED v7</span> Proposed content swap applied<br><br>
+    <strong>Three improvements from v6:</strong><br><br>
+    1. Shorter sentences throughout.<br>
+    Each observation now stands alone as its own sentence.<br>
+    Para 1 reads as five short recognitions on mobile,<br>
+    not one compound paragraph to parse.<br>
+    "Roles were designed for an earlier version."<br>
+    "People carry accountability that exists nowhere in writing."<br>
+    Each line lands independently on a small screen.<br><br>
+    2. RSM not named in body copy.<br>
+    v6: "RSM's research shows the middle market..."<br>
+    v7: Para 3 states the finding directly.<br>
+    Source note (.body-source) carries the citation.<br>
+    11px gray italic, sits below Para 3.<br>
+    ICP recognizes the situation. Source is auditable.<br>
+    The firm name does not interrupt the read.<br><br>
+    3. Para 2 trigger events tightened.<br>
+    v6 had an extra clause ("These are not failures...").<br>
+    v7: one clean closing sentence.<br>
+    "These are signals that the structure was under pressure<br>
+    long before the event made it visible."<br><br>
+    <strong>Retained from v6:</strong><br>
+    Not-do strip: unchanged<br>
+    Positioning statement: "That is where we work."<br>
+    Boutique strip action bridge with inline CTA link<br><br>
+    Body: 17px Source Sans 3 300 lh 1.8, max-width 760px<br>
+    Source note: 11px gray italic, .body-source class<br>
+    Mobile: 16px lh 1.7, short sentences break cleanly
+  </div>
+</div>
+
+
+<!-- BLOCK 7c, CAPABILITY DETAIL
+     CHANGED v6: pain-forward card structure
+     Micro-headline + pain sentence leads each card
+     Service name moved to bottom as secondary label
+     Section label invites self-selection
+     Block 4b results strip follows immediately below -->
+<div class="annotated">
+  <div class="section-tag">BLOCK 7c, CAPABILITY DETAIL</div>
+  <div class="cap-section">
+    <div class="content-wrap">
+      <div class="section-label">Do any of these sound familiar?</div>
+      <div class="cap-grid">
+
+        <div class="cap-card">
+          <div class="cap-micro">Decisions keep stalling</div>
+          <div class="cap-pain">Critical calls bounce upward and wait on the same one or two people. Everyone is busy. Nothing is moving.</div>
+          <div>
+            <div class="cap-sub-label">How it works</div>
+            <ul class="cap-bullets">
+              <li>Map where decisions consistently stall or get made by the wrong person</li>
+              <li>Surface roles where ownership is informal or assumed rather than assigned</li>
+              <li>Document clear decision ownership before the next change event makes it urgent</li>
+            </ul>
+          </div>
+          <div>
+            <div class="cap-sub-label">What you get</div>
+            <ul class="cap-bullets cap-outcomes">
+              <li>Decisions made at the right level without constant escalation</li>
+              <li>Accountability that holds when leaders or teams change</li>
+            </ul>
+          </div>
+          <div class="cap-service">Service: <span>Accountability Architecture</span></div>
+        </div>
+
+        <div class="cap-card">
+          <div class="cap-micro">You're hiring for a role that no longer exists</div>
+          <div class="cap-pain">The job description was written for a different operation. Onboarding discovers the mismatch 90 days after the offer.</div>
+          <div>
+            <div class="cap-sub-label">How it works</div>
+            <ul class="cap-bullets">
+              <li>Map what each role actually requires against what people can genuinely do</li>
+              <li>Identify where the gap between hire profile and role reality is concentrated</li>
+              <li>Give talent acquisition and onboarding a shared capability baseline before the next search opens</li>
+            </ul>
+          </div>
+          <div>
+            <div class="cap-sub-label">What you get</div>
+            <ul class="cap-bullets cap-outcomes">
+              <li>Hiring grounded in what the work actually requires, not what it used to</li>
+              <li>Development directed at the people and gaps that matter most right now</li>
+            </ul>
+          </div>
+          <div class="cap-service">Service: <span>Workforce Capability Mapping</span></div>
+        </div>
+
+        <div class="cap-card">
+          <div class="cap-micro">The team is capable. The structure is slow.</div>
+          <div class="cap-pain">Good people waiting on approvals. Meetings to schedule meetings. Decisions made twice because the first one didn't hold.</div>
+          <div>
+            <div class="cap-sub-label">How it works</div>
+            <ul class="cap-bullets">
+              <li>Identify which decisions are consistently escalated, delayed, or remade and trace the structural cause</li>
+              <li>Map the real decision paths, not the ones the org chart implies</li>
+              <li>Design decision flow around the speed the operation actually needs to move</li>
+            </ul>
+          </div>
+          <div>
+            <div class="cap-sub-label">What you get</div>
+            <ul class="cap-bullets cap-outcomes">
+              <li>Faster decision cycles on things that have been stuck for months</li>
+              <li>Teams that act with confidence because their authority is clearly defined</li>
+            </ul>
+          </div>
+          <div class="cap-service">Service: <span>Governance &amp; Decision Velocity</span></div>
+        </div>
+
+        <div class="cap-card">
+          <div class="cap-micro">Initiatives start strong and slow in the middle</div>
+          <div class="cap-pain">Projects stall not because the team can't deliver, but because nobody knows who unblocks it when it gets stuck.</div>
+          <div>
+            <div class="cap-sub-label">How it works</div>
+            <ul class="cap-bullets">
+              <li>Identify where execution breaks down and the structural cause behind each point</li>
+              <li>Separate accountability gaps from process gaps from capability gaps</li>
+              <li>Redesign operating conditions so work flows without constant senior intervention</li>
+            </ul>
+          </div>
+          <div>
+            <div class="cap-sub-label">What you get</div>
+            <ul class="cap-bullets cap-outcomes">
+              <li>Visible improvement in execution speed within 90 days</li>
+              <li>Fewer initiatives abandoned mid-stream for structural reasons</li>
+            </ul>
+          </div>
+          <div class="cap-service">Service: <span>Execution Architecture</span></div>
+        </div>
+
+        <div class="cap-card">
+          <div class="cap-micro">The transition is coming. The workforce isn't ready yet.</div>
+          <div class="cap-pain">New technology, new roles, new requirements. An 18-month window and no clear picture of who on your team can actually make the shift.</div>
+          <div>
+            <div class="cap-sub-label">How it works</div>
+            <ul class="cap-bullets">
+              <li>Identify who in your current workforce has the foundation for what is coming</li>
+              <li>Define what the new roles require so development and hiring point at the same target</li>
+              <li>Build work arrangements that reach talent your current structure cannot access</li>
+            </ul>
+          </div>
+          <div>
+            <div class="cap-sub-label">What you get</div>
+            <ul class="cap-bullets cap-outcomes">
+              <li>A workforce ready when the new operation goes live, not months behind it</li>
+              <li>Development plans tied to the gaps the transition will actually expose</li>
+            </ul>
+          </div>
+          <div class="cap-service">Service: <span>Future-Ready Capability Building</span></div>
+        </div>
+
+        <div class="cap-card">
+          <div class="cap-micro">The AI is in. Nobody knows who owns it.</div>
+          <div class="cap-pain">Tools are deployed and processes changed. But nobody defined who owns the exceptions, the oversight, or what happens when the output is wrong.</div>
+          <div>
+            <div class="cap-sub-label">How it works</div>
+            <ul class="cap-bullets">
+              <li>Map which roles have changed because of AI tools already in use or being implemented</li>
+              <li>Define who owns the judgment, exceptions, and oversight AI cannot perform</li>
+              <li>Design the accountability structure for human-AI workflows before a failure forces the question</li>
+            </ul>
+          </div>
+          <div>
+            <div class="cap-sub-label">What you get</div>
+            <ul class="cap-bullets cap-outcomes">
+              <li>Clarity on who is responsible when an AI-assisted process needs review or reversal</li>
+              <li>AI adoption that holds because people understand their place in it</li>
+            </ul>
+          </div>
+          <div class="cap-service">Service: <span>AI-Driven Organization Design</span></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="anno" style="top:24px">
+    <strong>Block 7c, Capability Detail</strong>
+    <span class="changed">CHANGED v6</span> Pain-forward structure<br><br>
+    <strong>Section label:</strong><br>
+    "Do any of these sound familiar?"<br>
+    Invites self-selection. ICP scans for their situation.<br>
+    Replaces "How each capability works" which required<br>
+    the reader to already know which card applied to them.<br><br>
+    <strong>New card structure per card:</strong><br>
+    1. Micro-headline: the felt problem in plain language<br>
+    2. Pain sentence: one or two sentences, conversational<br>
+    3. How it works: 3 teal bullets, concrete verbs<br>
+    4. What you get: 2 gold bullets (was 3, now tighter)<br>
+    5. Service label: bottom, muted, italic, secondary<br><br>
+    Service name is now visually secondary.<br>
+    ICP reads: "decisions keep stalling" and recognizes<br>
+    themselves BEFORE they see the service name.<br>
+    Recognition earns attention. Service name closes the loop.<br><br>
+    <strong>What changed from v5:</strong><br>
+    v5: service name led, ICP had to decode which card<br>
+    v6: pain leads, service name confirms at the end<br>
+    Outcomes reduced from 3 to 2 bullets per Carole's<br>
+    "keep it tight" principle from OKC v11.<br><br>
+    Layout: 3-col desktop, 2-col tablet, 1-col mobile<br>
+    Section bg: #F2F4F7<br>
+    Card: white, 0.5px border, radius 10px<br>
+    Micro: 17px 700 navy<br>
+    Pain: 13px italic #555 300, gold border-bottom<br>
+    Service: 11px gray italic, margin-top auto, teal border-top
+  </div>
+</div>
+
+
+<!-- BLOCK 4b, PRACTITIONER RESULTS STRIP
+     MOVED v6: now lives immediately below Block 7c
+     Page flow: Body (problem) → Cards (recognition) → Results (proof) → CTA (action)
+     Tightened copy per feedback: attribution explicit, framing line added -->
+<div class="annotated">
+  <div class="section-tag">BLOCK 4b, PRACTITIONER RESULTS STRIP</div>
+  <div class="results-strip">
+    <div class="results-inner">
+      <div class="results-label">When clients engage us on organization design, this is what they typically see</div>
+      <div class="results-stats">
+        <div class="rs-item">
+          <div class="rs-number">80<span style="font-size:18px">%</span></div>
+          <div class="rs-desc">of team effectiveness is predicted by six structural conditions that leaders can directly shape, conditions organization design either supports or undermines<br><span style="font-size:10px;color:#aaa">6 Team Conditions research, Hackman and Wageman, peer-reviewed</span></div>
+        </div>
+        <div class="rs-item">
+          <div class="rs-number">22<span style="font-size:18px">%</span></div>
+          <div class="rs-desc">productivity improvement within 90 days after clarifying accountability and decision rights<br><span style="font-size:10px;color:#aaa">ITC client engagements</span></div>
+        </div>
+        <div class="rs-item">
+          <div class="rs-number">67<span style="font-size:18px">%</span></div>
+          <div class="rs-desc">reduction in post-transition attrition when role clarity is built before the change lands<br><span style="font-size:10px;color:#aaa">ITC client engagements</span></div>
+        </div>
+        <div class="rs-item">
+          <div class="rs-number">90</div>
+          <div class="rs-desc">days to measurable traction in a typical organization design engagement<br><span style="font-size:10px;color:#aaa">ITC practitioner observation</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="anno" style="top:24px">
+    <strong>Block 4b, Results Strip</strong>
+    <span class="changed">CHANGED v6</span> Moved below 7c, copy tightened<br><br>
+    <strong>New page flow logic:</strong><br>
+    Block 4: names the problem (body copy)<br>
+    Block 7c: ICP recognizes their specific situation (cards)<br>
+    Block 4b: shows what changes when you fix it (results)<br>
+    Block 8: schedule the call (CTA)<br><br>
+    This is: problem, recognition, proof, action.<br>
+    The old position (above 7c) broke the logic:<br>
+    ICP saw results before they recognized their situation.<br><br>
+    <strong>Framing label updated:</strong><br>
+    Old: "What winning looks like"<br>
+    New: "When clients engage us on organization design,<br>
+    this is what they typically see"<br>
+    Connects the strip directly to an engagement with ITC,<br>
+    not to a generic win condition.<br><br>
+    <strong>Attribution now explicit per stat:</strong><br>
+    80%: 6 Team Conditions research, Hackman and Wageman,<br>
+    peer-reviewed (stronger evidentiary standard than survey data)<br>
+    Buck's actual methodology -- differentiates ITC from<br>
+    every other OD page citing Deloitte Human Capital Trends<br>
+    22%: ITC client engagements (practitioner, honest)<br>
+    67%: ITC client engagements (practitioner, honest)<br>
+    90 days: ITC practitioner observation (labeled as such)<br><br>
+    Source line removed from footer: attribution is now<br>
+    inline below each stat description.<br><br>
+    Background: #F2F4F7<br>
+    Numbers: Playfair 700 28px navy<br>
+    Attribution: 10px #aaa, below description
+  </div>
+</div>
+
+
+<!-- BLOCK 8, CTA
+     CHANGED v6: call explainer updated with outcome hint
+     Single conversion objective: schedule the working conversation -->
+<div class="annotated" id="cta-section">
+  <div class="section-tag">BLOCK 8, CTA BLOCK</div>
+  <div class="cta-section">
+    <div class="content-wrap">
+      <div class="cta-inner">
+        <div class="call-explainer">
+          <h4>What the 30-minute conversation looks like</h4>
+          <p>In thirty minutes we listen to your situation and share what we are seeing in similar organizations. You will leave with a clear picture of what is possible and a practical sense of where to start. If we are the right fit, we will tell you. If someone else would serve you better, we will tell you that too.</p>
+        </div>
+        <a href="https://scheduler.zoom.us/buck-seward/30-minute-working-conversation" class="cta-button" target="_blank" rel="noopener">
+          Schedule a 30-minute working conversation
+        </a>
+        <p class="cta-prompt">"Tell us what your structure is costing you right now, and what you have already tried to fix it."</p>
+      </div>
+    </div>
+  </div>
+  <div class="anno" style="top:24px">
+    <strong>Block 8, CTA</strong>
+    <span class="changed">CHANGED v6</span> Outcome hint added<br><br>
+    <strong>Call explainer v5 vs v6:</strong><br>
+    v5: "tell you honestly whether we are the right fit,<br>
+    or recommend someone who may be"<br>
+    = honest, but passive. Describes an evaluation.<br><br>
+    v6: Two moves in one sentence:<br>
+    "You will leave with a clear picture of what is possible<br>
+    and a practical sense of where to start."<br>
+    = outcome hint. ICP knows what they get from the call.<br>
+    THEN: "If we are the right fit... if someone else..."<br>
+    = trust signal retained, but AFTER the outcome hint.<br>
+    Sequence matters: lead with value, close with trust.<br><br>
+    "This is not a sales call" REMOVED per OKC v11.<br>
+    One action only, no email fallback per OKC v11.<br><br>
+    Prompt retained from v5:<br>
+    "Tell us what your structure is costing you right now,<br>
+    and what you have already tried to fix it."<br>
+    Still peer-to-peer, still respects 10-year practitioner.<br><br>
+    Background: #E8F4F4<br>
+    Button: teal, navy hover<br>
+    Prompt: Playfair italic 18px navy
+  </div>
+</div>
+
+
+<!-- BLOCK 8b REMOVED v7
+     Organization Design Health Check removed from practice area page.
+     Repurposed as standalone marketing tool:
+     - Resources page on itc.pro
+     - LinkedIn posts, articles, and white paper companion
+     - Future lead gen asset, not inline page conversion tool -->
+
+
+<!-- BLOCK 9b, PRACTITIONER CREDENTIAL STRIP -->
+<div class="annotated">
+  <div class="section-tag">BLOCK 9b, PRACTITIONER CREDENTIAL STRIP</div>
+  <div class="credential-section">
+    <div class="content-wrap">
+      <div class="credential-inner">
+        <div class="credential-label">This practice was built from work like this</div>
+        <p class="credential-statement">I've done this from inside operating companies as a portfolio manager, operations leader, and commercialization executive. The redesigns I worked on were live businesses under financial pressure, with accountability gaps, leadership misalignment, and structural inertia that had to be resolved while the operation kept running. This isn't a framework I wrote for clients. It's the practice I built doing the work.</p>
+        <p class="credential-attribution">PE-backed manufacturing and industrial operations, B2B technology commercialization, $55M to $555M revenue environments</p>
+      </div>
+    </div>
+  </div>
+  <div class="anno" style="top:24px">
+    <strong>Block 9b, Credential Strip</strong>
+    ODE parallel to OKC's Carole credential strip.<br>
+    OKC: Fortune 500 internal OD at Lockheed and GM Financial.<br>
+    ODE: PE portfolio and manufacturing operations.<br>
+    Same credibility structure, distinct practitioner backgrounds.<br><br>
+    Closing line mirrors OKC v11 Block 9b:<br>
+    "That is not a framework designed for a client.<br>
+    That is the practice behind the practice."<br><br>
+    BUCK: Review and correct anything inaccurate.<br>
+    No company names in body copy per ITC protocol.<br><br>
+    Background: #F8F8F6<br>
+    Label: 11px teal uppercase<br>
+    Statement: Playfair 500 17px navy<br>
+    Attribution: 12px gray italic
+  </div>
+</div>
+
+
+<!-- BLOCK 9c, WINNING SIGNAL CARD
+     CHANGED v7: pain-forward format matches Block 7c cap cards
+     Real numbers, real outcome, signals future full case study
+     Client name withheld per ITC anonymization protocol -->
+<div class="annotated">
+  <div class="section-tag">BLOCK 9c, WINNING SIGNAL CARD</div>
+  <div class="win-section">
+    <div class="content-wrap">
+      <div class="cap-card cap-card-feature" style="max-width:760px">
+        <div class="cap-micro">Fixed the structure. Decisions moved.</div>
+        <div class="cap-pain">Too many decisions were waiting on too few leaders. For operators, that meant lines and field teams waiting while backlog grew.</div>
+        <div>
+          <div class="cap-sub-label">How it works</div>
+          <ul class="cap-bullets">
+            <li>Cut 200 exempt roles by day 60 and 50 hourly roles by day 120</li>
+            <li>Redesigned about 180 roles around team leaders and clear decision rights</li>
+            <li>Helped all 50 hourly employees find local jobs within 45 minutes</li>
+          </ul>
+        </div>
+        <div>
+          <div class="cap-sub-label">What you get</div>
+          <ul class="cap-bullets cap-outcomes">
+            <li>More than $35M a year in labor savings</li>
+            <li>About 45% fewer escalations in 90 days, while shipments stayed on track</li>
+          </ul>
+        </div>
+        <div class="cap-service">Service: <span>Post-Merger Decision &amp; Structure Redesign</span></div>
+        <p style="font-size:10.5px;color:var(--gray);font-style:italic;margin-top:12px;border-top:1px solid #EDEDEA;padding-top:12px">Client name withheld. Full case study available on request to qualified organizations.</p>
+      </div>
+    </div>
+  </div>
+  <div class="anno" style="top:24px">
+    <strong>Block 9c, Winning Signal Card</strong>
+    <span class="changed">CHANGED v7</span> Pain-forward format<br><br>
+    Format now matches Block 7c cap cards exactly:<br>
+    Micro-headline, pain sentence, how it works,<br>
+    what you get, service label at bottom.<br>
+    Gold left border distinguishes it as a case result,<br>
+    not a service description.<br><br>
+    <strong>Numbers are real, not bracketed.</strong><br>
+    This card is no longer a placeholder.<br>
+    200 exempt + 50 hourly cuts = 250 total<br>
+    180 roles redesigned<br>
+    50 hourly employees placed locally within 45 min<br>
+    $35M+ annual labor savings<br>
+    45% fewer escalations in 90 days<br>
+    Shipments maintained through transition<br><br>
+    <strong>Signals future full case study.</strong><br>
+    "Full case study available on request" replaces<br>
+    the generic "details available on request" placeholder.<br>
+    When the full ITC case study is published, this card<br>
+    gets a link to the full story. No other changes needed.<br><br>
+    Client name withheld per ITC anonymization protocol.<br>
+    Industry and size signal only: PE-backed manufacturer,<br>
+    post-merger, mid-market scale implied by numbers.<br><br>
+    max-width: 760px, border-left: 4px gold<br>
+    Mobile: single column, reads top to bottom cleanly
+  </div>
+</div>
+
+
+<!-- BLOCK 9, LINKEDIN FOLLOW -->
+<div class="annotated">
+  <div class="section-tag">BLOCK 9, LINKEDIN FOLLOW</div>
+  <div class="linkedin-section">
+    <div class="linkedin-inner">
+      <div class="li-icon">in</div>
+      <div class="li-text">
+        <p>Follow ITC on LinkedIn for weekly organization design and execution insights.&nbsp;<a href="https://www.linkedin.com/company/itcpro/" target="_blank" rel="noopener">linkedin.com/company/itcpro</a></p>
+      </div>
+    </div>
+  </div>
+  <div class="anno" style="top:16px">
+    <strong>Block 9, LinkedIn</strong>
+    URL: linkedin.com/company/itcpro, confirmed slug, do not change<br>
+    Descriptor updated to ODE practice<br><br>
+    Background: white, border-top: 1px #E8E8E4<br>
+    Padding: 32px top/bottom
+  </div>
+</div>
+
+
+<!-- BLOCK 10, CONTACT MODULE -->
+<div class="annotated">
+  <div class="section-tag">BLOCK 10, CONTACT MODULE</div>
+  <div class="contact-section">
+    <div class="content-wrap">
+      <div class="contact-card">
+        <div class="contact-photo-ph">
+          <div class="ph-icon"></div>
+          <div class="ph-body"></div>
+        </div>
+        <div class="contact-info">
+          <a href="https://itc.pro/buck-seward" target="_blank" rel="noopener" class="contact-name-link">
+            <div class="contact-name">Buck Seward, JD, SHRM-SCP</div>
+          </a>
+          <div class="contact-title">Founding Partner, Organization Design &amp; Execution</div>
+          <div class="contact-creds">Harvard/MIT 6TC L2, Drucker OD, Agendashift Suite</div>
+          <a href="mailto:buck@itc.pro" class="contact-email">buck@itc.pro</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="anno" style="top:24px">
+    <strong>Block 10, Contact</strong>
+    <span class="changed">CHANGED v5</span> OKC v11 contact styling applied<br><br>
+    Single leader. ODE is not co-led.<br>
+    OKC uses dual-leader card. ODE uses single.<br><br>
+    Name links to itc.pro/buck-seward.<br>
+    Confirm slug with Robert before launch.<br>
+    Hover: teal underline on name.<br><br>
+    Background: #2A3F5F (lightened per OKC v11)<br>
+    Photo: 80px circle, replace placeholder post-launch<br>
+    File: buck-seward.jpg<br>
+    Alt: "Buck Seward, ITC Founding Partner"
+  </div>
+</div>
+
+
+<!-- META, URL, SEO -->
+<div class="annotated">
+  <div class="section-tag">META + SEO BLOCK, NOT RENDERED ON PAGE</div>
+  <div style="background:var(--lgray);padding:32px 0;border-top:2px solid #E0E0DC">
+    <div class="content-wrap">
+      <div style="font-family:'Source Code Pro',monospace;font-size:11.5px;color:var(--navy);line-height:2">
+        <strong style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:12px;color:var(--teal)">Page URL</strong>
+        https://itc.pro/organization-design-execution<br>
+        Hyphens, lowercase, no trailing slash, set as canonical URL in CMS<br><br>
+        <strong style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:12px;color:var(--teal)">Meta Title</strong>
+        Organization Design &amp; Execution | ITC<br>
+        47 characters, under 60-character limit<br><br>
+        <strong style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:12px;color:var(--teal)">Meta Description</strong>
+        Most organizations don't have a people problem. They have a design problem. ITC redesigns it alongside you. Measurable traction in 90 days.<br>
+        142 characters, under 160-character limit<br>
+        Opens with hero tagline for recognition continuity. Closes with outcome.<br><br>
+        <strong style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:12px;color:var(--teal)">Open Graph Tags</strong>
+        og:title: Organization Design &amp; Execution | ITC<br>
+        og:description: Most organizations don't have a people problem. They have a design problem. ITC redesigns it alongside you. Measurable traction in 90 days.<br>
+        og:url: https://itc.pro/organization-design-execution<br><br>
+        <strong style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:12px;color:var(--teal)">LinkedIn Company Page URL, Confirmed</strong>
+        https://www.linkedin.com/company/itcpro/<br>
+        Use everywhere. Do NOT change to itc.pro or institute-for-transformative-change.<br><br>
+        <strong style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:12px;color:var(--teal)">LinkedIn Specialties Field, Add These Verbatim</strong>
+        Organization Design, Execution Architecture, Workforce Capability Mapping,
+        Accountability Architecture, Decision Rights, Operating Model Design,
+        Governance and Decision Velocity, Future-Ready Capability Building,
+        AI-Driven Organization Design, Org Design Consulting, Workforce Transformation
+      </div>
+    </div>
+  </div>
+  <div class="anno" style="top:24px">
+    <strong>Meta + SEO Block</strong>
+    LinkedIn Specialties: all six cap-card names verbatim.<br>
+    AI search entity consistency mechanism.<br>
+    "AI-Driven Organization Design" is novel, claim early.<br><br>
+    LinkedIn URL decision: keep itcpro.<br>
+    Changing breaks all existing links.<br>
+    LinkedIn does not redirect old slugs.
+  </div>
+</div>
+
+
+<div class="responsive-bar">
+  <div class="rp-col">
+    <h4>DESKTOP 1200px+</h4>
+    <ul>
+      <li>Max content width: 960px centered</li>
+      <li>Hero: 100vh max 800px, H1 54px</li>
+      <li>Stat grid: 4-col 12px gap, bg #F8F8F6</li>
+      <li>Body: 17px Source Sans 3 300 lh 1.8</li>
+      <li>Not-do strip: lgray2 bg, teal left border</li>
+      <li>Positioning statement: 22px italic gold border</li>
+      <li>Boutique strip: teal left border, lgray2 bg</li>
+      <li class="new-item">Cap grid: 3-col, 6 pain-forward cards</li>
+      <li>Results strip: light gray bg, navy numbers</li>
+      <li>Credential strip: #F8F8F6, Playfair first-person</li>
+      <li>Win card: cap-card-feature format, gold left border</li>
+      <li class="changed-item">Block 8b Health Check: REMOVED, moves to resources page</li>
+      <li class="changed-item">Block 7b engagement model: REMOVED</li>
+      <li class="changed-item">Download block: hidden at launch</li>
+      <li>Sticky CTA: fixed bottom-right pill</li>
+    </ul>
+  </div>
+  <div class="rp-col">
+    <h4>TABLET 768px to 1199px</h4>
+    <ul>
+      <li>Content: 100% width 32px padding</li>
+      <li>Hero: 100vh, H1 scales 34-40px</li>
+      <li>Stat grid: 2-col, card 4 spans 2</li>
+      <li>Cap grid: 2-col</li>
+      <li>Results strip: wrap stats if needed</li>
+      <li>Win card: flex row maintained</li>
+      <li>CTA button: full width</li>
+    </ul>
+  </div>
+  <div class="rp-col">
+    <h4>MOBILE below 480px</h4>
+    <ul>
+      <li>Content: 100% 20px padding</li>
+      <li>Hero: 60vh H1 30px</li>
+      <li>Stat grid: 1-col, never 2x2</li>
+      <li>Cap grid: 1-col stack, 44px min tap target</li>
+      <li>Results strip: stack vertically</li>
+      <li>Win card: stack vertically, left panel first</li>
+      <li>Snapshot card: 20px padding</li>
+      <li>Sticky CTA: icon only below 360px</li>
+      <li>CTA button: width 100%</li>
+      <li>Video: poster-only on slow connections</li>
+      <li>prefers-reduced-motion: hide video</li>
+    </ul>
+  </div>
+</div>
+
+</div><!-- end page-sim -->
+
+<script>
+const stickyCta=document.getElementById('sticky-cta');
+const ctaSec=document.getElementById('cta-section');
+if(stickyCta&&ctaSec){
+  stickyCta.style.opacity='0';
+  stickyCta.style.pointerEvents='none';
+  window.addEventListener('scroll',function(){
+    const s=window.scrollY;
+    const ctaTop=ctaSec.getBoundingClientRect().top+window.scrollY;
+    if(s>400&&s<ctaTop-100){stickyCta.style.opacity='1';stickyCta.style.pointerEvents='auto';}
+    else{stickyCta.style.opacity='0';stickyCta.style.pointerEvents='none';}
+  });
+}
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',function(e){
+    const t=document.querySelector(this.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}
+  });
+});
+</script>
+</body>
+</html>
