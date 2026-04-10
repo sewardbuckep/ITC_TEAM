@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Operational Effectiveness &amp; Knowledge Continuity | ITC</title>
+<meta name="description" content="Most organizations don't have a knowledge problem. They have a continuity problem. ITC works alongside your internal team to close the gap. Measurable traction in 90 days.">
+<link rel="canonical" href="https://itc.pro/operational-effectiveness-knowledge-continuity">
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Source Sans 3', Arial, sans-serif; font-size: 16px; color: #222; background: #fff; }
+
+/* NAV */
+nav { background: #fff; border-bottom: 1px solid #dce6f0; padding: 0 32px; height: 68px; display: flex; align-items: center; justify-content: space-between; }
+.logo { font-size: 13px; font-weight: 600; color: #1A5276; text-transform: uppercase; letter-spacing: .04em; text-decoration: none; line-height: 1.4; }
+nav ul { list-style: none; display: flex; gap: 24px; }
+nav ul a { font-size: 14px; color: #444; text-decoration: none; }
+nav ul a:hover, nav ul a.active { color: #1A5276; }
+
+/* HERO */
+.hero { background: #1A5276; padding: 44px 32px 36px; text-align: center; border-bottom: 3px solid #2E5FA3; }
+.hero h1 { font-size: clamp(22px, 3.2vw, 34px); font-weight: 700; color: #fff; line-height: 1.2; }
+
+/* SHARED INNER */
+.inner { max-width: 960px; margin: 0 auto; }
+
+/* FRAMING */
+.framing { padding: 40px 32px 32px; border-bottom: 1px solid #dce6f0; }
+.framing p { font-size: 16px; line-height: 1.75; color: #374151; max-width: 820px; }
+
+/* BODY + PHOTO */
+.body-section { padding: 44px 32px; border-bottom: 1px solid #dce6f0; }
+.body-row { display: grid; grid-template-columns: 60fr 40fr; gap: 40px; align-items: start; }
+.body-text p { font-size: 15px; line-height: 1.78; color: #374151; margin-bottom: 14px; }
+.body-text p:last-child { margin-bottom: 0; }
+.photo-box { background: #eaf2fb; border: 1px solid #c8dced; border-radius: 4px; min-height: 220px; display: flex; align-items: center; justify-content: center; padding: 20px; }
+.photo-box p { font-size: 12px; color: #5a6b7d; text-align: center; line-height: 1.7; font-style: italic; }
+@media(max-width: 640px) { .body-row { grid-template-columns: 1fr; } }
+
+/* SCENARIOS */
+.scenarios { background: #eaf2fb; padding: 44px 32px; border-top: 1px solid #c8dced; border-bottom: 1px solid #c8dced; }
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.card { background: #fff; border: 1px solid #c8dced; border-top: 3px solid #1A5276; border-radius: 5px; padding: 18px 16px 14px; display: flex; flex-direction: column; gap: 0; }
+.card.ai-card { border-top-color: #2E5FA3; }
+.card-title { font-size: 14px; font-weight: 700; color: #1A5276; line-height: 1.25; padding-bottom: 8px; border-bottom: 1px solid #eaf2fb; margin-bottom: 8px; }
+.card-pain { font-size: 12.5px; color: #555; line-height: 1.5; font-style: italic; margin-bottom: 12px; }
+.card-sub { font-size: 10px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: #2E5FA3; margin-bottom: 5px; }
+.card-bullets { list-style: none; margin-bottom: 12px; display: flex; flex-direction: column; gap: 4px; }
+.card-bullets li { font-size: 12.5px; color: #333; line-height: 1.45; padding-left: 12px; position: relative; }
+.card-bullets li::before { content: ''; position: absolute; left: 0; top: 6px; width: 4px; height: 4px; background: #1A5276; border-radius: 50%; }
+.card-bullets.outcomes li::before { background: #2E5FA3; }
+.card-service { font-size: 11px; color: #777; margin-top: auto; padding-top: 10px; border-top: 1px solid #dce6f0; }
+.card-service span { font-style: italic; }
+@media(max-width: 640px) { .cards { grid-template-columns: 1fr; } }
+
+/* CTA */
+.cta { background: #f7f9fc; padding: 44px 32px; text-align: center; border-top: 1px solid #dce6f0; }
+.cta h3 { font-size: 20px; font-weight: 700; color: #1A5276; margin-bottom: 22px; }
+.cta a.btn { display: inline-block; background: #1A5276; color: #fff; font-size: 15px; font-weight: 600; padding: 13px 34px; border-radius: 4px; text-decoration: none; }
+.cta a.btn:hover { background: #2E5FA3; }
+
+/* CONTACT */
+.contact { background: #1A3550; padding: 20px 32px; border-top: 3px solid #2E5FA3; }
+.contact .inner { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
+.c-name { font-size: 14px; font-weight: 600; color: #fff; text-decoration: none; border-bottom: 1px solid transparent; transition: border-color .15s; }
+.c-name:hover { border-bottom-color: rgba(255,255,255,.5); }
+.c-sep { color: rgba(255,255,255,.35); }
+.c-role { font-size: 13px; color: rgba(255,255,255,.65); }
+.c-email { font-size: 13px; color: #8ecfcf; text-decoration: none; }
+.c-email:hover { text-decoration: underline; }
+.c-divider { width: 1px; height: 28px; background: rgba(255,255,255,.2); margin: 0 8px; }
+
+/* FOOTER */
+footer { background: #1A5276; padding: 18px 32px; text-align: center; }
+footer p { font-size: 12px; color: rgba(255,255,255,.45); }
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">Institute for<br>Transformative Change</a>
+  <ul>
+    <li><a href="#">Home</a></li>
+    <li><a href="#" class="active">Services</a></li>
+    <li><a href="#">Workshops</a></li>
+    <li><a href="#">Why ITC</a></li>
+    <li><a href="#">Our Team</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+</nav>
+
+
+<!-- BLOCK 1 - HERO -->
+<section class="hero">
+  <h1>Operational Effectiveness &amp; Knowledge Continuity</h1>
+</section>
+
+
+<!-- BLOCK 2 - FRAMING SENTENCE -->
+<section class="framing">
+  <div class="inner">
+    <p>Organizational Effectiveness and Knowledge Continuity is about making sure work still gets done well when people, processes, and structures change. The focus is on three things: keeping critical know-how inside the organization, making day-to-day operations easier and more effective, and getting teams ready to work with new technology and AI.</p>
+  </div>
+</section>
+
+
+<!-- BLOCK 3 - BODY COPY + PHOTO -->
+<section class="body-section">
+  <div class="inner">
+    <div class="body-row">
+      <div class="body-text">
+        <p>You already have the list. The names on it are the people whose departure would hurt, because what they know lives nowhere else in the organization. You know which transition exposed the fact that nobody documented how the critical work actually got done. You know which process depends on one person showing up.</p>
+        <p>Most organizations do not discover their knowledge risk at a predictable pace. They discover it when a change event lands: a restructuring, a digital initiative, an AI rollout that requires someone to explain how the work actually happens. The gap was always there. The event made it visible. We help organizations get ahead of it before the event forces their hand.</p>
+        <p>Most clients start with a conversation to get clarity on where the real risk is. Then they move into a project. We work at your pace. What we build, your team owns and sustains.</p>
+      </div>
+      <div class="photo-box">
+        <p>Photo: operational environment<br>frontline team or working session<br>practitioner alongside internal team<br>3:2 &middot; JPG</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- BLOCK 4 - SIX SCENARIOS -->
+<section class="scenarios">
+  <div class="inner">
+    <div class="cards">
+
+      <div class="card">
+        <div class="card-title">Someone on your team holds everything. Nothing is written down.</div>
+        <div class="card-pain">You could name them right now. What you don&apos;t have is any documented way to replace what they know when they leave.</div>
+        <div class="card-sub">How we work through it</div>
+        <ul class="card-bullets">
+          <li>Identify roles and processes most exposed if someone left tomorrow</li>
+          <li>Convert expert know-how into playbooks, decision guides, and mentoring routines</li>
+        </ul>
+        <div class="card-sub">What changes for you</div>
+        <ul class="card-bullets outcomes">
+          <li>Critical knowledge documented before a departure forces the issue</li>
+          <li>Incoming talent reaches effectiveness faster because the knowledge exists</li>
+        </ul>
+        <div class="card-service">Service: <span>Knowledge Continuity</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Everyone is busy. Half of what they&apos;re doing is working around a process that was never fixed.</div>
+        <div class="card-pain">The rework, the handoff delays, the unclear ownership between teams. It never had a fix. It got absorbed as how things work here.</div>
+        <div class="card-sub">How we work through it</div>
+        <ul class="card-bullets">
+          <li>Map the real workflow with the people who actually do the work</li>
+          <li>Guide teams to implement a focused set of high-impact changes</li>
+        </ul>
+        <div class="card-sub">What changes for you</div>
+        <ul class="card-bullets outcomes">
+          <li>Fewer delays and workarounds that became invisible because everyone adapted</li>
+          <li>Capacity freed from rework and redirected to work that moves things forward</li>
+        </ul>
+        <div class="card-service">Service: <span>Operational Effectiveness &amp; Process Improvement</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">You trained everyone on the new platform. How work actually happens hasn&apos;t changed.</div>
+        <div class="card-pain">Training completion looks fine. Adoption is not. People learned the tool but nobody redesigned the work it was supposed to improve.</div>
+        <div class="card-sub">How we work through it</div>
+        <ul class="card-bullets">
+          <li>Map how roles and workflows actually change with new technology</li>
+          <li>Define readiness at each role and level, beyond training completion</li>
+        </ul>
+        <div class="card-sub">What changes for you</div>
+        <ul class="card-bullets outcomes">
+          <li>Higher adoption because people understand how their work changes, not just how the tool works</li>
+          <li>Less disruption when new technology goes live</li>
+        </ul>
+        <div class="card-service">Service: <span>Digital Readiness</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Your supervisors know how to manage. They were never shown how to develop people.</div>
+        <div class="card-pain">Most frontline leaders were promoted because they were good at the work. Nobody prepared them to lead it. Performance is managed at annual reviews, not in daily routines.</div>
+        <div class="card-sub">How we work through it</div>
+        <ul class="card-bullets">
+          <li>Clarify what good supervision looks like in this specific organization</li>
+          <li>Build simple tools and routines supervisors will actually use</li>
+        </ul>
+        <div class="card-sub">What changes for you</div>
+        <ul class="card-bullets outcomes">
+          <li>Supervisors who manage performance daily instead of at the annual review</li>
+          <li>Clearer accountability and fewer mixed messages reaching the frontline</li>
+        </ul>
+        <div class="card-service">Service: <span>Frontline Capability &amp; Performance Architecture</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Nobody knows who owns what. Everyone has a guess.</div>
+        <div class="card-pain">Decisions get escalated that shouldn&apos;t. Work falls between teams because the boundary was never drawn. The invisible org chart runs things.</div>
+        <div class="card-sub">How we work through it</div>
+        <ul class="card-bullets">
+          <li>Map critical workflows against actual roles and decision rights</li>
+          <li>Support leaders in making and communicating clear ownership choices</li>
+        </ul>
+        <div class="card-sub">What changes for you</div>
+        <ul class="card-bullets outcomes">
+          <li>Accountability that holds when leaders change or the organization restructures</li>
+          <li>Less time spent escalating decisions that should be made one level down</li>
+        </ul>
+        <div class="card-service">Service: <span>Knowledge Architecture &amp; Accountability Design</span></div>
+      </div>
+
+      <div class="card ai-card">
+        <div class="card-title">The tools are coming. Nobody has mapped what actually needs to change in how people work.</div>
+        <div class="card-pain">Leadership wants AI in the operation. The technology is not the bottleneck. The question is whether the knowledge, the processes, and the people are ready.</div>
+        <div class="card-sub">How we work through it</div>
+        <ul class="card-bullets">
+          <li>Identify which AI use cases in your current workflows are realistic and ready</li>
+          <li>Document institutional know-how so AI tools can safely augment it</li>
+        </ul>
+        <div class="card-sub">What changes for you</div>
+        <ul class="card-bullets outcomes">
+          <li>AI tools that are actually used because the work around them was designed</li>
+          <li>Institutional expertise preserved and organized rather than at risk of walking out</li>
+        </ul>
+        <div class="card-service">Service: <span>AI Workflow Readiness &amp; Knowledge Architecture</span></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- BLOCK 5 - CTA -->
+<section class="cta">
+  <h3>If this describes your situation, let&apos;s talk.</h3>
+  <a href="https://scheduler.zoom.us/buck-seward/30-minute-working-conversation" class="btn" target="_blank" rel="noopener">
+    Schedule a Conversation &nbsp;&rarr;
+  </a>
+</section>
+
+
+<!-- BLOCK 6 - CONTACT LINE -->
+<div class="contact">
+  <div class="inner">
+    <a href="/team/carole-townsley" class="c-name">Carole Townsley</a>
+    <span class="c-sep">&middot;</span>
+    <span class="c-role">Founding Partner &amp; Practice Lead</span>
+    <span class="c-sep">&middot;</span>
+    <a href="mailto:carole@itc.pro" class="c-email">carole@itc.pro</a>
+    <div class="c-divider"></div>
+    <a href="/team/buck-seward" class="c-name">Buck Seward, JD, SHRM-SCP</a>
+    <span class="c-sep">&middot;</span>
+    <span class="c-role">Founding Partner &amp; Practice Lead</span>
+    <span class="c-sep">&middot;</span>
+    <a href="mailto:buck@itc.pro" class="c-email">buck@itc.pro</a>
+  </div>
+</div>
+
+
+<footer>
+  <p>&copy; 2026 Institute for Transformative Change &nbsp;&middot;&nbsp; itc.pro</p>
+</footer>
+
+</body>
+</html>
