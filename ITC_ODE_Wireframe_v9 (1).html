@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ITC Organization Design &amp; Execution, Practice Area Page</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,400&family=Source+Code+Pro:wght@400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#1B2A4A;
+  --blue:#1A5276;
+  --teal:#2E8B8B;
+  --gold:#D4A439;
+  --gray:#666;
+  --lgray:#F2F4F7;
+  --lgray2:#E8F4F4;
+  --off:#F8F8F6;
+  --note-bg:#FFFDE7;
+  --note-bd:#F9A825;
+  --note-tx:#5D3A00;
+  --red:#C0392B;
+  --green:#1A6B2E;
+  --max:960px
+}
+body{font-family:'Source Sans 3',sans-serif;font-size:16px;background:#EDEDEA;color:#1a1a1a}
+
+/* ─── WIREFRAME CHROME ─── */
+.wf-banner{position:sticky;top:0;z-index:1000;background:var(--navy);padding:10px 24px;display:flex;align-items:center;gap:16px;border-bottom:3px solid var(--gold)}
+.wf-title{font-family:'Source Code Pro',monospace;font-size:12px;color:var(--gold);letter-spacing:.08em}
+.wf-url{font-family:'Source Code Pro',monospace;font-size:12px;color:#7EB8B8}
+.wf-badge{margin-left:auto;background:var(--red);color:#fff;font-size:10px;font-weight:600;padding:3px 10px;border-radius:3px;letter-spacing:.1em;text-transform:uppercase}
+
+@media(min-width:1520px){}
+
+.page-sim{max-width:1200px;margin:0 auto;background:#fff;box-shadow:0 4px 32px rgba(0,0,0,.12)}
+.bp-bar{background:var(--navy);padding:6px 24px;font-size:11px;color:#7EB8B8;font-family:'Source Code Pro',monospace;display:flex;gap:24px}
+.bp-bar span{opacity:.6}
+.bp-bar span.active{opacity:1;color:var(--gold)}
+.content-wrap{max-width:var(--max);margin:0 auto;padding:0 24px}
+
+/* ─── TECH BAR ─── */
+.tech-bar{background:#0F1E10;padding:10px 24px;display:flex;gap:0;flex-wrap:wrap;border-bottom:2px solid #2A4A2A}
+.tech-bar-label{font-family:'Source Code Pro',monospace;font-size:10px;color:#64A064;letter-spacing:.1em;text-transform:uppercase;font-weight:600;margin-right:16px;padding-right:16px;border-right:1px solid #2A4A2A;flex-shrink:0}
+.tech-item{font-family:'Source Code Pro',monospace;font-size:10px;color:rgba(255,255,255,.5);padding:0 12px;border-right:1px solid #2A4A2A}
+.tech-item strong{color:#9ED89E;font-weight:600}
+.tech-item:last-child{border-right:none}
+
+/* ─── HERO ─── */
+.hero{background:var(--blue);padding:36px 0 32px;display:flex;align-items:center;justify-content:center;border-bottom:3px solid var(--teal)}
+.hero-content{text-align:center;padding:0 24px;max-width:760px}
+.hero-content h1{font-family:'Playfair Display',serif;font-size:clamp(22px,3.5vw,36px);font-weight:700;color:#fff;letter-spacing:-.01em;line-height:1.15}
+
+/* ─── BLOCK 2 — FRAMING TEXT ─── */
+.framing-section{padding:48px 0 40px;background:#fff;border-bottom:1px solid #E8E8E4}
+.framing-sentence{font-family:'Source Sans 3',sans-serif;font-size:15px;font-weight:400;color:#333;line-height:1.75;max-width:800px}
+
+/* ─── BLOCK 4 — BODY + PHOTO ─── */
+.body-section{padding:48px 0;background:#fff;border-bottom:1px solid #E8E8E4}
+/* Photo height matches text column exactly — align-items:stretch, photo fills 100% */
+.body-photo-row{
+  display:grid;
+  grid-template-columns:57fr 38fr;
+  gap:40px;
+  align-items:stretch;
+  max-width:var(--max)
+}
+.body-text p{font-size:15px;font-weight:400;color:#333;line-height:1.75;margin:0}
+.body-photo-ph{
+  background:var(--lgray);
+  border:2px dashed #C8C8C4;
+  border-radius:4px;
+  /* No fixed height — stretches to match text column */
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:16px;
+  min-height:0
+}
+.body-photo-ph p{font-family:'Source Code Pro',monospace;font-size:10px;color:var(--gray);text-align:center;line-height:1.8}
+
+/* ─── BLOCK 7 — THREE CARDS ─── */
+.cards-section{padding:40px 0;background:var(--lgray);border-top:1px solid #E0E0DC;border-bottom:1px solid #E0E0DC}
+.cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:var(--max)}
+
+/* TIGHTER CARDS — 33% height reduction
+   Padding: 18/16px → 12/14px
+   All internal gaps reduced */
+.cap-card{
+  background:#fff;
+  border-radius:8px;
+  padding:14px 14px 12px;
+  border:.5px solid #DDDDD8;
+  display:flex;
+  flex-direction:column;
+  gap:6px
+}
+.cap-card:not(.ai-card){border-top:3px solid var(--teal)}
+.cap-card.ai-card{border-top:3px solid var(--gold)}
+.cap-micro{font-family:'Playfair Display',serif;font-size:14px;font-weight:500;color:var(--navy);line-height:1.2;padding-bottom:6px;border-bottom:1px solid #EDEDEA}
+.cap-pain{font-size:12px;color:#555;line-height:1.45;font-weight:300;font-style:italic}
+.cap-sub-label{font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:3px;font-family:'Source Code Pro',monospace}
+.cap-bullets{list-style:none;display:flex;flex-direction:column;gap:3px}
+.cap-bullets li{font-size:12px;color:#444;line-height:1.4;font-weight:300;padding-left:12px;position:relative}
+.cap-bullets li::before{content:'';position:absolute;left:0;top:5px;width:4px;height:4px;background:var(--teal);border-radius:50%}
+.cap-outcomes li::before{background:var(--gold)}
+.cap-service{font-size:10px;color:var(--gray);font-weight:300;letter-spacing:.04em;margin-top:auto;padding-top:6px;border-top:1px solid #EDEDEA}
+.cap-service span{font-style:italic}
+
+/* ─── CTA ─── */
+.cta-section{padding:48px 0;background:var(--lgray2);border-top:1px solid rgba(46,139,139,.2)}
+.cta-inner{display:flex;flex-direction:column;align-items:center;max-width:600px;margin:0 auto}
+.cta-button{display:inline-block;background:var(--teal);color:#fff;font-size:15px;font-weight:600;padding:14px 36px;border-radius:6px;text-decoration:none;letter-spacing:.02em}
+.cta-button:hover{background:var(--navy)}
+
+/* ─── CONTACT STRIP ─── */
+.contact-strip{background:#2A3F5F;padding:24px 0;border-top:3px solid var(--teal)}
+.contact-inner{max-width:var(--max);margin:0 auto;padding:0 24px;display:flex;align-items:center;gap:20px}
+.contact-photo-ph{width:52px;height:52px;border-radius:50%;border:2px dashed rgba(255,255,255,.3);display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;gap:3px}
+.ph-icon{width:18px;height:18px;border-radius:50%;background:rgba(255,255,255,.2)}
+.ph-body{width:26px;height:13px;border-radius:13px 13px 0 0;background:rgba(255,255,255,.15)}
+.contact-divider{width:1px;height:40px;background:rgba(255,255,255,.15);flex-shrink:0}
+.contact-name{font-family:'Playfair Display',serif;font-size:14px;color:#fff;font-weight:500}
+.contact-title{font-size:11px;color:rgba(255,255,255,.7);font-weight:300;line-height:1.5;margin-top:1px}
+.contact-email{font-size:12px;color:#7ECECE;text-decoration:none;margin-top:3px;display:block}
+.contact-email:hover{text-decoration:underline}
+
+/* ─── MOBILE ─── */
+@media(max-width:600px){
+  .hero{padding:24px 0 20px}
+  .body-photo-row{grid-template-columns:1fr;gap:20px;align-items:start}
+  .body-photo-ph{min-height:160px}
+  .cards-grid{grid-template-columns:1fr}
+  .contact-divider{display:none}
+  .contact-inner{flex-wrap:wrap}
+}
+</style>
+</head>
+<body>
+
+<div class="wf-banner">
+  <div class="wf-title">ITC ANNOTATED WIREFRAME v9 — ODE — WORDPRESS CONTRACTOR HANDOFF</div>
+  <div class="wf-url">itc.pro/organization-design-execution</div>
+  <div class="wf-badge">DRAFT, NOT FOR PUBLICATION</div>
+</div>
+
+<div class="page-sim">
+<div class="bp-bar">
+  <span class="active">DESKTOP 1200px, viewing now</span>
+  <span>TABLET 768–1199px — cards stay 3-col</span>
+  <span>MOBILE below 600px — 1-col stack</span>
+</div>
+
+
+<!-- TECH BAR — contractor reference, not rendered on live page -->
+<div class="tech-bar">
+  <div class="tech-bar-label">Tech Stack</div>
+  <div class="tech-item"><strong>CMS:</strong> WordPress, Divi 5 Builder</div>
+  <div class="tech-item"><strong>Forms:</strong> Gravity Forms + Divi GF Premium</div>
+  <div class="tech-item"><strong>Payments:</strong> Stripe via GF Add-on</div>
+  <div class="tech-item"><strong>SEO:</strong> Rank Math SEO Pro</div>
+  <div class="tech-item"><strong>Analytics:</strong> MonsterInsights Pro + GSC</div>
+  <div class="tech-item"><strong>Hosting:</strong> Training Lion</div>
+  <div class="tech-item"><strong>Web dev:</strong> Rich Cruz, rich@itc.pro</div>
+</div>
+
+
+<!-- BLOCK 1 — HERO BANNER -->
+<div class="page-block">
+<div class="hero">
+    <div class="hero-content">
+      <h1>Organization Design &amp; Execution</h1>
+    </div>
+  </div>
+  
+</div>
+
+
+<!-- BLOCK 2 — FRAMING TEXT -->
+<div class="page-block" id="framing">
+<div class="framing-section">
+    <div class="content-wrap">
+      <p class="framing-sentence">Organization Design and Execution is about making sure the structure matches the work. The focus is on three things: making clear who owns which decisions and which work, removing the bottlenecks that slow capable teams down, and getting the operation ready for the workforce and technology changes already underway.</p>
+    </div>
+  </div>
+  
+</div>
+
+
+<!-- ─────────────────────────────────────
+     BLOCK 4 — BODY + PHOTO
+     CHANGED from v6: photo height now matches text column
+     align-items:stretch on grid row — both columns
+     grow to the same height. No fixed photo height.
+     Photo column is 38fr (slightly narrower than v6 40fr)
+     to further reduce photo visual weight.
+     ───────────────────────────────────── -->
+<div class="page-block">
+<div class="body-section">
+    <div class="content-wrap">
+      <div class="body-photo-row">
+        <div class="body-text">
+          <p>Most clients start with a conversation about what they already know is not working and what they want to be different. From there, the work becomes a project. We move at your pace. What we design, your team owns and runs. Most organizations at this scale see measurable value inside ninety days, in fewer escalations, faster decision cycles on critical work, and labor efficiency the CFO can see on the P&amp;L.</p>
+        </div>
+        <div class="body-photo-ph">
+          <p>
+            PHOTO — right column<br>
+            Height matches text column exactly<br>
+            (align-items:stretch · height:100%)<br><br>
+            ~3:2 or taller as text dictates<br>
+            JPG · loading=lazy · decoding=async<br><br>
+            Same brief as v8:<br>
+            Team working session · whiteboard ·<br>
+            practitioner alongside internal team<br>
+            Tone: operational, purposeful, adult
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+
+<!-- ─────────────────────────────────────
+     BLOCK 7 — THREE CARDS
+     CHANGED from v6:
+     · Section label "Do any of these sound familiar?" removed
+     · Card padding: 14px/12px (was 18/16px) — 33% height reduction
+     · Internal gaps: 6px → 3-4px
+     · Each card: 2 "how it works" bullets (was 3)
+     · Each card: 2 "what you get" bullets — unchanged
+     · Card 3: restored to clean AI card from v8 card 5/6
+       "The AI is in. Nobody knows who owns it."
+       Transition content removed — AI floats clean
+     · "The transition is already underway →" footer removed
+     ───────────────────────────────────── -->
+<div class="page-block">
+<div class="cards-section">
+    <div class="content-wrap">
+      <div class="cards-grid">
+
+        <!-- Card 1: Decisions keep stalling -->
+        <div class="cap-card">
+          <div class="cap-micro">Decisions keep stalling.</div>
+          <div class="cap-pain">Critical calls bounce upward and wait on the same one or two people. Everyone is busy. Nothing is moving.</div>
+          <div>
+            <div class="cap-sub-label">How it works</div>
+            <ul class="cap-bullets">
+              <li>Map where decisions consistently stall or land with the wrong person</li>
+              <li>Design decision flow around the speed the operation actually needs</li>
+            </ul>
+          </div>
+          <div>
+            <div class="cap-sub-label">What you get</div>
+            <ul class="cap-bullets cap-outcomes">
+              <li>Decisions made at the right level without constant escalation</li>
+              <li>Accountability that holds when leaders or teams change</li>
+            </ul>
+          </div>
+          <div class="cap-service">Service: <span>Accountability Architecture &amp; Governance</span></div>
+        </div>
+
+        <!-- Card 2: Initiatives start strong -->
+        <div class="cap-card">
+          <div class="cap-micro">Initiatives start strong.</div>
+          <div class="cap-pain">Projects stall not because the team can't deliver, but because nobody knows who unblocks it when it gets stuck.</div>
+          <div>
+            <div class="cap-sub-label">How it works</div>
+            <ul class="cap-bullets">
+              <li>Identify where execution breaks down and the structural cause behind each point</li>
+              <li>Redesign operating conditions so work flows without constant senior intervention</li>
+            </ul>
+          </div>
+          <div>
+            <div class="cap-sub-label">What you get</div>
+            <ul class="cap-bullets cap-outcomes">
+              <li>Visible improvement in execution speed within 90 days</li>
+              <li>Fewer initiatives abandoned mid-stream for structural reasons</li>
+            </ul>
+          </div>
+          <div class="cap-service">Service: <span>Execution Architecture</span></div>
+        </div>
+
+        <!-- Card 3: restored clean AI card from v8 card 5/6
+             "The AI is in. Nobody knows who owns it."
+             Transition content removed — AI floats on its own -->
+        <div class="cap-card ai-card">
+          <div class="cap-micro">The AI is in. Nobody knows who owns it.</div>
+          <div class="cap-pain">Tools are deployed and processes changed. But nobody defined who owns the exceptions, the oversight, or what happens when the output is wrong.</div>
+          <div>
+            <div class="cap-sub-label">How it works</div>
+            <ul class="cap-bullets">
+              <li>Map which roles have changed because of AI tools already in use or being implemented</li>
+              <li>Design the accountability structure for human-AI workflows before a failure forces the question</li>
+            </ul>
+          </div>
+          <div>
+            <div class="cap-sub-label">What you get</div>
+            <ul class="cap-bullets cap-outcomes">
+              <li>Clarity on who is responsible when an AI-assisted process needs review or reversal</li>
+              <li>AI adoption that holds because people understand their place in it</li>
+            </ul>
+          </div>
+          <div class="cap-service">Service: <span>AI-Driven Organization Design</span></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+
+<!-- BLOCK 8 — CTA BUTTON -->
+<div class="page-block" id="cta-section">
+<div class="cta-section">
+    <div class="content-wrap">
+      <div class="cta-inner">
+        <a href="https://scheduler.zoom.us/buck-seward/30-minute-working-conversation"
+           class="cta-button" target="_blank" rel="noopener">
+          Schedule a conversation →
+        </a>
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+
+<!-- BLOCK 10 — CONTACT STRIP -->
+<div class="page-block">
+<div class="contact-strip">
+    <div class="contact-inner">
+      <div class="contact-photo-ph">
+        <div class="ph-icon"></div>
+        <div class="ph-body"></div>
+      </div>
+      <div class="contact-divider"></div>
+      <div>
+        <div class="contact-name">Buck Seward, JD, SHRM-SCP</div>
+        <div class="contact-title">Founding Partner &amp; Practice Leader · Organization Design &amp; Execution</div>
+        <a href="mailto:buck@itc.pro" class="contact-email">buck@itc.pro</a>
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+
+<!-- META + SEO — UPDATED v9 to track current page content -->
+<div class="page-block">
+<div style="background:var(--lgray);padding:32px 0;border-top:2px solid #E0E0DC">
+    <div class="content-wrap">
+      <div style="font-family:'Source Code Pro',monospace;font-size:11.5px;color:var(--navy);line-height:2">
+
+        <strong style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:12px;color:var(--teal)">Page URL</strong>
+        https://itc.pro/organization-design-execution<br>
+        Hyphens, lowercase, no trailing slash, set as canonical URL in CMS<br><br>
+
+        <strong style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:12px;color:var(--teal)">Meta Title — 47 characters, under 60-character limit</strong>
+        Organization Design &amp; Execution | ITC<br><br>
+
+        <strong style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:12px;color:var(--teal)">Meta Description — UPDATED v9</strong>
+        Most organizations don't have a people problem. They have a structure problem. ITC redesigns it alongside your team. Measurable traction in 90 days.<br>
+        151 characters · under 160-character limit<br><br>
+        Change from v8: "design problem" → "structure problem"<br>
+        Aligns with Block 2 language: "making sure the structure matches the work."<br>
+        The v8 version echoed hero taglines that were removed in v5.<br>
+        This version mirrors language that is actually on the page.<br><br>
+
+        <strong style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:12px;color:var(--teal)">Open Graph Tags — UPDATED v9</strong>
+        og:title: Organization Design &amp; Execution | ITC<br>
+        og:description: Most organizations don't have a people problem. They have a structure problem. ITC redesigns it alongside your team. Measurable traction in 90 days.<br>
+        og:url: https://itc.pro/organization-design-execution<br><br>
+
+        <strong style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:12px;color:var(--teal)">LinkedIn Company Page URL — Confirmed, Do Not Change</strong>
+        https://www.linkedin.com/company/itcpro/<br>
+        Changing this slug breaks all existing links. LinkedIn does not redirect old slugs.<br><br>
+
+        <strong style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:12px;color:var(--teal)">LinkedIn Specialties — UPDATED v9 — Add Verbatim</strong>
+        Organization Design, Accountability Architecture, Decision Rights, Governance,
+        Execution Architecture, Operating Model Design, AI-Driven Organization Design,
+        AI Accountability, Org Design Consulting, Workforce Transformation<br><br>
+        Removed from v8 list: Workforce Capability Mapping (card removed from page),
+        Future-Ready Capability Building (card removed from page),
+        Governance and Decision Velocity (now Governance, per card 1 service label).<br>
+        Added: AI Accountability — reflects card 3 focus on human-AI workflow ownership.
+        Novel term, claim early. Signals AI governance competency without hype language.<br><br>
+
+        <strong style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:12px;color:var(--teal)">Rank Math SEO Pro — CMS Entry Checklist</strong>
+        Focus Keyword: organization design consulting<br>
+        Secondary keywords: execution architecture, decision rights, accountability structure, AI-driven organization design<br>
+        Canonical URL: https://itc.pro/organization-design-execution<br>
+        Schema type: Service (ServiceType: Organization Design &amp; Execution)<br>
+        og:image: upload hero image once photo is sourced — 1200 × 630px JPG<br>
+        og:image:alt: describe what is happening in the photo, not a label<br>
+
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+</div><!-- end page-sim -->
+
+<script>
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',function(e){
+    const t=document.querySelector(this.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}
+  });
+});
+</script>
+</body>
+</html>
