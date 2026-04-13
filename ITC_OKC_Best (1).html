@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Operational Effectiveness & Knowledge Continuity | ITC</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+
+/* ── RESET & BASE ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Source Sans 3', sans-serif; font-size: 16px; color: #1a1a1a; background: #fff; -webkit-font-smoothing: antialiased; }
+
+/* ── COLOR TOKENS ── */
+:root {
+  --navy:   #1A5276;
+  --teal:   #2E5FA3;
+  --mid:    #4A7FB5;
+  --light:  #dce6f0;
+  --pale:   #eaf2fb;
+  --bg:     #f7f9fc;
+  --text:   #374151;
+  --muted:  #6b7280;
+  --dark:   #1A3550;
+  --white:  #ffffff;
+  --amber:  #e6a817;
+  --green:  #1A6B3C;
+}
+
+/* ── TYPOGRAPHY ── */
+.serif { font-family: 'Libre Baskerville', Georgia, serif; }
+
+/* ── NAV ── */
+.nav { background: var(--white); border-bottom: 1px solid var(--light); padding: 0 40px; height: 68px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+.nav-logo { font-size: 11px; font-weight: 600; color: var(--navy); text-transform: uppercase; letter-spacing: .06em; text-decoration: none; line-height: 1.5; }
+.nav-links { list-style: none; display: flex; gap: 28px; }
+.nav-links a { font-size: 14px; color: #555; text-decoration: none; letter-spacing: .01em; transition: color .15s; }
+.nav-links a:hover, .nav-links a.active { color: var(--navy); }
+@media(max-width:680px){ .nav-links { display: none; } }
+
+/* ── HERO ── */
+.hero { background: var(--navy); padding: 52px 40px 44px; border-bottom: 3px solid var(--teal); }
+.hero-inner { max-width: 860px; margin: 0 auto; }
+.hero h1 { font-family: 'Libre Baskerville', Georgia, serif; font-size: clamp(24px, 3.5vw, 38px); font-weight: 700; color: var(--white); line-height: 1.2; letter-spacing: -.01em; }
+
+/* ── SHARED INNER ── */
+.inner { max-width: 860px; margin: 0 auto; }
+
+/* ── FRAMING ── */
+.framing { padding: 44px 40px 36px; border-bottom: 1px solid var(--light); }
+.framing-lead { font-family: 'Libre Baskerville', Georgia, serif; font-size: 22px; font-weight: 400; color: var(--navy); line-height: 1.45; margin-bottom: 18px; max-width: 720px; font-style: italic; }
+.framing-p { font-size: 16px; line-height: 1.8; color: var(--text); max-width: 720px; margin-bottom: 12px; }
+.framing-p:last-child { margin-bottom: 0; }
+
+/* ── BODY + PHOTO ── */
+.body-section { padding: 44px 40px; border-bottom: 1px solid var(--light); }
+.body-grid { display: grid; grid-template-columns: 1fr 340px; gap: 48px; align-items: start; }
+.body-p { font-size: 16px; line-height: 1.82; color: var(--text); margin-bottom: 18px; }
+.body-p:last-child { margin-bottom: 0; }
+.photo-box { background: var(--pale); border: 1px solid var(--light); border-radius: 3px; aspect-ratio: 3/2; display: flex; align-items: center; justify-content: center; padding: 20px; }
+.photo-box p { font-size: 11.5px; color: #7a8fa0; text-align: center; line-height: 1.65; font-style: italic; }
+@media(max-width:680px){ .body-grid { grid-template-columns: 1fr; } }
+
+/* ── FOCUS SECTION, LEFT BORDER PARAGRAPH STYLE ── */
+.focus-section { padding: 52px 40px; border-bottom: 1px solid var(--light); }
+.section-eyebrow { font-size: 10px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--mid); margin-bottom: 0; }
+
+.focus-item { border-left: 4px solid var(--navy); padding: 4px 0 4px 36px; margin-bottom: 0; text-align: left; }
+
+.fi-benefit { font-size: 10px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--mid); margin-bottom: 10px; text-align: left; }
+.fi-hook { font-family: 'Libre Baskerville', Georgia, serif; font-size: 20px; font-weight: 700; color: var(--navy); line-height: 1.35; margin-bottom: 12px; text-align: left; }
+.fi-pain { font-size: 15px; color: var(--text); line-height: 1.78; margin-bottom: 22px; font-style: italic; text-align: left; }
+.fi-label { font-size: 10px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--mid); margin-bottom: 9px; text-align: left; }
+.fi-bullets { list-style: none; margin-bottom: 20px; text-align: left; }
+.fi-bullets li { font-size: 14.5px; color: var(--text); line-height: 1.55; padding-left: 16px; position: relative; margin-bottom: 7px; text-align: left; }
+.fi-bullets li::before { content: ''; position: absolute; left: 0; top: 8px; width: 4px; height: 4px; background: var(--navy); border-radius: 50%; }
+.fi-bullets.out li::before { background: var(--teal); }
+.fi-leader { font-size: 13px; color: var(--teal); font-style: italic; line-height: 1.65; padding-top: 14px; border-top: 1px solid var(--light); text-align: left; }
+
+.focus-divider { border: none; border-top: 1px solid var(--light); margin: 40px 0 40px 40px; }
+
+@media(max-width:680px){
+  .focus-item { padding-left: 24px; }
+  .fi-hook { font-size: 17px; }
+}
+
+/* ── ITC STATEMENT ── */
+.itc-statement { padding: 40px 40px; border-bottom: 1px solid var(--light); background: var(--bg); }
+.itc-p { font-size: 16px; color: var(--text); line-height: 1.8; max-width: 720px; }
+.itc-p strong { color: var(--navy); font-weight: 600; }
+
+/* ── PROOF, ACCORDION ── */
+.proof-section { padding: 44px 40px; border-bottom: 1px solid var(--light); }
+
+.accordion-item { border-top: 1px solid var(--light); }
+.accordion-item:last-child { border-bottom: 1px solid var(--light); }
+
+.accordion-trigger { width: 100%; background: none; border: none; padding: 20px 0; cursor: pointer; display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; text-align: left; }
+.accordion-trigger:hover .acc-hook { color: var(--teal); }
+
+.acc-left { flex: 1; }
+.acc-tag { font-size: 10px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--mid); margin-bottom: 7px; display: block; }
+.acc-hook { font-family: 'Libre Baskerville', Georgia, serif; font-size: 17px; font-weight: 700; color: var(--navy); line-height: 1.35; transition: color .15s; }
+
+.acc-icon { flex-shrink: 0; width: 28px; height: 28px; border: 1.5px solid var(--light); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-top: 4px; transition: border-color .15s, background .15s; }
+.acc-icon svg { width: 12px; height: 12px; stroke: var(--navy); transition: transform .25s ease; }
+.accordion-trigger:hover .acc-icon { border-color: var(--teal); }
+.accordion-item.open .acc-icon { background: var(--navy); border-color: var(--navy); }
+.accordion-item.open .acc-icon svg { stroke: white; transform: rotate(45deg); }
+
+.accordion-body { display: none; padding: 0 48px 24px 0; border-left: 3px solid var(--navy); margin-left: 0; padding-left: 28px; }
+.accordion-item.open .accordion-body { display: block; }
+
+.acc-scr-label { font-size: 9px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--mid); display: block; margin-bottom: 4px; opacity: .7; }
+.acc-situation { font-size: 14.5px; color: var(--text); line-height: 1.78; margin-bottom: 12px; }
+.acc-challenge { font-size: 14.5px; color: var(--text); line-height: 1.78; margin-bottom: 12px; font-style: italic; }
+.acc-outcomes { font-size: 14.5px; color: var(--text); line-height: 1.78; }
+.acc-outcomes strong { color: var(--navy); font-weight: 600; }
+
+/* ── CTA ── */
+.cta { background: var(--navy); padding: 52px 40px; text-align: center; }
+.cta-inner { max-width: 600px; margin: 0 auto; }
+.cta h3 { font-family: 'Libre Baskerville', Georgia, serif; font-size: 22px; font-weight: 400; color: var(--white); line-height: 1.45; margin-bottom: 14px; font-style: italic; }
+.cta-conv { font-size: 15px; color: rgba(255,255,255,.75); line-height: 1.7; margin-bottom: 28px; }
+.cta-btn { display: inline-block; background: var(--white); color: var(--navy); font-size: 15px; font-weight: 600; padding: 14px 36px; border-radius: 3px; text-decoration: none; letter-spacing: .01em; transition: background .15s, color .15s; }
+.cta-btn:hover { background: var(--pale); }
+
+/* ── CONTACT ── */
+.contact { background: var(--dark); padding: 28px 40px; border-top: 3px solid var(--teal); }
+.contact-inner { max-width: 860px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+.contact-person { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 10px; }
+.c-name { font-size: 14px; font-weight: 600; color: var(--white); text-decoration: none; }
+.c-sep { color: rgba(255,255,255,.25); font-size: 14px; }
+.c-role { font-size: 13px; color: rgba(255,255,255,.6); }
+.c-email { font-size: 13px; color: #8ecfcf; text-decoration: none; }
+.c-email:hover { text-decoration: underline; }
+.c-divider { width: 100%; height: 1px; background: rgba(255,255,255,.1); }
+
+footer { background: var(--navy); padding: 18px 40px; text-align: center; }
+footer p { font-size: 12px; color: rgba(255,255,255,.4); }
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="#" class="nav-logo">Institute for<br>Transformative Change</a>
+  <ul class="nav-links">
+    <li><a href="#">Home</a></li>
+    <li><a href="#" class="active">Services</a></li>
+    <li><a href="#">Workshops</a></li>
+    <li><a href="#">Why ITC</a></li>
+    <li><a href="#">Our Team</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <h1>Operational Effectiveness &amp; Knowledge Continuity</h1>
+  </div>
+</section>
+
+<!-- FRAMING -->
+<section class="framing">
+  <div class="inner">
+    <p class="framing-lead">We help keep operations stable while the organization evolves.</p>
+    <p class="framing-p">When work is harder than it should be, it is almost always a process problem: the knowledge that lives in one person's head, the workaround that became standard procedure, the technology that arrived before anyone redesigned the work around it.</p>
+    <p class="framing-p">Organizational Effectiveness and Knowledge Continuity is about making sure work still gets done well when people, processes, and structures change. The focus is on three things: keeping critical know-how inside the organization, making day-to-day operations easier and more effective, and getting teams ready to work with new technology and AI.</p>
+  </div>
+</section>
+
+<!-- BODY + PHOTO -->
+<section class="body-section">
+  <div class="inner">
+    <div class="body-grid">
+      <div>
+        <p class="body-p">You already have the list. The names on it are the people whose departure would hurt, because what they know lives nowhere else in the organization. You know which transition exposed the fact that nobody documented how the critical work actually got done. You know which process depends on one person showing up.</p>
+        <p class="body-p">Most organizations do not discover their knowledge risk at a predictable pace. They discover it when a change event lands. The gap was always there. The event made it visible. For the leaders watching from the top, it shows up differently: in margin, in retention, in the cost of rebuilding what walked out the door.</p>
+      </div>
+      <div class="photo-box">
+        <p>Photo: operational environment<br>frontline team or working session<br>practitioner alongside internal team<br>3:2 · JPG</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOCUS AREAS, LEFT BORDER PARAGRAPH STYLE -->
+<section class="focus-section">
+  <div class="inner">
+    <div class="section-eyebrow" style="margin-bottom:36px;">What we help with</div>
+
+    <div class="focus-item">
+      <div class="fi-benefit">Protect Critical Knowledge</div>
+      <div class="fi-hook">Someone on your team holds everything. Nothing is written down.</div>
+      <p class="fi-pain">You could name them right now. Nobody wants to have that conversation because it feels like planning for someone to leave. And then they do, and you spend the next six months trying to rebuild what only they knew.</p>
+      <div class="fi-label">How we work through it</div>
+      <ul class="fi-bullets">
+        <li>Identify roles and processes most exposed if someone left tomorrow</li>
+        <li>Convert expert know-how into playbooks, decision guides, and mentoring routines</li>
+      </ul>
+      <div class="fi-label">What changes for you</div>
+      <ul class="fi-bullets out">
+        <li>Critical knowledge documented before a departure forces the issue</li>
+        <li>Incoming talent reaches effectiveness faster because the knowledge exists</li>
+      </ul>
+      <p class="fi-leader">For leadership: an unplanned departure in a critical role costs six to nine months of operational recovery. This gets ahead of it.</p>
+    </div>
+
+    <div class="focus-divider"></div>
+
+    <div class="focus-item">
+      <div class="fi-benefit">Strengthen Day-to-Day Operations</div>
+      <div class="fi-hook">Everyone is busy. Half of what they're doing is working around a process that was never fixed.</div>
+      <p class="fi-pain">The rework, the handoff delays, the unclear ownership between teams. It never had a fix. It got absorbed as how things work here.</p>
+      <div class="fi-label">How we work through it</div>
+      <ul class="fi-bullets">
+        <li>Map the real workflow with the people who actually do the work</li>
+        <li>Guide teams to implement a focused set of high-impact changes</li>
+      </ul>
+      <div class="fi-label">What changes for you</div>
+      <ul class="fi-bullets out">
+        <li>Fewer delays and workarounds that became invisible because everyone adapted</li>
+        <li>Capacity freed from rework and redirected to work that moves things forward</li>
+      </ul>
+      <p class="fi-leader">For leadership: the capacity your team burns on workarounds belongs on revenue-generating work. This is where it goes.</p>
+    </div>
+
+    <div class="focus-divider"></div>
+
+    <div class="focus-item">
+      <div class="fi-benefit">Prepare Teams for AI</div>
+      <div class="fi-hook">The tools are coming. Nobody has mapped what actually needs to change in how people work.</div>
+      <p class="fi-pain">You know you're behind. Some of your people are already using AI tools on their own. Nobody has set guardrails. Leadership says wait for the IT strategy. Meanwhile competitors are getting faster at things you're still doing by hand.</p>
+      <div class="fi-label">How we work through it</div>
+      <ul class="fi-bullets">
+        <li>Identify which AI use cases in your current workflows are realistic and ready</li>
+        <li>Document institutional know-how so AI tools can safely augment it</li>
+      </ul>
+      <div class="fi-label">What changes for you</div>
+      <ul class="fi-bullets out">
+        <li>AI tools that are actually used because the work around them was designed</li>
+        <li>Institutional expertise preserved and organized rather than at risk of walking out</li>
+      </ul>
+      <p class="fi-leader">For leadership: AI tool investments fail when the work around them was never designed. This is that design work. Before the rollout forces the issue.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ITC STATEMENT -->
+<section class="itc-statement">
+  <div class="inner">
+    <p class="itc-p">We can map the risks, simplify how work gets done, and protect the knowledge you cannot afford to lose. The person you speak with is the person who does the work. <strong>We do not sell knowledge management. We build the system that keeps your operation running when people leave, roles change, and technology arrives.</strong></p>
+  </div>
+</section>
+
+<!-- PROOF, ACCORDION -->
+<section class="proof-section">
+  <div class="inner">
+    <div class="section-eyebrow" style="margin-bottom:8px;">From the field</div>
+
+    <!-- ROW 1, CONFIRMED -->
+    <div class="accordion-item" id="proof-1">
+      <button class="accordion-trigger" onclick="toggleProof('proof-1')" aria-expanded="false">
+        <div class="acc-left">
+          <span class="acc-tag">Financial Services &nbsp;·&nbsp; Knowledge Continuity</span>
+          <div class="acc-hook">Three senior leaders announced departures in the same quarter. None of their critical workflows had ever been documented.</div>
+        </div>
+        <div class="acc-icon">
+          <svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+        </div>
+      </button>
+      <div class="accordion-body">
+        <span class="acc-scr-label">Situation</span>
+        <p class="acc-situation">Regional financial services firm. Three senior leaders announced departures in the same quarter. None of the critical workflows they owned had ever been documented. It all lived in their heads and in informal relationships built over years.</p>
+        <span class="acc-scr-label">Challenge</span>
+        <p class="acc-challenge">The team knew the knowledge was at risk. Nobody had a system for capturing it before the exits happened. The firm had weeks, not months, before the first departure date.</p>
+        <span class="acc-scr-label">Outcomes and Signs of Winning</span>
+        <p class="acc-outcomes">Critical workflow documentation completed and transferred before the first departure date. <strong>Incoming leaders productive in their first 30 days</strong> because the knowledge existed to hand off, not rebuild from scratch after the fact.</p>
+      </div>
+    </div>
+
+    <!-- ROW 2 - PORTFOLIO -->
+    <div class="accordion-item" id="proof-2">
+      <button class="accordion-trigger" onclick="toggleProof('proof-2')" aria-expanded="false">
+        <div class="acc-left">
+          <span class="acc-tag">Field Services &nbsp;·&nbsp; AI Workflow Readiness</span>
+          <div class="acc-hook">We rolled out AI across fourteen markets before we had a management system to run it through. Nobody had mapped how the work had to change first.</div>
+        </div>
+        <div class="acc-icon">
+          <svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+        </div>
+      </button>
+      <div class="accordion-body">
+        <span class="acc-scr-label">Situation</span>
+        <p class="acc-situation">Mid-market field services company. Fourteen markets. AI tools deployed before anyone designed how field managers and coordinators would actually use them day to day.</p>
+        <span class="acc-scr-label">Challenge</span>
+        <p class="acc-challenge">Adoption was stalled. Managers were bypassing the tools entirely. The technology was sound. The workflow design and the readiness work had never happened. Nobody owned that gap once the vendor finished their scope.</p>
+        <span class="acc-scr-label">Outcomes and Signs of Winning</span>
+        <p class="acc-outcomes">Built a cross-functional team to integrate the technology with existing platforms and fed what we learned directly back into the process as we went. <strong>Adoption moved from 30% to 75% in 45 days.</strong> Managers effective in their new workflows within 30 days. Rework cut 50% within 60 days.</p>
+      </div>
+    </div>
+
+    <!-- ROW 3 - PORTFOLIO -->
+    <div class="accordion-item" id="proof-3">
+      <button class="accordion-trigger" onclick="toggleProof('proof-3')" aria-expanded="false">
+        <div class="acc-left">
+          <span class="acc-tag">PE-Backed Field Services, HVACR &nbsp;·&nbsp; Operational Effectiveness</span>
+          <div class="acc-hook">Six companies under one roof with no unified way of doing the work. Technician retention was 22 points apart between the best and worst operations.</div>
+        </div>
+        <div class="acc-icon">
+          <svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg>
+        </div>
+      </button>
+      <div class="accordion-body">
+        <span class="acc-scr-label">Situation</span>
+        <p class="acc-situation">PE-backed HVACR platform. Six acquired companies operating independently under one ownership structure. No shared service delivery model. Technician development and retention varied dramatically across operations.</p>
+        <span class="acc-scr-label">Challenge</span>
+        <p class="acc-challenge">Retention was 22 points apart between the best and worst operations. The knowledge of what worked in the high-performing companies was not traveling to the others. Each acquisition had kept its own way of developing and retaining technicians. Nobody had built the connective tissue between them.</p>
+        <span class="acc-scr-label">Outcomes and Signs of Winning</span>
+        <p class="acc-outcomes">Built one service delivery model from what was already working inside the platform and standardized technician development across all six companies. <strong>Retention improved 19% across the board.</strong> Referral revenue between the companies up 24% in two quarters.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="cta-inner">
+    <h3>If you already know where the work feels fragile, that is the best place to start.</h3>
+    <p class="cta-conv">In 30 minutes you will know exactly where your highest risk is and what a first step looks like. That is useful whether or not we work together.</p>
+    <a href="https://scheduler.zoom.us/buck-seward/30-minute-working-conversation" class="cta-btn" target="_blank" rel="noopener">Schedule a 30-Minute Working Conversation &nbsp;→</a>
+  </div>
+</section>
+
+<!-- CONTACT, STACKED -->
+<div class="contact">
+  <div class="contact-inner">
+    <div class="contact-person">
+      <a href="/team/carole-townsley" class="c-name">Carole Townsley, MSIO, SPHR</a>
+      <span class="c-sep">·</span>
+      <span class="c-role">Founding Partner &amp; Practice Lead</span>
+      <span class="c-sep">·</span>
+      <a href="mailto:carole@itc.pro" class="c-email">carole@itc.pro</a>
+    </div>
+    <div class="c-divider"></div>
+    <div class="contact-person">
+      <a href="/team/buck-seward" class="c-name">Buck Seward, JD, SHRM-SCP</a>
+      <span class="c-sep">·</span>
+      <span class="c-role">Founding Partner &amp; Practice Lead</span>
+      <span class="c-sep">·</span>
+      <a href="mailto:buck@itc.pro" class="c-email">buck@itc.pro</a>
+    </div>
+  </div>
+</div>
+<footer>
+  <p>© 2026 Institute for Transformative Change &nbsp;·&nbsp; itc.pro</p>
+</footer>
+
+<script>
+function toggleProof(id) {
+  var item = document.getElementById(id);
+  var btn = item.querySelector('.accordion-trigger');
+  var isOpen = item.classList.contains('open');
+
+  // Close all open items first
+  document.querySelectorAll('.accordion-item.open').forEach(function(el) {
+    el.classList.remove('open');
+    el.querySelector('.accordion-trigger').setAttribute('aria-expanded', 'false');
+  });
+
+  // If this one was closed, open it
+  if (!isOpen) {
+    item.classList.add('open');
+    btn.setAttribute('aria-expanded', 'true');
+  }
+}
+</script>
+
+</body>
+</html>
