@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Organization Design &amp; Execution | ITC</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,400&family=Source+Code+Pro:wght@400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#1B2A4A;
+  --blue:#1A5276;
+  --teal:#2E8B8B;
+  --gold:#D4A439;
+  --gray:#666;
+  --lgray:#F2F4F7;
+  --lgray2:#E8F4F4;
+  --off:#F8F8F6;
+  --light:#dce6f0;
+  --pale:#eaf2fb;
+  --mid:#4A7FB5;
+  --text:#374151;
+  --max:960px
+}
+body{font-family:'Source Sans 3',sans-serif;font-size:16px;background:#fff;color:#1a1a1a;-webkit-font-smoothing:antialiased}
+
+/* ─── LAYOUT ─── */
+.content-wrap{max-width:var(--max);margin:0 auto;padding:0 40px}
+
+/* ─── TECH BAR — contractor reference only ─── */
+.tech-bar{background:#0F1E10;padding:10px 24px;display:flex;gap:0;flex-wrap:wrap;border-bottom:2px solid #2A4A2A}
+.tech-bar-label{font-family:'Source Code Pro',monospace;font-size:10px;color:#64A064;letter-spacing:.1em;text-transform:uppercase;font-weight:600;margin-right:16px;padding-right:16px;border-right:1px solid #2A4A2A;flex-shrink:0}
+.tech-item{font-family:'Source Code Pro',monospace;font-size:10px;color:rgba(255,255,255,.5);padding:0 12px;border-right:1px solid #2A4A2A}
+.tech-item strong{color:#9ED89E;font-weight:600}
+.tech-item:last-child{border-right:none}
+
+/* ─── HERO ─── */
+.hero{background:var(--blue);padding:36px 0 32px;display:flex;align-items:center;justify-content:center;border-bottom:3px solid var(--teal)}
+.hero-content{text-align:center;padding:0 24px;max-width:760px}
+.hero-content h1{font-family:'Playfair Display',serif;font-size:clamp(22px,3.5vw,36px);font-weight:700;color:#fff;letter-spacing:-.01em;line-height:1.15}
+
+/* ─── BLOCK 2 — FRAMING ─── */
+.framing-section{padding:48px 0 40px;background:#fff;border-bottom:1px solid var(--light)}
+.framing-sentence{font-family:'Source Sans 3',sans-serif;font-size:15px;font-weight:400;color:#333;line-height:1.75;max-width:800px}
+
+/* ─── BLOCK 4 — BODY + PHOTO ─── */
+.body-section{padding:48px 0;background:#fff;border-bottom:1px solid var(--light)}
+.body-photo-row{display:grid;grid-template-columns:57fr 38fr;gap:40px;align-items:stretch;max-width:var(--max)}
+.body-text p{font-size:15px;font-weight:400;color:#333;line-height:1.75;margin:0}
+.body-photo-ph{background:var(--pale);border:1px solid var(--light);border-radius:3px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:20px;min-height:0}
+.body-photo-ph p{font-size:11.5px;color:#7a8fa0;text-align:center;line-height:1.65;font-style:italic}
+
+/* ─── BLOCK 7 — WHAT WE HELP WITH (OKC FOCUS-ITEM FORMAT) ─── */
+.focus-section{padding:52px 0;background:#fff;border-top:1px solid var(--light);border-bottom:1px solid var(--light)}
+.focus-item{border-left:4px solid var(--navy);padding:4px 0 4px 36px;margin-bottom:0}
+.fi-benefit{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);margin-bottom:10px}
+.fi-hook{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--navy);line-height:1.35;margin-bottom:12px}
+.fi-pain{font-size:15px;color:var(--text);line-height:1.78;margin-bottom:22px;font-style:italic}
+.fi-label{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);margin-bottom:9px}
+.fi-bullets{list-style:none;margin-bottom:20px}
+.fi-bullets li{font-size:14.5px;color:var(--text);line-height:1.55;padding-left:16px;position:relative;margin-bottom:7px}
+.fi-bullets li::before{content:'';position:absolute;left:0;top:8px;width:4px;height:4px;background:var(--navy);border-radius:50%}
+.fi-bullets.out li::before{background:var(--teal)}
+.fi-leader{font-size:13px;color:var(--teal);font-style:italic;line-height:1.65;padding-top:14px;border-top:1px solid var(--light)}
+.focus-divider{border:none;border-top:1px solid var(--light);margin:40px 0 40px 40px}
+@media(max-width:600px){
+  .focus-item{padding-left:24px}
+  .fi-hook{font-size:17px}
+  .focus-divider{margin:32px 0 32px 24px}
+}
+
+/* ─── BLOCK 8 — PROOF ACCORDION ─── */
+.proof-section{padding:44px 0;background:#fff;border-bottom:1px solid var(--light)}
+.section-eyebrow{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--mid);margin-bottom:8px}
+.accordion-item{border-top:1px solid var(--light)}
+.accordion-item:last-child{border-bottom:1px solid var(--light)}
+.accordion-trigger{width:100%;background:none;border:none;padding:20px 0;cursor:pointer;display:flex;align-items:flex-start;justify-content:space-between;gap:20px;text-align:left}
+.accordion-trigger:hover .acc-hook{color:var(--teal)}
+.acc-left{flex:1}
+.acc-tag{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);margin-bottom:7px;display:block}
+.acc-hook{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--navy);line-height:1.35;transition:color .15s}
+.acc-icon{flex-shrink:0;width:28px;height:28px;border:1.5px solid var(--light);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-top:4px;transition:border-color .15s,background .15s}
+.acc-icon svg{width:12px;height:12px;stroke:var(--navy);transition:transform .25s ease}
+.accordion-trigger:hover .acc-icon{border-color:var(--teal)}
+.accordion-item.open .acc-icon{background:var(--navy);border-color:var(--navy)}
+.accordion-item.open .acc-icon svg{stroke:#fff;transform:rotate(45deg)}
+.accordion-body{display:none;padding:0 48px 24px 28px;border-left:3px solid var(--navy)}
+.accordion-item.open .accordion-body{display:block}
+.acc-scr-label{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);display:block;margin-bottom:4px;opacity:.7;margin-top:14px}
+.acc-scr-label:first-child{margin-top:0}
+.acc-situation{font-size:14.5px;color:var(--text);line-height:1.78;margin-bottom:0}
+.acc-challenge{font-size:14.5px;color:var(--text);line-height:1.78;margin-bottom:0;font-style:italic}
+.acc-outcomes{font-size:14.5px;color:var(--text);line-height:1.78;margin-bottom:0}
+.acc-outcomes strong{color:var(--navy);font-weight:600}
+
+/* ─── CTA — matches OKC exactly ─── */
+.cta-section{background:var(--navy);padding:52px 40px;text-align:center}
+.cta-inner{max-width:600px;margin:0 auto}
+.cta-section h3{font-family:'Playfair Display',Georgia,serif;font-size:22px;font-weight:400;color:#fff;line-height:1.45;margin-bottom:14px;font-style:italic}
+.cta-conv{font-size:15px;color:rgba(255,255,255,.75);line-height:1.7;margin-bottom:28px}
+.cta-btn{display:inline-block;background:#fff;color:var(--navy);font-size:15px;font-weight:600;padding:14px 36px;border-radius:3px;text-decoration:none;letter-spacing:.01em;transition:background .15s,color .15s}
+.cta-btn:hover{background:var(--pale,#eaf2fb)}
+
+/* ─── CONTACT — matches OKC exactly ─── */
+.contact{background:#1A3550;padding:28px 40px;border-top:3px solid var(--teal)}
+.contact-inner{max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+.contact-person{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 10px}
+.c-name{font-size:14px;font-weight:600;color:#fff;text-decoration:none}
+.c-sep{color:rgba(255,255,255,.25);font-size:14px}
+.c-role{font-size:13px;color:rgba(255,255,255,.6)}
+.c-email{font-size:13px;color:#8ecfcf;text-decoration:none}
+.c-email:hover{text-decoration:underline}
+.c-divider{width:100%;height:1px;background:rgba(255,255,255,.1)}
+
+/* ─── META BLOCK ─── */
+.meta-block{background:var(--lgray);padding:32px 0;border-top:2px solid #E0E0DC}
+
+/* ─── MOBILE ─── */
+@media(max-width:600px){
+  .content-wrap{padding:0 20px}
+  .hero{padding:24px 0 20px}
+  .body-photo-row{grid-template-columns:1fr;gap:20px;align-items:start}
+  .body-photo-ph{min-height:180px}
+  .cards-grid{grid-template-columns:1fr}
+  .accordion-body{padding:0 0 20px 20px}
+  .contact-divider{display:none}
+  .contact-inner{flex-wrap:wrap;padding:0 20px}
+}
+</style>
+</head>
+<body>
+
+
+<!-- TECH BAR — contractor reference, not rendered on live page -->
+<div class="tech-bar">
+  <div class="tech-bar-label">Tech Stack</div>
+  <div class="tech-item"><strong>CMS:</strong> WordPress, Divi 5 Builder</div>
+  <div class="tech-item"><strong>Forms:</strong> Gravity Forms + Divi GF Premium</div>
+  <div class="tech-item"><strong>Payments:</strong> Stripe via GF Add-on</div>
+  <div class="tech-item"><strong>SEO:</strong> Rank Math SEO Pro</div>
+  <div class="tech-item"><strong>Analytics:</strong> MonsterInsights Pro + GSC</div>
+  <div class="tech-item"><strong>Hosting:</strong> Training Lion</div>
+  <div class="tech-item"><strong>Web dev:</strong> Rich Cruz, rich@itc.pro</div>
+</div>
+
+
+<!-- BLOCK 1 — HERO BANNER -->
+<div class="hero">
+  <div class="hero-content">
+    <h1>Organization Design &amp; Execution</h1>
+  </div>
+</div>
+
+
+<!-- BLOCK 2 — FRAMING TEXT -->
+<div class="framing-section" id="framing">
+  <div class="content-wrap">
+    <p class="framing-sentence">Organization Design and Execution is about making sure the structure matches the work. The focus is on three things: making clear who owns which decisions and which work, removing the bottlenecks that slow capable teams down, and getting the operation ready for the workforce and technology changes already underway.</p>
+  </div>
+</div>
+
+
+<!-- BLOCK 4 — BODY COPY + PHOTO -->
+<div class="body-section">
+  <div class="content-wrap">
+    <div class="body-photo-row">
+      <div class="body-text">
+        <p>Most clients start with a conversation about what they already know is not working and what they want to be different. From there, the work becomes a project. We move at your pace. What we design, your team owns and runs. Most organizations at this scale see measurable value inside ninety days, in fewer escalations, faster decision cycles on critical work, and labor efficiency the CFO can see on the P&amp;L.</p>
+      </div>
+      <div class="body-photo-ph">
+        <p>Photo placeholder<br>Team working session<br>practitioner alongside internal team<br>3:2 ratio · JPG<br>loading="lazy"</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- BLOCK 7 — WHAT WE HELP WITH -->
+<div class="focus-section">
+  <div class="content-wrap">
+    <div class="section-eyebrow" style="margin-bottom:36px;">What we help with</div>
+
+    <div class="focus-item">
+      <div class="fi-benefit">Who Owns the Work</div>
+      <div class="fi-hook">Decisions keep stalling. The same calls land on the same two people every time.</div>
+      <p class="fi-pain">Critical decisions bounce upward and wait. Everyone is busy. Nothing is moving. It's not that the team can't decide — it's that nobody has ever gotten clear on who actually owns which decisions and which work.</p>
+      <div class="fi-label">How we work through it</div>
+      <ul class="fi-bullets">
+        <li>Map where decisions consistently stall or land with the wrong person</li>
+        <li>Design decision flow around the speed the operation actually needs</li>
+      </ul>
+      <div class="fi-label">What changes for you</div>
+      <ul class="fi-bullets out">
+        <li>Decisions made at the right level without constant escalation</li>
+        <li>Accountability that holds when leaders or teams change</li>
+      </ul>
+      <p class="fi-leader">For leadership: every decision that escalates unnecessarily costs your team time and costs you attention. This builds the structure that stops it.</p>
+    </div>
+
+    <hr class="focus-divider">
+
+    <div class="focus-item">
+      <div class="fi-benefit">Execution That Holds</div>
+      <div class="fi-hook">Initiatives start strong. They slow in the middle and stall before they land.</div>
+      <p class="fi-pain">Projects stall not because the team can't deliver, but because nobody knows who unblocks it when it gets stuck. The gap between what was designed and what actually runs is almost always structural — not a people problem.</p>
+      <div class="fi-label">How we work through it</div>
+      <ul class="fi-bullets">
+        <li>Identify where execution breaks down and the structural cause behind each point</li>
+        <li>Redesign operating conditions so work flows without constant senior intervention</li>
+      </ul>
+      <div class="fi-label">What changes for you</div>
+      <ul class="fi-bullets out">
+        <li>Visible improvement in execution speed within 90 days</li>
+        <li>Fewer initiatives abandoned mid-stream for structural reasons</li>
+      </ul>
+      <p class="fi-leader">For leadership: every initiative that stalls in the middle is a budget line that didn't deliver. This closes the gap between what was approved and what actually ran.</p>
+    </div>
+
+    <hr class="focus-divider">
+
+    <div class="focus-item">
+      <div class="fi-benefit">AI Accountability</div>
+      <div class="fi-hook">The AI is already in. Nobody defined who owns what happens when it's wrong.</div>
+      <p class="fi-pain">Tools are deployed and processes changed. But nobody defined who owns the exceptions, the oversight, or what happens when the output is wrong. That gap is not a technology problem. It's an accountability problem.</p>
+      <div class="fi-label">How we work through it</div>
+      <ul class="fi-bullets">
+        <li>Map which roles have changed because of AI tools already in use or being implemented</li>
+        <li>Design the accountability structure for human-AI workflows before a failure forces the question</li>
+      </ul>
+      <div class="fi-label">What changes for you</div>
+      <ul class="fi-bullets out">
+        <li>Clarity on who is responsible when an AI-assisted process needs review or reversal</li>
+        <li>AI adoption that holds because people understand their place in it</li>
+      </ul>
+      <p class="fi-leader">For leadership: AI tool failures surface as operational incidents. This builds the ownership structure before the first one lands.</p>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- BLOCK 8 — FROM THE FIELD — ACCORDION PROOF -->
+<div class="proof-section">
+  <div class="content-wrap">
+    <div class="section-eyebrow">From the field</div>
+
+    <!-- STORY 1 — Decisions keep stalling
+         Foodservice Equipment Manufacturing · Decision Rights & Governance
+         EBITDA 2% → 14% · 100% leadership retention · 2 of 14 op cos adopted model -->
+    <div class="accordion-item" id="ode-proof-1">
+      <button class="accordion-trigger" onclick="toggleProof('ode-proof-1')" aria-expanded="false">
+        <div class="acc-left">
+          <span class="acc-tag">Foodservice Equipment Manufacturer &nbsp;·&nbsp; Decision Rights &amp; Governance</span>
+          <div class="acc-hook">We kept missing our numbers and every program corporate sent in got waited out by the same team. Nobody had ever gotten clear on who owned what — so when things went wrong, accountability had nowhere to land.</div>
+        </div>
+        <div class="acc-icon">
+          <svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round">
+            <line x1="6" y1="1" x2="6" y2="11"/>
+            <line x1="1" y1="6" x2="11" y2="6"/>
+          </svg>
+        </div>
+      </button>
+      <div class="accordion-body">
+        <span class="acc-scr-label">Situation</span>
+        <p class="acc-situation">A $140M division inside a Fortune 500 foodservice equipment company had missed its numbers three quarters in a row. Corporate needed visible progress before the next board cycle but could not impose a top-down restructuring — the semi-autonomous model was a core part of how the company operated across all twenty-three of its divisions.</p>
+        <span class="acc-scr-label">Challenge</span>
+        <p class="acc-challenge">The division's leadership team had strong tenure but had never operated under a structured performance management cadence. Prior corporate programs had been launched and quietly abandoned, and the workforce had learned to wait them out. Nobody had ever built a governance structure the division actually owned — so when things went sideways, there was nowhere for accountability to land.</p>
+        <span class="acc-scr-label">Outcomes and Signs of Winning</span>
+        <p class="acc-outcomes"><strong>EBITDA moved from 2% to 14%.</strong> Every leader on the division team stayed through close. Two of the other fourteen operating companies in the portfolio asked to use the same governance model without being asked. The board stopped wondering whether the people running the business had a handle on it.</p>
+      </div>
+    </div>
+
+    <!-- STORY 2 — Initiatives start strong
+         PE-Backed Field Service Platform · Execution Architecture
+         32% productivity · 5 markets above threshold · 18% overtime reduction -->
+    <div class="accordion-item" id="ode-proof-2">
+      <button class="accordion-trigger" onclick="toggleProof('ode-proof-2')" aria-expanded="false">
+        <div class="acc-left">
+          <span class="acc-tag">PE-Backed Field Service Platform &nbsp;·&nbsp; Execution Architecture</span>
+          <div class="acc-hook">Fourteen markets and a platform thesis — and productivity 40 points apart between our best and worst operations. Five markets were at contract renewal risk and nobody had a baseline reliable enough to build a plan from.</div>
+        </div>
+        <div class="acc-icon">
+          <svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round">
+            <line x1="6" y1="1" x2="6" y2="11"/>
+            <line x1="1" y1="6" x2="11" y2="6"/>
+          </svg>
+        </div>
+      </button>
+      <div class="accordion-body">
+        <span class="acc-scr-label">Situation</span>
+        <p class="acc-situation">A PE-backed commercial kitchen and HVACR service platform had been assembled through three acquisitions over four years, reaching $160M in revenue across fourteen markets. Each acquired business had kept its own dispatch system, its own technician standards, and its own pricing model. The sponsor had a platform thesis. The platform did not function as one.</p>
+        <span class="acc-scr-label">Challenge</span>
+        <p class="acc-challenge">Field productivity varied 40% between the highest- and lowest-performing markets. Five markets were running below customer satisfaction thresholds that triggered contract renewal risk. The COO had clear financial targets for the next twelve months and no operational baseline reliable enough to build a plan from. The structure looked like a platform. It ran like a collection of separate businesses.</p>
+        <span class="acc-scr-label">Outcomes and Signs of Winning</span>
+        <p class="acc-outcomes"><strong>Field productivity improved 32% across all fourteen markets within twelve months.</strong> Five markets crossed above customer satisfaction renewal thresholds. Overtime cost dropped 18% from dispatch efficiency gains. The platform had a documented operating model it could replicate into future acquisitions.</p>
+      </div>
+    </div>
+
+    <!-- STORY 3 — AI is in, nobody owns it
+         Mid-Market Manufacturer · AI Accountability & Organization Design
+         Turnover 34% → 19% · 61% fewer overrides · investment case hit month 11 -->
+    <div class="accordion-item" id="ode-proof-3">
+      <button class="accordion-trigger" onclick="toggleProof('ode-proof-3')" aria-expanded="false">
+        <div class="acc-left">
+          <span class="acc-tag">Mid-Market Manufacturer &nbsp;·&nbsp; AI Accountability &amp; Organization Design</span>
+          <div class="acc-hook">The automation was installed and the investment case was on paper — but eighteen months later the numbers had not moved, turnover in the automated plants was running higher than in the ones we had never touched, and the supervisors were manually overriding the systems to keep the lines moving. Nobody had defined who owned the human side of what the technology now required.</div>
+        </div>
+        <div class="acc-icon">
+          <svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round">
+            <line x1="6" y1="1" x2="6" y2="11"/>
+            <line x1="1" y1="6" x2="11" y2="6"/>
+          </svg>
+        </div>
+      </button>
+      <div class="accordion-body">
+        <span class="acc-scr-label">Situation</span>
+        <p class="acc-situation">A mid-market manufacturer had installed automation across two production facilities with clear productivity targets in the investment case. Eighteen months after installation, the targets had not been met. Turnover in the automated facilities was running at 34% annually — higher than the manual plants still running the old way. The CFO was asking hard questions. The technology vendor had finished their scope and left.</p>
+        <span class="acc-scr-label">Challenge</span>
+        <p class="acc-challenge">Operators did not understand the new systems. First-line supervisors were reverting to manual overrides to prevent downtime, which was undermining the entire automation investment. Nobody had defined who owned the human side of what the technology now required — the exceptions, the judgment calls, the oversight. The structure had been redesigned around the equipment. It had never been redesigned around the people running it.</p>
+        <span class="acc-scr-label">Outcomes and Signs of Winning</span>
+        <p class="acc-outcomes"><strong>Turnover in the automated facilities dropped from 34% to 19% within nine months.</strong> Supervisor manual override incidents decreased 61%. The productivity metrics from the original investment case were achieved in month eleven — thirteen months after they were first projected. The COO had a documented workforce model ready to apply to the two remaining manual facilities.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- BLOCK 9 — CTA -->
+<section class="cta-section" id="cta-section">
+  <div class="cta-inner">
+    <h3>If you already know where the work feels fragile, that is the best place to start.</h3>
+    <p class="cta-conv">In 30 minutes you will know exactly where your highest risk is and what a first step looks like. That is useful whether or not we work together.</p>
+    <a href="https://scheduler.zoom.us/buck-seward/30-minute-working-conversation"
+       class="cta-btn" target="_blank" rel="noopener">
+      Schedule a 30-Minute Working Conversation &nbsp;→
+    </a>
+  </div>
+</section>
+
+
+<!-- CONTACT -->
+<div class="contact">
+  <div class="contact-inner">
+    <div class="contact-person">
+      <span class="c-name">Buck Seward, JD, SHRM-SCP</span>
+      <span class="c-sep">·</span>
+      <span class="c-role">Founding Partner &amp; Practice Leader</span>
+      <span class="c-sep">·</span>
+      <a href="mailto:buck@itc.pro" class="c-email">buck@itc.pro</a>
+    </div>
+  </div>
+</div>
+
+
+<!-- META + SEO — NOT RENDERED ON PUBLISHED PAGE -->
+<div class="meta-block">
+  <div class="content-wrap">
+    <div style="font-family:'Source Code Pro',monospace;font-size:11.5px;color:var(--navy);line-height:2">
+
+      <strong style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:12px;color:var(--teal)">Page URL</strong>
+      https://itc.pro/organization-design-execution<br>
+      Hyphens, lowercase, no trailing slash, set as canonical URL in CMS<br><br>
+
+      <strong style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:12px;color:var(--teal)">Meta Title — 47 characters, under 60-character limit</strong>
+      Organization Design &amp; Execution | ITC<br><br>
+
+      <strong style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:12px;color:var(--teal)">Meta Description — 151 characters, under 160-character limit</strong>
+      Most organizations don't have a people problem. They have a structure problem. ITC redesigns it alongside your team. Measurable traction in 90 days.<br><br>
+
+      <strong style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:12px;color:var(--teal)">Open Graph Tags</strong>
+      og:title: Organization Design &amp; Execution | ITC<br>
+      og:description: Most organizations don't have a people problem. They have a structure problem. ITC redesigns it alongside your team. Measurable traction in 90 days.<br>
+      og:url: https://itc.pro/organization-design-execution<br>
+      og:image: 1200 × 630px JPG — upload once photo is sourced<br>
+      og:image:alt: describe what is happening in the photo<br><br>
+
+      <strong style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:12px;color:var(--teal)">LinkedIn Company Page URL — Do Not Change</strong>
+      https://www.linkedin.com/company/itcpro/<br><br>
+
+      <strong style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:12px;color:var(--teal)">LinkedIn Specialties — Add Verbatim</strong>
+      Organization Design, Accountability Architecture, Decision Rights, Governance,
+      Execution Architecture, Operating Model Design, AI-Driven Organization Design,
+      AI Accountability, Org Design Consulting, Workforce Transformation<br><br>
+
+      <strong style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:12px;color:var(--teal)">Rank Math SEO Pro — CMS Entry Checklist</strong>
+      Focus Keyword: organization design consulting<br>
+      Secondary: execution architecture, decision rights, accountability structure, AI-driven organization design<br>
+      Canonical URL: https://itc.pro/organization-design-execution<br>
+      Schema type: Service · ServiceType: Organization Design &amp; Execution<br>
+      og:image: 1200 × 630px JPG · upload when photo is sourced
+
+    </div>
+  </div>
+</div>
+
+
+<script>
+function toggleProof(id) {
+  var item = document.getElementById(id);
+  var btn = item.querySelector('.accordion-trigger');
+  var isOpen = item.classList.contains('open');
+  document.querySelectorAll('.accordion-item').forEach(function(el) {
+    el.classList.remove('open');
+    el.querySelector('.accordion-trigger').setAttribute('aria-expanded','false');
+  });
+  if (!isOpen) {
+    item.classList.add('open');
+    btn.setAttribute('aria-expanded','true');
+  }
+}
+document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+  a.addEventListener('click', function(e) {
+    var t = document.querySelector(this.getAttribute('href'));
+    if (t) { e.preventDefault(); t.scrollIntoView({behavior:'smooth',block:'start'}); }
+  });
+});
+</script>
+</body>
+</html>
