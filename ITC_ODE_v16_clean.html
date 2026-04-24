@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Organization Design &amp; Execution | ITC</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,400&family=Source+Code+Pro:wght@400&display=swap" rel="stylesheet">
+
+<style>
+
+/* ══════════════════════════════════════════════════════
+   ITC ODE PAGE - CSS v16
+   CHANGES FROM v13
+   - Body: 16px/1.8 up to 17px/1.85 (generous desktop)
+   - H1: clamp(26-40) up to clamp(28-46)
+   - "What We Help With" promoted to Playfair h2 heading
+   - Tension: clamp(18-23) up to clamp(20-27)
+   - Focus hooks: 22px up to 24px
+   - Focus pain: 16px up to 17px
+   - Accordion hooks: 18px/1.4 up to 20px/1.42
+   - Accordion body text: 15px up to 16px/1.82
+   - Section padding: further increased throughout
+   - Focus items: background shading + rounded right corners
+   - Focus dividers: replaced by item margin (no visible line)
+   - All em dashes removed from visible content
+   ══════════════════════════════════════════════════════ */
+
+/* ── TOKENS ── */
+:root {
+  --navy:  #1B2A4A;
+  --blue:  #1A5276;
+  --teal:  #2E8B8B;
+  --gold:  #D4A439;
+  --gray:  #666666;
+  --lgray: #F2F4F7;
+  --light: #dce6f0;
+  --pale:  #eaf2fb;
+  --mid:   #4A7FB5;
+  --text:  #374151;
+  --max:   960px;
+  --focus-bg: #EEF3F8;
+}
+
+/* ── RESET ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Source Sans 3', sans-serif; font-size: 17px;
+       background: #fff; color: #1a1a1a; -webkit-font-smoothing: antialiased; }
+
+/* ── LAYOUT ── */
+.content-wrap { max-width: var(--max); margin: 0 auto; padding: 0 40px; }
+@media(max-width:600px) { .content-wrap { padding: 0 20px; } }
+
+/* ── HERO ──
+   Desktop-optimized H1: clamp(28-46px)
+   Mobile floor: 28px - readable without wrapping on small screens ── */
+.ode-hero { background: var(--blue); padding: 44px 0 40px;
+            display: flex; align-items: center; justify-content: center;
+            border-bottom: 3px solid var(--teal); }
+.ode-hero h1 { font-family: 'Playfair Display', serif;
+               font-size: clamp(28px, 5vw, 46px); font-weight: 700;
+               color: #fff; letter-spacing: -.015em; line-height: 1.1;
+               text-align: center; padding: 0 24px; }
+@media(max-width:600px) { .ode-hero { padding: 32px 0 28px; } }
+
+/* ── FRAMING ──
+   17px / lh 1.85 - generous, optimized for desktop reading ── */
+.ode-framing { padding: 60px 0 52px; background: #fff;
+               border-bottom: 1px solid var(--light); }
+.ode-framing p { font-size: 17px; font-weight: 400; color: #333;
+                 line-height: 1.85; max-width: 800px; }
+@media(max-width:600px) { .ode-framing { padding: 40px 0 36px; }
+  .ode-framing p { font-size: 16px; line-height: 1.8; } }
+
+/* ── TENSION STATEMENT ──
+   Playfair italic, teal left border, generous size.
+   clamp(20-27px) - substantial presence on desktop ── */
+.ode-tension { padding: 0 0 60px; background: #fff; }
+.ode-tension-inner { border-left: 4px solid var(--teal);
+                     padding: 10px 0 10px 28px; max-width: 700px; }
+.ode-tension-inner p { font-family: 'Playfair Display', serif;
+                        font-size: clamp(20px, 2.5vw, 27px); font-weight: 500;
+                        font-style: italic; color: var(--navy); line-height: 1.5; }
+@media(max-width:600px) { .ode-tension-inner { padding-left: 20px; }
+  .ode-tension-inner p { font-size: 18px; } }
+
+/* ── BODY + PHOTO ──
+   17px / lh 1.85 matches framing paragraph ── */
+.ode-body { padding: 60px 0; background: #fff;
+            border-bottom: 1px solid var(--light); }
+.ode-body-row { display: grid; grid-template-columns: 57fr 38fr;
+                gap: 40px; align-items: stretch; max-width: var(--max); }
+.ode-body-text p { font-size: 17px; font-weight: 400; color: #333;
+                   line-height: 1.85; margin: 0;
+                   text-align: justify; hyphens: auto; -webkit-hyphens: auto; }
+/* PHOTO: replace .ode-photo-ph with:
+   <img src="/wp-content/uploads/[file].jpg" alt="[describe action]"
+        loading="lazy" decoding="async"
+        style="width:100%;height:100%;object-fit:cover;border-radius:4px"> */
+.ode-photo-ph { background: var(--pale); border: 1px solid var(--light);
+                border-radius: 4px; display: flex; flex-direction: column;
+                align-items: center; justify-content: center;
+                gap: 8px; padding: 20px; min-height: 0; }
+.ode-photo-ph p { font-size: 12px; color: #7a8fa0; text-align: center;
+                  line-height: 1.65; font-style: italic; }
+@media(max-width:600px) {
+  .ode-body-row { grid-template-columns: 1fr; gap: 24px; align-items: start; }
+  .ode-photo-ph { min-height: 180px; }
+  .ode-body-text p { font-size: 16px; line-height: 1.8; text-align: left; hyphens: none; }
+}
+
+/* ── WHAT WE HELP WITH ──
+   HEADING: promoted from 11px eyebrow to Playfair h2
+   clamp(26-36px) - substantial section anchor on desktop
+   Focus items now have background shading + rounded right corners
+   Dividers replaced by item margin-bottom ── */
+.ode-focus { padding: 64px 0; background: #fff;
+             border-top: 1px solid var(--light);
+             border-bottom: 1px solid var(--light); }
+
+/* Heading replaces the old .ode-eyebrow in this section */
+.ode-focus-heading { font-family: 'Playfair Display', serif;
+                     font-size: clamp(26px, 3.5vw, 36px); font-weight: 700;
+                     color: var(--navy); line-height: 1.2;
+                     margin-bottom: 48px; }
+@media(max-width:600px) { .ode-focus-heading { font-size: 22px; margin-bottom: 36px; } }
+
+/* From the Field heading - same scale as focus heading ── */
+.ode-proof-heading { font-family: 'Playfair Display', serif;
+                     font-size: clamp(26px, 3.5vw, 36px); font-weight: 700;
+                     color: var(--navy); line-height: 1.2;
+                     margin-bottom: 48px; }
+@media(max-width:600px) { .ode-proof-heading { font-size: 22px; margin-bottom: 36px; } }
+
+/* Eyebrow kept for the accordion "From the field" label */
+.ode-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: .12em;
+               text-transform: uppercase; color: var(--mid); margin-bottom: 40px; }
+
+/* Focus item: shaded background, rounded right corners, generous padding ── */
+.ode-focus-item { border-left: 4px solid var(--navy);
+                  padding: 32px 36px 30px 40px;
+                  background: var(--focus-bg);
+                  border-radius: 0 8px 8px 0;
+                  margin-bottom: 20px; }
+.ode-focus-item:last-child { margin-bottom: 0; }
+@media(max-width:600px) { .ode-focus-item { padding: 24px 20px 22px 24px; } }
+
+.ode-fi-benefit { font-size: 11px; font-weight: 600; letter-spacing: .1em;
+                  text-transform: uppercase; color: var(--mid); margin-bottom: 12px; }
+.ode-fi-hook { font-family: 'Playfair Display', serif; font-size: 24px;
+               font-weight: 700; color: var(--navy); line-height: 1.3; margin-bottom: 16px; }
+@media(max-width:600px) { .ode-fi-hook { font-size: 19px; } }
+.ode-fi-pain { font-size: 17px; color: var(--text); line-height: 1.85;
+               margin-bottom: 26px; font-style: italic; }
+@media(max-width:600px) { .ode-fi-pain { font-size: 16px; } }
+.ode-fi-label { font-size: 11px; font-weight: 600; letter-spacing: .1em;
+                text-transform: uppercase; color: var(--mid); margin-bottom: 10px; }
+.ode-fi-bullets { list-style: none; margin-bottom: 24px; }
+.ode-fi-bullets li { font-size: 16px; color: var(--text); line-height: 1.72;
+                     padding-left: 18px; position: relative; margin-bottom: 10px; }
+.ode-fi-bullets li::before { content: ''; position: absolute; left: 0; top: 9px;
+                              width: 5px; height: 5px; background: var(--navy);
+                              border-radius: 50%; }
+.ode-fi-bullets.out li::before { background: var(--teal); }
+.ode-fi-leader { font-size: 15px; color: var(--teal); font-style: italic;
+                 line-height: 1.72; padding-top: 18px;
+                 border-top: 1px solid #D4E2EF; }
+
+/* Divider: kept in HTML but rendered as invisible spacer
+   Visual separation now comes from the shaded item backgrounds ── */
+.ode-focus-divider { border: none; height: 0; margin: 0; }
+
+/* ── FROM THE FIELD — INTRO ROW ──
+   Two-column layout: heading + intro line left, image right.
+   Same grid proportions as body+photo row (57fr / 38fr).
+   Image uses 16:9 crop (wider, shorter) for horizontal placement.
+   Accordion stories run full-width below the intro row. ── */
+.ode-proof-intro { display: grid; grid-template-columns: 57fr 38fr;
+                   gap: 40px; align-items: start; margin-bottom: 48px; }
+.ode-proof-intro-text { display: flex; flex-direction: column; gap: 12px; }
+.ode-proof-intro-desc { font-size: 17px; font-weight: 400; color: #333;
+                         line-height: 1.85; margin: 0; }
+/* Image placeholder — replace with <img> when licensed file arrives.
+   Crop: 16:9 landscape. WordPress upload: ode-from-field-photo.jpg
+   img style: width:100%;height:100%;object-fit:cover;border-radius:4px */
+.ode-proof-img-ph { background: var(--pale); border: 1px solid var(--light);
+                    border-radius: 4px; aspect-ratio: 16/9;
+                    display: flex; flex-direction: column;
+                    align-items: center; justify-content: center;
+                    gap: 8px; padding: 20px; }
+.ode-proof-img-ph p { font-size: 12px; color: #7a8fa0; text-align: center;
+                      line-height: 1.65; font-style: italic; }
+@media(max-width:600px) {
+  .ode-proof-intro { grid-template-columns: 1fr; gap: 24px; }
+  .ode-proof-img-ph { aspect-ratio: 16/9; }
+}
+
+/* ── ACCORDION - FROM THE FIELD ──
+   hooks 20px / lh 1.42 / body 16px / lh 1.82
+   More generous internal padding throughout ── */
+.ode-proof { padding: 56px 0; background: #fff;
+             border-bottom: 1px solid var(--light); }
+.ode-acc-item { border-top: 1px solid var(--light); }
+.ode-acc-item:last-child { border-bottom: 1px solid var(--light); }
+.ode-acc-trigger { width: 100%; background: none; border: none; padding: 26px 0;
+                   cursor: pointer; display: flex; align-items: flex-start;
+                   justify-content: space-between; gap: 20px; text-align: left; }
+.ode-acc-trigger:hover .ode-acc-hook { color: var(--teal); }
+.ode-acc-left { flex: 1; }
+.ode-acc-pull { font-family: 'Source Sans 3', sans-serif; font-size: 14px;
+                font-weight: 600; color: var(--teal); letter-spacing: .02em;
+                margin-bottom: 9px; display: block;
+                padding-bottom: 9px; border-bottom: 1px solid var(--light); }
+.ode-acc-tag { font-size: 11px; font-weight: 600; letter-spacing: .1em;
+               text-transform: uppercase; color: var(--mid);
+               margin-bottom: 9px; display: block; margin-top: 9px; }
+.ode-acc-hook { font-family: 'Playfair Display', serif; font-size: 20px;
+                font-weight: 700; color: var(--navy); line-height: 1.42;
+                transition: color .15s; }
+@media(max-width:600px) { .ode-acc-hook { font-size: 17px; } }
+.ode-acc-icon { flex-shrink: 0; width: 30px; height: 30px;
+                border: 1.5px solid var(--light); border-radius: 50%;
+                display: flex; align-items: center; justify-content: center;
+                margin-top: 6px; transition: border-color .15s, background .15s; }
+.ode-acc-icon svg { width: 12px; height: 12px; stroke: var(--navy);
+                    transition: transform .25s ease; }
+.ode-acc-trigger:hover .ode-acc-icon { border-color: var(--teal); }
+.ode-acc-item.open .ode-acc-icon { background: var(--navy); border-color: var(--navy); }
+.ode-acc-item.open .ode-acc-icon svg { stroke: #fff; transform: rotate(45deg); }
+.ode-acc-body { display: none; padding: 6px 52px 36px 28px;
+                border-left: 3px solid var(--navy); }
+@media(max-width:600px) { .ode-acc-body { padding: 6px 0 28px 20px; } }
+.ode-acc-item.open .ode-acc-body { display: block; }
+.ode-scr-label { font-size: 10px; font-weight: 700; letter-spacing: .1em;
+                 text-transform: uppercase; color: var(--mid);
+                 display: block; margin-bottom: 7px; opacity: .7; margin-top: 22px; }
+.ode-scr-label:first-child { margin-top: 0; }
+.ode-acc-situation { font-size: 16px; color: var(--text); line-height: 1.82; margin-bottom: 0; }
+.ode-acc-challenge  { font-size: 16px; color: var(--text); line-height: 1.82;
+                      margin-bottom: 0; font-style: italic; }
+.ode-acc-outcomes   { font-size: 16px; color: var(--text); line-height: 1.82; margin-bottom: 0; }
+.ode-acc-outcomes strong { color: var(--navy); font-weight: 600; }
+
+/* ── CTA - teal background (changed from navy in v13) ── */
+.ode-cta { background: var(--teal); padding: 64px 40px; text-align: center; }
+.ode-cta-inner { max-width: 600px; margin: 0 auto; }
+.ode-cta h3 { font-family: 'Playfair Display', Georgia, serif;
+              font-size: clamp(20px, 2.5vw, 26px);
+              font-weight: 400; color: #fff; line-height: 1.5;
+              margin-bottom: 18px; font-style: italic; }
+.ode-cta-conv { font-size: 17px; color: rgba(255,255,255,.9);
+                line-height: 1.85; margin-bottom: 36px; }
+.ode-cta-btn { display: inline-block; background: #fff; color: var(--navy);
+               font-size: 16px; font-weight: 600; padding: 16px 40px;
+               border-radius: 3px; text-decoration: none; letter-spacing: .01em;
+               transition: background .15s, color .15s; }
+.ode-cta-btn:hover { background: var(--pale); }
+@media(max-width:600px) { .ode-cta { padding: 48px 24px; }
+  .ode-cta-conv { font-size: 16px; } }
+
+/* ── CONTACT / ITC GLOBAL FOOTER - #1B2A4A matches all ITC pages ── */
+.ode-contact { background: var(--blue); padding: 30px 40px;
+               border-top: 3px solid var(--teal); }
+.ode-contact-inner { max-width: 860px; margin: 0 auto; }
+.ode-contact-person { display: flex; flex-wrap: wrap;
+                      align-items: center; gap: 8px 12px; }
+.ode-c-name  { font-size: 15px; font-weight: 600; color: #fff; }
+.ode-c-sep   { color: rgba(255,255,255,.25); font-size: 14px; }
+.ode-c-role  { font-size: 13px; color: rgba(255,255,255,.6); }
+.ode-c-email { font-size: 13px; color: #8ecfcf; text-decoration: none; }
+.ode-c-email:hover { text-decoration: underline; }
+.ode-c-linkedin { display: inline-flex; align-items: center; justify-content: center;
+                  width: 24px; height: 24px; border-radius: 4px;
+                  background: rgba(255,255,255,.12); text-decoration: none;
+                  transition: background .15s; flex-shrink: 0; }
+.ode-c-linkedin:hover { background: var(--teal); }
+.ode-c-linkedin svg { width: 13px; height: 13px; fill: #8ecfcf; display: block; }
+.ode-c-linkedin:hover svg { fill: #fff; }
+@media(max-width:600px) { .ode-contact { padding: 24px 20px; }
+  .ode-contact-person { gap: 6px 10px; } }
+
+</style>
+</head>
+<body>
+
+<div class="ode-hero">
+  <h1>Organization Design &amp; Execution</h1>
+</div>
+
+<div class="ode-framing" id="framing">
+  <div class="content-wrap">
+    <p>Organization Design and Execution is about making sure the structure matches the work. The focus is on three things: making clear who owns which decisions and which work, removing the bottlenecks that slow capable teams down, and getting the operation ready for the workforce and technology changes already underway.</p>
+  </div>
+</div>
+
+<div class="ode-tension">
+  <div class="content-wrap">
+    <div class="ode-tension-inner">
+      <p>You already know what needs to move. The question is whether the organization is built to let it.</p>
+    </div>
+  </div>
+</div>
+
+<div class="ode-body">
+  <div class="content-wrap">
+    <div class="ode-body-row">
+
+      
+      <div class="ode-body-text">
+        <p>Most clients start with a conversation about what they already know is not working and what they want to be different. From there, the work becomes a project. We move at your pace. What we design, your team owns and runs. Most organizations at this scale see measurable value inside ninety days, in fewer escalations, faster decision cycles on critical work, and labor efficiency the CFO can see on the P&amp;L.</p>
+      </div>
+
+      
+      
+      <div class="ode-photo-ph">
+        <p>BODY PHOTO - LICENSED<br>
+           File: ode-body-working-session.jpg<br>
+           Upload to WordPress media library<br>
+           Replace this div with img tag above<br>
+           3:2 ratio · object-fit:cover</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="ode-focus">
+  <div class="content-wrap">
+    <h2 class="ode-focus-heading">What We Help With</h2>
+
+    
+    <div class="ode-focus-item">
+      <div class="ode-fi-benefit">Who Owns the Work</div>
+      <div class="ode-fi-hook">Decisions keep stalling. The same calls land on the same two people every time.</div>
+      <p class="ode-fi-pain">Critical decisions bounce upward and wait. Everyone is busy. Nothing is moving. It is not that the team cannot decide. Nobody has ever gotten clear on who actually owns which decisions and which work.</p>
+      <div class="ode-fi-label">How we work through it</div>
+      <ul class="ode-fi-bullets">
+        <li>Map where decisions consistently stall or land with the wrong person</li>
+        <li>Design decision flow around the speed the operation actually needs</li>
+      </ul>
+      <div class="ode-fi-label">What changes for you</div>
+      <ul class="ode-fi-bullets out">
+        <li>Decisions made at the right level without constant escalation</li>
+        <li>Accountability that holds when leaders or teams change</li>
+      </ul>
+      <p class="ode-fi-leader">For leadership: every decision that escalates unnecessarily costs your team time and costs you attention. This builds the structure that stops it.</p>
+    </div>
+
+    <hr class="ode-focus-divider">
+
+    
+    <div class="ode-focus-item">
+      <div class="ode-fi-benefit">Execution That Holds</div>
+      <div class="ode-fi-hook">Initiatives start strong. They slow in the middle and stall before they land.</div>
+      <p class="ode-fi-pain">Projects stall not because the team can&#8217;t deliver, but because nobody knows who unblocks it when it gets stuck. The gap between what was designed and what actually runs is almost always structural. Not a people problem.</p>
+      <div class="ode-fi-label">How we work through it</div>
+      <ul class="ode-fi-bullets">
+        <li>Identify where execution breaks down and the structural cause behind each point</li>
+        <li>Redesign operating conditions so work flows without constant senior intervention</li>
+      </ul>
+      <div class="ode-fi-label">What changes for you</div>
+      <ul class="ode-fi-bullets out">
+        <li>Visible improvement in execution speed within 90 days</li>
+        <li>Fewer initiatives abandoned mid-stream for structural reasons</li>
+      </ul>
+      <p class="ode-fi-leader">For leadership: every initiative that stalls in the middle is a budget line that didn&#8217;t deliver. This closes the gap between what was approved and what actually ran.</p>
+    </div>
+
+    <hr class="ode-focus-divider">
+
+    
+    <div class="ode-focus-item">
+      <div class="ode-fi-benefit">AI Accountability</div>
+      <div class="ode-fi-hook">The AI is already in. Nobody defined who owns what happens when it&#8217;s wrong.</div>
+      <p class="ode-fi-pain">Tools are deployed and processes changed. But nobody defined who owns the exceptions, the oversight, or what happens when the output is wrong. That gap is not a technology problem. It&#8217;s an accountability problem.</p>
+      <div class="ode-fi-label">How we work through it</div>
+      <ul class="ode-fi-bullets">
+        <li>Map which roles have changed because of AI tools already in use or being implemented</li>
+        <li>Design the accountability structure for human-AI workflows before a failure forces the question</li>
+      </ul>
+      <div class="ode-fi-label">What changes for you</div>
+      <ul class="ode-fi-bullets out">
+        <li>Clarity on who is responsible when an AI-assisted process needs review or reversal</li>
+        <li>AI adoption that holds because people understand their place in it</li>
+      </ul>
+      <p class="ode-fi-leader">For leadership: AI tool failures surface as operational incidents. This builds the ownership structure before the first one lands.</p>
+    </div>
+
+  </div>
+</div>
+
+<div class="ode-proof">
+  <div class="content-wrap">
+
+    <div class="ode-proof-intro">
+      <div class="ode-proof-intro-text">
+        <h2 class="ode-proof-heading">From the Field</h2>
+        <p class="ode-proof-intro-desc">Three situations where getting clear on structure changed what the numbers did next.</p>
+      </div>
+      <div class="ode-proof-img-ph">
+        
+        <p>FROM THE FIELD PHOTO<br>
+           Adobe Stock #1531586609<br>
+           License pending<br>
+           Upload as: ode-from-field-team.jpg<br>
+           16:9 crop · object-fit:cover</p>
+      </div>
+    </div>
+
+    
+    <div class="ode-acc-item" id="ode-proof-1">
+      <button class="ode-acc-trigger" onclick="toggleProof('ode-proof-1')" aria-expanded="false">
+        <div class="ode-acc-left">
+          <span class="ode-acc-pull">EBITDA 2% &#8594; 14% &nbsp;&#183;&nbsp; 100% leadership retention &nbsp;&#183;&nbsp; governance model adopted by 2 of 14 operating companies</span>
+          <span class="ode-acc-tag">Foodservice Equipment Manufacturer &nbsp;&#183;&nbsp; Decision Rights &amp; Governance</span>
+          <div class="ode-acc-hook">We kept missing our numbers and every program corporate sent in got waited out by the same team. Nobody had ever gotten clear on who owned what. When things went wrong, accountability had nowhere to land.</div>
+        </div>
+        <div class="ode-acc-icon">
+          <svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round">
+            <line x1="6" y1="1" x2="6" y2="11"/>
+            <line x1="1" y1="6" x2="11" y2="6"/>
+          </svg>
+        </div>
+      </button>
+      <div class="ode-acc-body">
+        <span class="ode-scr-label">Situation</span>
+        <p class="ode-acc-situation">A $140M division inside a Fortune 500 foodservice equipment company had missed its numbers three quarters in a row. Corporate needed visible progress before the next board cycle but could not impose a top-down restructuring. The semi-autonomous model was a core part of how the company operated across all twenty-three of its divisions.</p>
+        <span class="ode-scr-label">Challenge</span>
+        <p class="ode-acc-challenge">The division&#8217;s leadership team had strong tenure but had never operated under a structured performance management cadence. Prior corporate programs had been launched and quietly abandoned, and the workforce had learned to wait them out. Nobody had ever built a governance structure the division actually owned. When things went sideways, there was nowhere for accountability to land.</p>
+        <span class="ode-scr-label">Outcomes and Signs of Winning</span>
+        <p class="ode-acc-outcomes"><strong>EBITDA moved from 2% to 14%.</strong> Every leader on the division team stayed through close. Two of the other fourteen operating companies asked to use the same governance model without being asked. The board stopped wondering whether the people running the business had a handle on it.</p>
+      </div>
+    </div>
+
+    
+    <div class="ode-acc-item" id="ode-proof-2">
+      <button class="ode-acc-trigger" onclick="toggleProof('ode-proof-2')" aria-expanded="false">
+        <div class="ode-acc-left">
+          <span class="ode-acc-pull">Productivity +32% across 14 markets &nbsp;&#183;&nbsp; at-risk contracts above renewal threshold &nbsp;&#183;&nbsp; overtime &#8722;18%</span>
+          <span class="ode-acc-tag">PE-Backed Field Service Platform &nbsp;&#183;&nbsp; Execution Architecture</span>
+          <div class="ode-acc-hook">Fourteen markets and a platform thesis. Productivity was 40 points apart between our best and worst operations. Five markets were at contract renewal risk and nobody had a baseline reliable enough to build a plan from.</div>
+        </div>
+        <div class="ode-acc-icon">
+          <svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round">
+            <line x1="6" y1="1" x2="6" y2="11"/>
+            <line x1="1" y1="6" x2="11" y2="6"/>
+          </svg>
+        </div>
+      </button>
+      <div class="ode-acc-body">
+        <span class="ode-scr-label">Situation</span>
+        <p class="ode-acc-situation">A PE-backed commercial kitchen and HVACR service platform had been assembled through three acquisitions over four years, reaching $160M in revenue across fourteen markets. Each acquired business had kept its own dispatch system, its own technician standards, and its own pricing model. The sponsor had a platform thesis. The platform did not function as one.</p>
+        <span class="ode-scr-label">Challenge</span>
+        <p class="ode-acc-challenge">Field productivity varied 40% between the highest- and lowest-performing markets. Five markets were running below customer satisfaction thresholds that triggered contract renewal risk. The COO had clear financial targets for the next twelve months and no operational baseline reliable enough to build a plan from. The structure looked like a platform. It ran like a collection of separate businesses.</p>
+        <span class="ode-scr-label">Outcomes and Signs of Winning</span>
+        <p class="ode-acc-outcomes"><strong>Productivity up 32%</strong>, at-risk contracts back above renewal thresholds, overtime down 18%, and a repeatable operating model the sponsor can now scale into future acquisitions.</p>
+      </div>
+    </div>
+
+    
+    <div class="ode-acc-item" id="ode-proof-3">
+      <button class="ode-acc-trigger" onclick="toggleProof('ode-proof-3')" aria-expanded="false">
+        <div class="ode-acc-left">
+          <span class="ode-acc-pull">Turnover 34% &#8594; 19% &nbsp;&#183;&nbsp; manual overrides &#8722;61% &nbsp;&#183;&nbsp; productivity case met month 11</span>
+          <span class="ode-acc-tag">Mid-Market Manufacturer &nbsp;&#183;&nbsp; AI Accountability &amp; Organization Design</span>
+          <div class="ode-acc-hook">The automation was installed. The investment case was on paper. Eighteen months later the numbers had not moved, turnover in the automated plants was running higher than in the ones we had never touched, and the supervisors were manually overriding the systems to keep the lines moving. Nobody had defined who owned the human side of what the technology now required.</div>
+        </div>
+        <div class="ode-acc-icon">
+          <svg viewBox="0 0 12 12" fill="none" stroke-width="1.8" stroke-linecap="round">
+            <line x1="6" y1="1" x2="6" y2="11"/>
+            <line x1="1" y1="6" x2="11" y2="6"/>
+          </svg>
+        </div>
+      </button>
+      <div class="ode-acc-body">
+        <span class="ode-scr-label">Situation</span>
+        <p class="ode-acc-situation">A mid-market manufacturer had installed automation across two production facilities with clear productivity targets in the investment case. Eighteen months after installation, the targets had not been met. Turnover in the automated facilities was running at 34% annually, higher than the manual plants still running the old way. The CFO was asking hard questions. The technology vendor had finished their scope and left.</p>
+        <span class="ode-scr-label">Challenge</span>
+        <p class="ode-acc-challenge">Operators did not understand the new systems. First-line supervisors were reverting to manual overrides to prevent downtime, which was undermining the entire automation investment. Nobody had defined who owned the human side of what the technology now required: the exceptions, the judgment calls, the oversight. The structure had been redesigned around the equipment. It had never been redesigned around the people running it.</p>
+        <span class="ode-scr-label">Outcomes and Signs of Winning</span>
+        <p class="ode-acc-outcomes"><strong>Turnover dropped from 34% to 19%</strong>, manual overrides fell 61%, the productivity case was met in month eleven, and the two remaining IoT facilities now have a tested workforce and accountability model ready to deploy before a single line goes live.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<section class="ode-cta" id="cta-section">
+  <div class="ode-cta-inner">
+    <h3>If you already know where the work feels fragile, that is the best place to start.</h3>
+    <p class="ode-cta-conv">In 30 minutes you will know exactly where your highest risk is and what a first step looks like. That is useful whether or not we work together.</p>
+    <a href="https://scheduler.zoom.us/buck-seward/30-minute-working-conversation"
+       class="ode-cta-btn" target="_blank" rel="noopener">
+      Schedule a 30-Minute Working Conversation &nbsp;&#8594;
+    </a>
+  </div>
+</section>
+
+<div class="ode-contact">
+  <div class="ode-contact-inner">
+    <div class="ode-contact-person">
+      <span class="ode-c-name">Buck Seward, JD, SHRM-SCP</span>
+      <span class="ode-c-sep">&#183;</span>
+      <span class="ode-c-role">Founding Partner &amp; Practice Leader</span>
+      <span class="ode-c-sep">&#183;</span>
+      <a href="mailto:buck@itc.pro" class="ode-c-email">buck@itc.pro</a>
+      <span class="ode-c-sep">&#183;</span>
+      <a href="https://www.linkedin.com/in/buckseward" class="ode-c-linkedin"
+         target="_blank" rel="noopener" aria-label="Buck Seward on LinkedIn">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853
+                   0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9
+                   1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337
+                   7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782
+                   13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0
+                   1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24
+                   22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+function toggleProof(id) {
+  var item = document.getElementById(id);
+  var btn = item.querySelector('.ode-acc-trigger');
+  var isOpen = item.classList.contains('open');
+  document.querySelectorAll('.ode-acc-item').forEach(function(el) {
+    el.classList.remove('open');
+    el.querySelector('.ode-acc-trigger').setAttribute('aria-expanded', 'false');
+  });
+  if (!isOpen) {
+    item.classList.add('open');
+    btn.setAttribute('aria-expanded', 'true');
+  }
+}
+document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+  a.addEventListener('click', function(e) {
+    var t = document.querySelector(this.getAttribute('href'));
+    if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+  });
+});
+</script>
+
+</body>
+</html>
